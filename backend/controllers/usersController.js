@@ -1,5 +1,5 @@
 import { Admin } from "../models/adminRegisterSchema.js";
-import { Student } from "../models/usersSchema.js";
+import { studentCredential } from "../models/studentRegisterSchema.js";
 import { Teacher } from "../models/usersSchema.js";
 
 export const adminSignIn = async (req, res, next) => {
@@ -41,7 +41,21 @@ export const studentSignIn = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Please provide email and password" });
     }
-    // Your sign-in logic for student goes here
+
+    const existingStudent = await studentCredential.findOne({ email });
+    if (!existingStudent) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await existingStudent.isValidPassword(password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
     res
       .status(200)
       .json({ success: true, message: "Student signed in successfully" });
@@ -58,7 +72,21 @@ export const teacherSignIn = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Please provide email and password" });
     }
-    // Your sign-in logic for teacher goes here
+
+    const existingTeacher = await Teacher.findOne({ email });
+    if (!existingTeacher) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await existingTeacher.isValidPassword(password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
     res
       .status(200)
       .json({ success: true, message: "Teacher signed in successfully" });

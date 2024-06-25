@@ -8,7 +8,7 @@ import {
 import axios from "axios"; // Import axios
 import { Link } from "react-router-dom";
 
-const AdminRegister = () => {
+const StudentRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,12 +18,12 @@ const AdminRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/register/admin",
+        "http://localhost:4000/api/v1/studentregister/students",
         { name, email, password }
       );
       if (response.status === 200) {
         // Registration successful, redirect to admin login
-        window.location.href = "/admin-signIn";
+        window.location.href = "/student-signIn";
       } else {
         // Handle registration errors
         console.error("Registration failed");
@@ -35,7 +35,7 @@ const AdminRegister = () => {
 
   return (
     <AdminRegisterContainer>
-      <h2>Admin Register</h2>
+      <h2>Student Register</h2>
       <FormContainer>
         <h3>Welcome to BTI</h3>
         <InputField
@@ -67,4 +67,4 @@ const AdminRegister = () => {
   );
 };
 
-export default AdminRegister;
+export default StudentRegister;

@@ -42,12 +42,13 @@ const StudentSignIn = () => {
         <SubmitButton to="/student/dashboard" onClick={handleSignIn}>
           Sign In
         </SubmitButton>
-        <Link style={{ padding: "13px", fontSize: "16px" }}>
+        <Link
+          to="/students/register"
+          style={{ padding: "13px", fontSize: "16px" }}
+        >
           Create Account
         </Link>
-        <Link style={{fontSize: "16px" }}>
-          Forgotten Password
-        </Link>
+        <Link style={{ fontSize: "16px" }}>Forgotten Password</Link>
       </FormContainer>
     </StudentSignInContainer>
   );

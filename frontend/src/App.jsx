@@ -41,6 +41,7 @@ import AssignmentSection from "../src/pages/Teachers/Assignments";
 import CheckAttendanceSection from "../src/pages/Teachers/Attendance";
 import CheckExamSection from "../src/pages/Teachers/Exams";
 import AdminRegister from "../src/components/AdminRegister";
+import StudentRegister from "../src/components/StudentRegister";
 
 const App = () => {
   return (
@@ -75,6 +76,7 @@ const App = () => {
         <Route path="admin/settings" element={<SettingsProfile />} />
         <Route path="admin/register" element={<AdminRegister />} />
         {/* Students sections here  */}
+        <Route path="students/register" element={<StudentRegister />} />
         <Route path="student/assignments" element={<StudentAssignments />} />
         <Route path="student/exams" element={<ExamSection />} />
         <Route path="student/performance" element={<PerformanceSection />} />
