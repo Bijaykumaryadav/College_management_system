@@ -1,3 +1,4 @@
+//router/adminRegisterRouter.js
 import express from "express";
 import { adminSignIn } from "../controllers/usersController.js";
 import { adminRegister } from "../controllers/adminRegisterController.js";

@@ -1,6 +1,9 @@
-import { Admin } from "../models/adminRegisterSchema.js";
-import { studentCredential } from "../models/studentRegisterSchema.js";
+import { Admin } from "../models/usersSchema.js";
+import { Student } from "../models/usersSchema.js";
 import { Teacher } from "../models/usersSchema.js";
+
+import { AdminRegister } from "../models/adminRegisterSchema.js";
+import jwt from "jsonwebtoken";
 
 export const adminSignIn = async (req, res, next) => {
   const { email, password } = req.body;
@@ -11,7 +14,9 @@ export const adminSignIn = async (req, res, next) => {
         .json({ success: false, message: "Please provide email and password" });
     }
 
-    const existingAdmin = await Admin.findOne({ email });
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
+    const existingAdmin = await AdminRegister.findOne({ email });
     if (!existingAdmin) {
       return res
         .status(401)
@@ -25,9 +30,16 @@ export const adminSignIn = async (req, res, next) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    const token = jwt.sign({ _id: existingAdmin._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    existingAdmin.tokens = existingAdmin.tokens.concat({ token });
+    await existingAdmin.save();
+
     res
       .status(200)
-      .json({ success: true, message: "Admin signed in successfully" });
+      .json({ success: true, message: "Admin signed in successfully", token });
   } catch (err) {
     next(err);
   }
@@ -42,7 +54,7 @@ export const studentSignIn = async (req, res, next) => {
         .json({ success: false, message: "Please provide email and password" });
     }
 
-    const existingStudent = await studentCredential.findOne({ email });
+    const existingStudent = await Student.findOne({ email });
     if (!existingStudent) {
       return res
         .status(401)

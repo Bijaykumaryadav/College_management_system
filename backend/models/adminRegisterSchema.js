@@ -1,25 +1,38 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 import validator from "validator";
+import bcrypt from "bcryptjs";
 
-const adminRegisterSchema = new mongoose.Schema({
+const adminRegisterSchema = new mongoose.Schema(
+  {
     name: {
-    type: String,
-    required: true,
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please provide a valid email"],
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"],
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Pre-save hook to hash the password
 adminRegisterSchema.pre("save", async function (next) {
@@ -33,4 +46,14 @@ adminRegisterSchema.methods.isValidPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export const Admin = mongoose.model("Admin", adminRegisterSchema);
+// Ensure tokens array is initialized as an empty array
+adminRegisterSchema.pre("save", function (next) {
+  if (!this.tokens) {
+    this.tokens = [];
+  }
+  next();
+});
+
+export const AdminRegister =
+  mongoose.models.AdminRegister ||
+  mongoose.model("AdminRegister", adminRegisterSchema);

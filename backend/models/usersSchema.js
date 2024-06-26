@@ -1,23 +1,52 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"],
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please provide a valid email"],
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-  },
+  {
+    timestamps: true,
+  }
+);
+
+// Ensure tokens array is initialized as an empty array
+userSchema.pre("save", function (next) {
+  if (!this.tokens) {
+    this.tokens = [];
+  }
+  next();
 });
 
-export const AdminLogin = mongoose.model('Admin Login', userSchema);
-export const Student = mongoose.model('Student Login', userSchema);
-export const Teacher = mongoose.model('Teacher Login', userSchema);
+// Method to validate password
+userSchema.methods.isValidPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
-
+// Create models if they don't already exist
+export const Admin =
+  mongoose.models.Admin || mongoose.model("Admin", userSchema);
+export const Student =
+  mongoose.models.Student || mongoose.model("Student", userSchema);
+export const Teacher =
+  mongoose.models.Teacher || mongoose.model("Teacher", userSchema);

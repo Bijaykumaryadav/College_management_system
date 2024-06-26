@@ -5,7 +5,6 @@ import { dbConnection } from "./database/dbConnection.js";
 import studentRouter from "./router/studentRouter.js";
 import teacherRouter from "./router/teacherRouter.js";
 import assignmentRouter from "./router/assignmentRouter.js";
-
 import announcementRouter from "./router/announcementRouter.js";
 import classRouter from "./router/classRouter.js";
 import libraryRouter from "./router/libraryRouter.js";
@@ -15,6 +14,7 @@ import attendanceRouter from "./router/attendanceRouter.js";
 import usersRouter from "./router/usersRouter.js";
 import adminRegisterRouter from "./router/adminRegisterRouter.js";
 import studentRegisterRouter from "./router/studentRegisterRouter.js";
+import dashboardRouter from "./router/dashboard.js";  // Import the dashboard router
 import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
@@ -37,17 +37,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/teachers", teacherRouter);
 app.use("/api/v1/assignments", assignmentRouter);
-
 app.use("/api/v1/announcements", announcementRouter);
 app.use("/api/v1/class", classRouter);
 app.use("/api/v1/library", libraryRouter);
 app.use("/api/v1/events", eventsRouter);
 app.use("/api/v1/exam", examRouter);
 app.use("/api/v1/attendance", attendanceRouter);
-
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/register", adminRegisterRouter);
 app.use("/api/v1/studentregister", studentRegisterRouter);
+app.use("/api/v1/", dashboardRouter);  // Use the dashboard router
 
 dbConnection();
 

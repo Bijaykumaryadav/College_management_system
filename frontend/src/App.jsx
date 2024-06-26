@@ -4,8 +4,8 @@ import Home from "./routes/Home.jsx";
 import About from "./routes/About.jsx";
 import Notes from "./routes/Notes.jsx";
 import Chatroom from "./routes/Chatroom.jsx";
-
 import ChooseUser from "../src/components/ChooseUser";
+import ProtectedRoute from "./components/ProtectedRoute";
 import AdminSignIn from "../src/components/AdminSignIn";
 import StudentSignIn from "../src/components/StudentSignIn";
 import TeacherSignIn from "../src/components/TeacherSignIn";
@@ -54,15 +54,25 @@ const App = () => {
           <Route path="chatroom" element={<Chatroom />} />
         </Route>
         <Route path="choose-user" element={<ChooseUser />} />
-        {/* All the sign-in pages/routes */}
         <Route path="admin-signIn" element={<AdminSignIn />} />
         <Route path="student-signIn" element={<StudentSignIn />} />
         <Route path="teacher-signIn" element={<TeacherSignIn />} />
-        {/* All the dashboard routes */}
-        <Route path="admin/dashboard" element={<AdminDashboard />} />
-        <Route path="teacher/dashboard" element={<TeacherDashboard />} />
-        <Route path="student/dashboard" element={<StudentDashboard />} />
-        {/* Admin section here */}
+
+        {/* Protected Routes */}
+        <Route
+          path="admin/dashboard"
+          element={<ProtectedRoute element={AdminDashboard} />}
+        />
+        <Route
+          path="teacher/dashboard"
+          element={<ProtectedRoute element={TeacherDashboard} />}
+        />
+        <Route
+          path="student/dashboard"
+          element={<ProtectedRoute element={StudentDashboard} />}
+        />
+
+        {/* Admin section */}
         <Route path="admin/classes" element={<Classes />} />
         <Route path="admin/exams" element={<Exam />} />
         <Route path="admin/attendance" element={<Attendance />} />
@@ -75,7 +85,8 @@ const App = () => {
         <Route path="admin/events" element={<EventCalender />} />
         <Route path="admin/settings" element={<SettingsProfile />} />
         <Route path="admin/register" element={<AdminRegister />} />
-        {/* Students sections here  */}
+
+        {/* Students sections */}
         <Route path="students/register" element={<StudentRegister />} />
         <Route path="student/assignments" element={<StudentAssignments />} />
         <Route path="student/exams" element={<ExamSection />} />
@@ -84,7 +95,8 @@ const App = () => {
         <Route path="student/library" element={<LibrarySection />} />
         <Route path="student/communication" element={<AnnouncementSection />} />
         <Route path="student/settings" element={<ProfileSection />} />
-        {/* Teachers sections here */}
+
+        {/* Teachers sections */}
         <Route path="teacher/classes" element={<ClassSection />} />
         <Route path="teacher/students" element={<StudentSection />} />
         <Route path="teacher/teachers" element={<TeacherSection />} />
