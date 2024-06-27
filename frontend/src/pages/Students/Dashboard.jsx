@@ -1,5 +1,4 @@
 // StudentDashboard.js
-import React from 'react';
 import Sidebar from './Sidebar';
 import { StudentDashboardContainer, Content, Section, SectionTitle, CardContainer, Card, CardTitle, CardContent } 
 from '../../styles/DashboardStyles';

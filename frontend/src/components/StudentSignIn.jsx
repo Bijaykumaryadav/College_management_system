@@ -1,5 +1,5 @@
-// StudentSignIn.js
 import { useState } from "react";
+import axios from "axios";
 import {
   StudentSignInContainer,
   FormContainer,
@@ -11,19 +11,29 @@ import { Link } from "react-router-dom";
 const StudentSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Error state
 
-  const handleSignIn = () => {
-    // For demonstration purposes, we'll directly navigate to the student dashboard route
-    // Replace this with your actual sign-in logic
-    console.log("Student Sign In:", { email, password });
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/users/student/signin",
+        { email, password }
+      );
+      console.log("Student Sign In:", { email, password });
+      window.location.href = "/student/dashboard";
+    } catch (error) {
+      console.error("Student Sign In failed:", error);
+      setError(error.response?.data?.message || "Sign In failed");
+    }
   };
 
   return (
     <StudentSignInContainer>
       <h2>Student Sign In</h2>
-      <FormContainer>
+      <FormContainer onSubmit={handleSignIn}>
         <h3>Welcome to BTI</h3>
-
+        {error && <p style={{ color: "red" }}>{error}</p>} {/* Display error */}
         <InputField
           type="email"
           placeholder="Email"
@@ -38,8 +48,7 @@ const StudentSignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {/* Use Link component to navigate to student dashboard */}
-        <SubmitButton to="/student/dashboard" onClick={handleSignIn}>
+        <SubmitButton type="submit" onClick={handleSignIn}>
           Sign In
         </SubmitButton>
         <Link

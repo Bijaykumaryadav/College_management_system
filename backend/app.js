@@ -46,7 +46,7 @@ app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/register", adminRegisterRouter);
 app.use("/api/v1/studentregister", studentRegisterRouter);
-app.use("/api/v1/", dashboardRouter);  // Use the dashboard router
+app.use("/api/v1/", dashboardRouter);
 
 dbConnection();
 

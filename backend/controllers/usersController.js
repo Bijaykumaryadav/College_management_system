@@ -1,6 +1,5 @@
-import { Admin } from "../models/usersSchema.js";
-import { Student } from "../models/usersSchema.js";
-import { Teacher } from "../models/usersSchema.js";
+import { studentCredential } from "../models/studentRegisterSchema.js";
+import { teacherCredential } from "../models/teacherRegisterSchema.js";
 
 import { AdminRegister } from "../models/adminRegisterSchema.js";
 import jwt from "jsonwebtoken";
@@ -45,6 +44,7 @@ export const adminSignIn = async (req, res, next) => {
   }
 };
 
+
 export const studentSignIn = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -54,7 +54,7 @@ export const studentSignIn = async (req, res, next) => {
         .json({ success: false, message: "Please provide email and password" });
     }
 
-    const existingStudent = await Student.findOne({ email });
+    const existingStudent = await studentCredential.findOne({ email });
     if (!existingStudent) {
       return res
         .status(401)
@@ -76,6 +76,7 @@ export const studentSignIn = async (req, res, next) => {
   }
 };
 
+
 export const teacherSignIn = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -85,7 +86,7 @@ export const teacherSignIn = async (req, res, next) => {
         .json({ success: false, message: "Please provide email and password" });
     }
 
-    const existingTeacher = await Teacher.findOne({ email });
+    const existingTeacher = await teacherCredential.findOne({ email });
     if (!existingTeacher) {
       return res
         .status(401)
