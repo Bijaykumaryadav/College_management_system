@@ -1,6 +1,5 @@
 import { studentCredential } from "../models/studentRegisterSchema.js";
 import { teacherCredential } from "../models/teacherRegisterSchema.js";
-
 import { AdminRegister } from "../models/adminRegisterSchema.js";
 import jwt from "jsonwebtoken";
 

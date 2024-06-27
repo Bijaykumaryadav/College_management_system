@@ -7,15 +7,30 @@ import {
   SubmitButton,
 } from "../styles/TeacherSignInStyles";
 import { Link } from "react-router-dom";
+  import axios from "axios";
+
 
 const TeacherSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Error state
 
-  const handleSignIn = () => {
-    // For demonstration purposes, we'll directly navigate to the teacher dashboard route
-    // Replace this with your actual sign-in logic
-    console.log("Teacher Sign In:", { email, password });
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/users/teacher/signin",
+        { email, password }
+      );
+      console.log("Teacher Sign In:", { email, password });
+      // localStorage.setItem("token", response.data.token);
+
+      window.location.href = "/teacher/dashboard";
+    } catch (error) {
+      console.error("Teacher Sign In failed:", error);
+      setError(error.response?.data?.message || "Sign In failed");
+    }
   };
 
   return (
@@ -41,9 +56,13 @@ const TeacherSignIn = () => {
         <SubmitButton to="/teacher/dashboard" onClick={handleSignIn}>
           Sign In
         </SubmitButton>
-        <Link style={{ padding: "25px", fontSize: "16px" }}>
-          Forgotten Password
+        <Link
+          to="/teachers/register"
+          style={{ padding: "13px", fontSize: "16px" }}
+        >
+          Create Account
         </Link>
+        <Link style={{ fontSize: "16px" }}>Forgotten Password</Link>
       </FormContainer>
     </TeacherSignInContainer>
   );

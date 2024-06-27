@@ -43,6 +43,7 @@ import CheckAttendanceSection from "../src/pages/Teachers/Attendance";
 import CheckExamSection from "../src/pages/Teachers/Exams";
 import AdminRegister from "../src/components/AdminRegister";
 import StudentRegister from "../src/components/StudentRegister";
+import TeacherRegister from "../src/components/TeacherRegister";
 
 const App = () => {
   return (
@@ -64,15 +65,15 @@ const App = () => {
           path="admin/dashboard"
           element={<ProtectedRoute element={AdminDashboard} />}
         />
-        <Route
+        {/* <Route
           path="teacher/dashboard"
           element={<ProtectedRoute element={TeacherDashboard} />}
-        />
+        /> */}
         <Route
           path="student/dashboard"
           element={<ProtectedStudentRoute element={StudentDashboard} />}
         />
-        {/* <Route path = "student/dashboard" element = {<StudentDashboard/>}/> */}
+        <Route path="teacher/dashboard" element={<TeacherDashboard />} />
 
         {/* Admin section */}
         <Route path="admin/classes" element={<Classes />} />
@@ -99,6 +100,7 @@ const App = () => {
         <Route path="student/settings" element={<ProfileSection />} />
 
         {/* Teachers sections */}
+        <Route path="teachers/register" element={<TeacherRegister />} />
         <Route path="teacher/classes" element={<ClassSection />} />
         <Route path="teacher/students" element={<StudentSection />} />
         <Route path="teacher/teachers" element={<TeacherSection />} />
