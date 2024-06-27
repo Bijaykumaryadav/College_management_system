@@ -21,6 +21,8 @@ const StudentSignIn = () => {
         { email, password }
       );
       console.log("Student Sign In:", { email, password });
+      localStorage.setItem("token", response.data.token);
+
       window.location.href = "/student/dashboard";
     } catch (error) {
       console.error("Student Sign In failed:", error);

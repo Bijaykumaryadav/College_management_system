@@ -44,7 +44,6 @@ export const adminSignIn = async (req, res, next) => {
   }
 };
 
-
 export const studentSignIn = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -68,9 +67,21 @@ export const studentSignIn = async (req, res, next) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    const token = jwt.sign(
+      { _id: existingStudent._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    existingStudent.tokens = existingStudent.tokens.concat({ token });
+    await existingStudent.save();
+
     res
       .status(200)
-      .json({ success: true, message: "Student signed in successfully" });
+      .json({
+        success: true,
+        message: "Student signed in successfully",
+        token,
+      });
   } catch (err) {
     next(err);
   }
