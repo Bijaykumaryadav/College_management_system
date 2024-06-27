@@ -74,18 +74,15 @@ export const studentSignIn = async (req, res, next) => {
     existingStudent.tokens = existingStudent.tokens.concat({ token });
     await existingStudent.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Student signed in successfully",
-        token,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Student signed in successfully",
+      token,
+    });
   } catch (err) {
     next(err);
   }
 };
-
 
 export const teacherSignIn = async (req, res, next) => {
   const { email, password } = req.body;
@@ -110,10 +107,23 @@ export const teacherSignIn = async (req, res, next) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    const token = jwt.sign(
+      { _id: existingTeacher._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    existingTeacher.tokens = existingTeacher.tokens.concat({ token });
+    await existingTeacher.save();
+
     res
       .status(200)
-      .json({ success: true, message: "Teacher signed in successfully" });
+      .json({
+        success: true,
+        message: "Teacher signed in successfully",
+        token,
+      });
   } catch (err) {
     next(err);
   }
 };
+

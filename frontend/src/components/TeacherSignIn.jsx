@@ -24,9 +24,16 @@ const TeacherSignIn = () => {
         { email, password }
       );
       console.log("Teacher Sign In:", { email, password });
-      // localStorage.setItem("token", response.data.token);
 
-      window.location.href = "/teacher/dashboard";
+      const token = response.data.token;
+      console.log("Received token:", token); // Log the token to verify
+
+      if (token) {
+        localStorage.setItem("token", token);
+        window.location.href = "/teacher/dashboard";
+      } else {
+        setError("Sign In failed: No token received");
+      }
     } catch (error) {
       console.error("Teacher Sign In failed:", error);
       setError(error.response?.data?.message || "Sign In failed");
@@ -64,6 +71,7 @@ const TeacherSignIn = () => {
         </Link>
         <Link style={{ fontSize: "16px" }}>Forgotten Password</Link>
       </FormContainer>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </TeacherSignInContainer>
   );
 };

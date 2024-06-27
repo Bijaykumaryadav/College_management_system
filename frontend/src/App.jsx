@@ -7,6 +7,7 @@ import Chatroom from "./routes/Chatroom.jsx";
 import ChooseUser from "../src/components/ChooseUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedStudentRoute from "./components/ProtectedStudentRoute";
+import ProtectedTeacherRoute from "./components/ProtectedTeacherRoute";
 import AdminSignIn from "../src/components/AdminSignIn";
 import StudentSignIn from "../src/components/StudentSignIn";
 import TeacherSignIn from "../src/components/TeacherSignIn";
@@ -65,15 +66,14 @@ const App = () => {
           path="admin/dashboard"
           element={<ProtectedRoute element={AdminDashboard} />}
         />
-        {/* <Route
+        <Route
           path="teacher/dashboard"
-          element={<ProtectedRoute element={TeacherDashboard} />}
-        /> */}
+          element={<ProtectedTeacherRoute element={TeacherDashboard} />}
+        />
         <Route
           path="student/dashboard"
           element={<ProtectedStudentRoute element={StudentDashboard} />}
         />
-        <Route path="teacher/dashboard" element={<TeacherDashboard />} />
 
         {/* Admin section */}
         <Route path="admin/classes" element={<Classes />} />
