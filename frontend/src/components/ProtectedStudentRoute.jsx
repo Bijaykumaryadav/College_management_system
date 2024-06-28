@@ -19,7 +19,7 @@ const ProtectedStudentRoute = ({ element: Component }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:4000/api/v1/auth/students/check",
+          "http://localhost:4000/api/v1/users/auth/students/check",
           {
             headers: {
               Authorization: `Bearer ${token}`,

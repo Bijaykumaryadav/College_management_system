@@ -18,7 +18,7 @@ const TeacherRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/teacherregister/teachers",
+        "http://localhost:4000/api/v1/users/teachers",
         { name, email, password }
       );
       if (response.status === 200) {

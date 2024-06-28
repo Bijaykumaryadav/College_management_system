@@ -59,9 +59,6 @@ const AdminRegister = () => {
           required
         />
         <SubmitButton onClick={(e) => handleRegister(e)}>Register</SubmitButton>
-        <Link style={{ padding: "25px", fontSize: "16px" }}>
-          Sign In using Google
-        </Link>
       </FormContainer>
     </AdminRegisterContainer>
   );

@@ -13,9 +13,6 @@ import examRouter from "./router/examRouter.js";
 import attendanceRouter from "./router/attendanceRouter.js";
 import usersRouter from "./router/usersRouter.js";
 import adminRegisterRouter from "./router/adminRegisterRouter.js";
-import studentRegisterRouter from "./router/usersRouter.js";
-import teacherRegisterRouter from "./router/usersRouter.js"
-import dashboardRouter from "./router/dashboard.js";  // Import the dashboard router
 import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
@@ -46,9 +43,6 @@ app.use("/api/v1/exam", examRouter);
 app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/register", adminRegisterRouter);
-app.use("/api/v1/studentregister", studentRegisterRouter);
-app.use("/api/v1/teacherregister", teacherRegisterRouter);
-app.use("/api/v1/", dashboardRouter);
 
 dbConnection();
 

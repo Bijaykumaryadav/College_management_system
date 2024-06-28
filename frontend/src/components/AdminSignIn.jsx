@@ -1,4 +1,3 @@
-//components/AdminSignIn.jsx
 import { useState } from "react";
 import {
   AdminSignInContainer,
@@ -9,6 +8,7 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AdminRegisterLink } from "../styles/styles";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const AdminSignIn = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +26,23 @@ const AdminSignIn = () => {
     } catch (error) {
       console.error("Error signing in:", error);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+    try {
+      const res = await axios.post("http://localhost:4000/api/v1/users/auth/google", {
+        tokenId: credential,
+      });
+      localStorage.setItem("token", res.data.token);
+      window.location.href = "/admin/dashboard";
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
+
+  const handleGoogleFailure = (error) => {
+    console.error("Google Sign-In failed:", error);
   };
 
   return (
@@ -51,9 +68,15 @@ const AdminSignIn = () => {
         <AdminRegisterLink to="/admin/register">
           Admin Register
         </AdminRegisterLink>
-        <Link style={{ padding: "25px", fontSize: "16px" }}>
+        <Link style={{ padding: "10px", fontSize: "16px" }}>
           Forgotten Password
         </Link>
+        <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleFailure}
+          />
+        </GoogleOAuthProvider>
       </FormContainer>
     </AdminSignInContainer>
   );
