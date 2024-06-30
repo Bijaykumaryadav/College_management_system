@@ -31,25 +31,9 @@ const AdminSignIn = () => {
 
   const handleGoogleSignIn = () => {
     // Redirect to Google sign-in endpoint
-    window.location.href = "http://localhost:4000/api/v1/users/auth/google";
+    window.location.href =
+      "http://localhost:4000/api/v1/users/auth/google";
   };
-
-  // useEffect(() => {
-  //   const searchParams = new URLSearchParams(location.search);
-  //   const token = searchParams.get("token");
-  //   console.log("ex:", token);
-  //   console.log(localStorage.token);
-
-  //   if (token) {
-  //     localStorage.setItem("token", token);
-  //     console.log(localStorage.token);
-  //     console.log("Signed in successfully");
-  //     navigate("/admin/dashboard");
-  //   } else if (location.pathname === "/admin/dashboard") {
-  //     console.log("Failed to sign in");
-  //     navigate("/admin-signIn");
-  //   }
-  // }, [location.search, location.pathname, navigate]);
 
   return (
     <AdminSignInContainer>

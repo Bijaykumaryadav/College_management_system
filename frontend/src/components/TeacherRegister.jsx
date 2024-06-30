@@ -6,7 +6,6 @@ import {
   SubmitButton,
 } from "../styles/AdminRegisterStyles";
 import axios from "axios"; // Import axios
-import { Link } from "react-router-dom";
 
 const TeacherRegister = () => {
   const [name, setName] = useState("");
@@ -59,9 +58,6 @@ const TeacherRegister = () => {
           required
         />
         <SubmitButton onClick={(e) => handleRegister(e)}>Register</SubmitButton>
-        <Link style={{ padding: "25px", fontSize: "16px" }}>
-          Sign In using Google
-        </Link>
       </FormContainer>
     </AdminRegisterContainer>
   );

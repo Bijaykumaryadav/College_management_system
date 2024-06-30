@@ -7,14 +7,12 @@ import {
   SubmitButton,
 } from "../styles/TeacherSignInStyles";
 import { Link } from "react-router-dom";
-  import axios from "axios";
-
+import axios from "axios";
 
 const TeacherSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Error state
-
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -38,6 +36,12 @@ const TeacherSignIn = () => {
       console.error("Teacher Sign In failed:", error);
       setError(error.response?.data?.message || "Sign In failed");
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    // Redirect to Google sign-in endpoint
+    window.location.href =
+      "http://localhost:4000/api/v1/users/auth/google-teacher";
   };
 
   return (
@@ -69,7 +73,12 @@ const TeacherSignIn = () => {
         >
           Create Account
         </Link>
-        <Link style={{ fontSize: "16px" }}>Forgotten Password</Link>
+        <Link style={{ paddingBottom: "15px", fontSize: "16px" }}>
+          Forgotten Password
+        </Link>
+        <button type="button" onClick={handleGoogleSignIn}>
+          Sign in with Google
+        </button>
       </FormContainer>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </TeacherSignInContainer>
