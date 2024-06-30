@@ -115,15 +115,29 @@ export const teacherSignIn = async (req, res, next) => {
     existingTeacher.tokens = existingTeacher.tokens.concat({ token });
     await existingTeacher.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Teacher signed in successfully",
-        token,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Teacher signed in successfully",
+      token,
+    });
   } catch (err) {
     next(err);
   }
 };
 
+export const googleSignUp = async (req, res) => {
+  const { _id, name, email } = req.user;
+  const token = jwt.sign({ _id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  req.user.tokens = req.user.tokens.concat({ token });
+  await req.user.save();
+
+  // Stringify user data for the query parameter
+  const queryParams = new URLSearchParams({ token }).toString();
+
+  // Correctly append the token as a query parameter
+  res.redirect(
+    `${process.env.FRONTEND_URL}/admin/dashboard?${queryParams}`
+  );
+};

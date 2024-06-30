@@ -18,7 +18,7 @@ const AdminRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/register/admin",
+        "http://localhost:4000/api/v1/users/admins",
         { name, email, password }
       );
       if (response.status === 200) {

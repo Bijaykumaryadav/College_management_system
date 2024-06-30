@@ -1,9 +1,11 @@
 import passport from 'passport';
-import User from '../models/userSchema.js'; // Assuming userSchema.js is your User model file
+import { AdminRegister } from '../models/adminRegisterSchema.js'; // Adjusted for AdminRegister schema
 import { config as dotenvConfig } from 'dotenv';
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+dotenvConfig();
 
 // Serialize user into the session
 passport.serializeUser((user, done) => {
@@ -13,7 +15,7 @@ passport.serializeUser((user, done) => {
 // Deserialize user from the session
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id).select("-password");
+    const user = await AdminRegister.findById(id).select("-password");
     return done(null, user);
   } catch (error) {
     return done(error);
@@ -25,31 +27,28 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL:
-        "https://chatapp-inyr.onrender.com/user/auth/google/callback",
+      callbackURL: "http://localhost:4000/api/v1/users/auth/google/callback", 
     },
     async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
       try {
-        // Find or create a user based on the Google profile
-        const user = await User.findOne({
+        // Find or create an admin based on the Google profile
+        const admin = await AdminRegister.findOne({
           email: profile.emails[0].value,
         });
-        const profileImage = profile.photos && profile.photos[0].value;
-        if (user) {
-          // Serialize user into the session
-          return done(null, user);
+        // const profileImage = profile.photos && profile.photos[0].value;
+        if (admin) {
+          // Serialize admin into the session
+          return done(null, admin);
         } else {
-          const newUser = await User.create({
+          const newAdmin = await AdminRegister.create({
             name: profile.displayName,
             email: profile.emails[0].value,
             password: crypto.randomBytes(20).toString("hex"),
-            profileImage,
-            isVerified: true,
-            token: crypto.randomBytes(16).toString("hex"),
+            tokens: [], // Initialize tokens as an empty array
           });
-          // Serialize new user into the session
-          return done(null, newUser);
+          // Serialize new admin into the session
+          return done(null, newAdmin);
         }
       } catch (error) {
         console.log(`Error in authentication using Google: ${error}`);

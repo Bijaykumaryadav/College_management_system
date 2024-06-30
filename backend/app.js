@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
+import passport from "passport";
+import session from "express-session"; // Add session support
 import { dbConnection } from "./database/dbConnection.js";
 import studentRouter from "./router/studentRouter.js";
 import teacherRouter from "./router/teacherRouter.js";
@@ -12,8 +14,8 @@ import eventsRouter from "./router/eventsRouter.js";
 import examRouter from "./router/examRouter.js";
 import attendanceRouter from "./router/attendanceRouter.js";
 import usersRouter from "./router/usersRouter.js";
-import adminRegisterRouter from "./router/adminRegisterRouter.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import "./config/passport-google-strategy.js"; // Import the passport configuration
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -25,12 +27,21 @@ app.use(
   })
 );
 
-app.use((err, req, res, next) => {
-  errorHandler(err, req, res, next);
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Initialize session support
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Initialize Passport and restore authentication state, if any, from the session
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/teachers", teacherRouter);
@@ -42,7 +53,10 @@ app.use("/api/v1/events", eventsRouter);
 app.use("/api/v1/exam", examRouter);
 app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/register", adminRegisterRouter);
+
+app.use((err, req, res, next) => {
+  errorHandler(err, req, res, next);
+});
 
 dbConnection();
 

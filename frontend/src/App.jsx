@@ -66,6 +66,7 @@ const App = () => {
           path="admin/dashboard"
           element={<ProtectedRoute element={AdminDashboard} />}
         />
+
         <Route
           path="teacher/dashboard"
           element={<ProtectedTeacherRoute element={TeacherDashboard} />}

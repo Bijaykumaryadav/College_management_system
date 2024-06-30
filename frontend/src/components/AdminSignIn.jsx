@@ -6,44 +6,50 @@ import {
   SubmitButton,
 } from "../styles/AdminSignInStyles";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate /*useLocation/*/ } from "react-router-dom";
 import { AdminRegisterLink } from "../styles/styles";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const AdminSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  // const location = useLocation();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/register/signin",
+        "http://localhost:4000/api/v1/users/admin/signin",
         { email, password }
       );
       localStorage.setItem("token", response.data.token);
-      window.location.href = "/admin/dashboard";
+      navigate("/admin/dashboard");
     } catch (error) {
       console.error("Error signing in:", error);
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    const { credential } = credentialResponse;
-    try {
-      const res = await axios.post("http://localhost:4000/api/v1/users/auth/google", {
-        tokenId: credential,
-      });
-      localStorage.setItem("token", res.data.token);
-      window.location.href = "/admin/dashboard";
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-    }
+  const handleGoogleSignIn = () => {
+    // Redirect to Google sign-in endpoint
+    window.location.href = "http://localhost:4000/api/v1/users/auth/google";
   };
 
-  const handleGoogleFailure = (error) => {
-    console.error("Google Sign-In failed:", error);
-  };
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   const token = searchParams.get("token");
+  //   console.log("ex:", token);
+  //   console.log(localStorage.token);
+
+  //   if (token) {
+  //     localStorage.setItem("token", token);
+  //     console.log(localStorage.token);
+  //     console.log("Signed in successfully");
+  //     navigate("/admin/dashboard");
+  //   } else if (location.pathname === "/admin/dashboard") {
+  //     console.log("Failed to sign in");
+  //     navigate("/admin-signIn");
+  //   }
+  // }, [location.search, location.pathname, navigate]);
 
   return (
     <AdminSignInContainer>
@@ -64,19 +70,21 @@ const AdminSignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <SubmitButton onClick={handleSignIn}>Sign In</SubmitButton>
+        <SubmitButton type="submit" onClick={handleSignIn}>
+          Sign In
+        </SubmitButton>
         <AdminRegisterLink to="/admin/register">
           Admin Register
         </AdminRegisterLink>
-        <Link style={{ padding: "10px", fontSize: "16px" }}>
+        <Link
+          to="/forgot-password"
+          style={{ padding: "10px", fontSize: "16px" }}
+        >
           Forgotten Password
         </Link>
-        <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleFailure}
-          />
-        </GoogleOAuthProvider>
+        <button type="button" onClick={handleGoogleSignIn}>
+          Sign in with Google
+        </button>
       </FormContainer>
     </AdminSignInContainer>
   );
