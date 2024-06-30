@@ -11,6 +11,7 @@ import {
   teacherSignIn,
   googleSignUp,
   googleTeacherSignUp,
+  googleStudentSignUp,
 } from "../controllers/usersController.js";
 import passport from "passport";
 
@@ -59,6 +60,17 @@ router.get(
   "/auth/google-teacher/callback",
   passport.authenticate("google-teacher", { failureRedirect: "/" }),
   googleTeacherSignUp
+);
+
+//Google Oauth routes for students
+router.get(
+  "/auth/google-student",
+  passport.authenticate("google-student", { scope: ["profile", "email"] })
+);
+router.get(
+  "/auth/google-student/callback",
+  passport.authenticate("google-student", { failureRedirect: "/" }),
+  googleStudentSignUp
 );
 
 export default router;

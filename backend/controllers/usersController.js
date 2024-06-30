@@ -137,9 +137,7 @@ export const googleSignUp = async (req, res) => {
   const queryParams = new URLSearchParams({ token }).toString();
 
   // Correctly append the token as a query parameter
-  res.redirect(
-    `${process.env.FRONTEND_URL}/admin/dashboard?${queryParams}`
-  );
+  res.redirect(`${process.env.FRONTEND_URL}/admin/dashboard?${queryParams}`);
 };
 
 // New Google sign-in controller for teachers
@@ -155,7 +153,21 @@ export const googleTeacherSignUp = async (req, res) => {
   const queryParams = new URLSearchParams({ token }).toString();
 
   // Correctly append the token as a query parameter
-  res.redirect(
-    `${process.env.FRONTEND_URL}/teacher/dashboard?${queryParams}`
-  );
+  res.redirect(`${process.env.FRONTEND_URL}/teacher/dashboard?${queryParams}`);
+};
+
+// New Google sign-in controller for students
+export const googleStudentSignUp = async (req, res) => {
+  const { _id, name, email } = req.user;
+  const token = jwt.sign({ _id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  req.user.tokens = req.user.tokens.concat({ token });
+  await req.user.save();
+
+  // Stringify user data for the query parameter
+  const queryParams = new URLSearchParams({ token }).toString();
+
+  // Correctly append the token as a query parameter
+  res.redirect(`${process.env.FRONTEND_URL}/student/dashboard?${queryParams}`);
 };

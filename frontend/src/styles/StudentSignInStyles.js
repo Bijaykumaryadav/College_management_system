@@ -15,7 +15,7 @@ export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 300px;
+  height: 340px;
   width: 80%;
   max-width: 300px; /* Limit form width */
   padding: 20px;

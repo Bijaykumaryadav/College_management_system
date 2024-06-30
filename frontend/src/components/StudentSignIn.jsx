@@ -30,6 +30,12 @@ const StudentSignIn = () => {
     }
   };
 
+  const handleGoogleSignIn = () => {
+    // Redirect to Google sign-in endpoint
+    window.location.href =
+      "http://localhost:4000/api/v1/users/auth/google-student";
+  };
+
   return (
     <StudentSignInContainer>
       <h2>Student Sign In</h2>
@@ -60,6 +66,9 @@ const StudentSignIn = () => {
           Create Account
         </Link>
         <Link style={{ fontSize: "16px" }}>Forgotten Password</Link>
+        <button type="button" onClick={handleGoogleSignIn}>
+          Sign in with Google
+        </button>
       </FormContainer>
     </StudentSignInContainer>
   );

@@ -9,10 +9,20 @@ const ProtectedTeacherRoute = ({ element: Component }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem("token");
-        console.log("Token:", token);
+        const searchParams = new URLSearchParams(location.search);
+        const token = searchParams.get("token");
 
-        if (!token) {
+        // If token found in URL params, set it in localStorage
+        if (token) {
+          localStorage.setItem("token", token);
+        }
+
+        // Retrieve token from localStorage
+        const storedToken = localStorage.getItem("token");
+        console.log("Token:", storedToken);
+
+        // If still no token, set isAuthenticated to false
+        if (!storedToken) {
           setIsAuthenticated(false);
           setLoading(false);
           return;
