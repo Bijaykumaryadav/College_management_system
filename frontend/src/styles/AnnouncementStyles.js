@@ -1,9 +1,7 @@
 // AnnouncementStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const AnnouncementContainer = styled.div`
-  display: flex;
-  padding-left: 240px;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
@@ -68,14 +66,11 @@ export const SidebarContainer = styled.div`
   flex: 0 0 250px; /* Sidebar width */
 `;
 
-
 export const AnnouncementHeader = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
 `;
 
-
 export const AnnouncementTitle = styled.h3`
   margin-bottom: 10px;
 `;
-

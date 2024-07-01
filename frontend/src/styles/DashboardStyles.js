@@ -1,26 +1,22 @@
 // AdminDashboardStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const AdminDashboardContainer = styled.div`
-  display: flex;
-`;
+export const AdminDashboardContainer = styled.div``;
 
 export const Content = styled.div`
   flex: 1;
-  padding: 20px;
-  margin-left: ${({ isOpen }) => (isOpen ? '250px' : '80px')}; /* Adjust margin based on sidebar state */
   transition: margin-left 0.3s ease;
 `;
 
 export const TopContent = styled.div`
-  display: flex;
+  display: block;
   gap: 20px;
   flex: 1; /* Take remaining space */
 `;
 
 export const BottomContent = styled.div`
   margin-top: 20px;
-  display: flex; /* Make the content side by side */
+  /* Make the content side by side */
   gap: 20px; /* Add gap between the components */
 `;
 
@@ -30,12 +26,14 @@ export const Section = styled.section`
 `;
 
 export const SectionTitle = styled.h2`
+  padding: 20px;
   font-size: 24px;
   margin-bottom: 20px;
   color: #333333; /* Darker text color */
 `;
 
 export const CardContainer = styled.div`
+  padding: 20px;
   display: flex;
   gap: 20px;
 `;
@@ -57,7 +55,7 @@ export const Card = styled.div`
 export const CardTitle = styled.h3`
   font-size: 18px;
   margin-bottom: 10px;
-  color: #007bff; 
+  color: #007bff;
 `;
 
 export const CardContent = styled.p`
@@ -70,9 +68,7 @@ export const StudentDashboardContainer = styled.div`
   padding-left: 240px;
 `;
 
-
 export const TeacherDashboardContainer = styled.div`
   display: flex;
   padding-left: 240px;
 `;
-

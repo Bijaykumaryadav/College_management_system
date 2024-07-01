@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSidebar } from "./SidebarContext";
 import {
   BsGraphUp,
   BsPeople,
@@ -19,7 +20,7 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${({ isOpen }) => (isOpen ? "250px" : "45px")};
+  width: ${({ isOpen }) => (isOpen ? "250px" : "80px")};
   height: 100%;
   background-color: #2c3e50;
   color: white;
@@ -64,9 +65,10 @@ const SidebarIcon = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px;
+  width: ${({ isOpen }) => (isOpen ? "150px" : "50px")};
   cursor: pointer;
   height: auto;
+  transition: width 0.3s ease;
 `;
 
 const ToggleButton = styled.div`
@@ -91,13 +93,11 @@ const ToggleIcon = styled.span`
 `;
 
 const MainContent = styled.div`
-  margin-left: ${({ isOpen }) => (isOpen ? "250px" : "45px")};
+  margin-left: ${({ isOpen }) => (isOpen ? "265px" : "80px")};
   transition: margin-left 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 20px;
 `;
 
 const ContentWrapper = styled.div`
@@ -106,18 +106,14 @@ const ContentWrapper = styled.div`
 `;
 
 const Sidebar = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const { isOpen, toggleSidebar } = useSidebar();
 
   return (
     <>
       <SidebarContainer isOpen={isOpen}>
         <SidebarHeader>
           <Link to="/">
-            <Logo src={logo} alt="Logo" />
+            <Logo src={logo} alt="Logo" isOpen={isOpen} />
           </Link>
         </SidebarHeader>
         <SidebarNav>
