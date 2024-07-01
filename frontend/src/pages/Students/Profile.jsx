@@ -1,6 +1,6 @@
 // ProfileSection.js
-import React from 'react';
-import Sidebar from './Sidebar';
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
 import {
   ProfileContainer,
   SidebarContainer,
@@ -10,17 +10,25 @@ import {
   ProfileDetail,
   Label,
   Value,
-} from '../../styles/SettingsProfileStyles'; // Import styled components from ProfileSectionStyles.js
+  LogoutButton,
+} from "../../styles/SettingsProfileStyles"; // Import styled components from ProfileSectionStyles.js
 
 const ProfileSection = () => {
   // Sample student profile data
+  const navigate = useNavigate(); // Hook to access the navigate function
+
   const studentProfile = {
-    name: 'John Doe',
+    name: "John Doe",
     age: 18,
-    grade: '12th',
-    school: 'Example High School',
-    email: 'john.doe@example.com'
+    grade: "12th",
+    school: "Example High School",
+    email: "john.doe@example.com",
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    navigate("/student-signIn"); // Redirect to the sign-in page
+  }; // Moved the closing brace here
 
   return (
     <ProfileContainer>
@@ -50,6 +58,7 @@ const ProfileSection = () => {
             <Label>Email:</Label>
             <Value>{studentProfile.email}</Value>
           </ProfileDetail>
+          <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
         </ProfileInfo>
       </Content>
     </ProfileContainer>

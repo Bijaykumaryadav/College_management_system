@@ -5,6 +5,7 @@ import { teacherRegister } from "../controllers/teacherRegisterController.js";
 import adminAuth from "../middlewares/adminAuth.js";
 import studentAuth from "../middlewares/studentAuth.js";
 import teacherAuth from "../middlewares/teacherAuth.js";
+
 import {
   adminSignIn,
   studentSignIn,

@@ -1,17 +1,33 @@
-// TeacherProfileSection.js
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import { ProfileContainer, SidebarContainer, Content, ProfileHeader, ProfileDetails, ProfileLabel, ProfileInfo, EditButton } 
-from '../../styles/SettingsProfileStyles'; 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import {
+  ProfileContainer,
+  SidebarContainer,
+  Content,
+  ProfileHeader,
+  ProfileDetails,
+  ProfileLabel,
+  ProfileInfo,
+  EditButton,
+  LogoutButton,
+} from "../../styles/SettingsProfileStyles";
 
 const TeacherProfileSection = () => {
+  const navigate = useNavigate(); // Hook to access the navigate function
+
   const [teacherInfo, setTeacherInfo] = useState({
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    phone: '123-456-7890',
-    address: '123 Main St, City, Country',
-    qualification: 'Master of Education',
+    name: "John Doe",
+    email: "johndoe@example.com",
+    phone: "123-456-7890",
+    address: "123 Main St, City, Country",
+    qualification: "Master of Education",
   });
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    navigate("/teacher-signIn"); // Redirect to the sign-in page
+  };
 
   return (
     <ProfileContainer>
@@ -33,6 +49,7 @@ const TeacherProfileSection = () => {
           <ProfileInfo>{teacherInfo.qualification}</ProfileInfo>
         </ProfileDetails>
         <EditButton>Edit Profile</EditButton>
+        <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
       </Content>
     </ProfileContainer>
   );

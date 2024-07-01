@@ -1,6 +1,5 @@
 // SettingsProfile.js
-import React from 'react';
-import Sidebar from './Sidebar';
+import Sidebar from "./Sidebar";
 import {
   ProfileContainer,
   SidebarContainer,
@@ -10,15 +9,24 @@ import {
   ProfileLabel,
   ProfileInfo,
   EditButton,
-} from '../../styles/SettingsProfileStyles'; // Import styled components from SettingsProfileStyles.js
+  LogoutButton,
+} from "../../styles/SettingsProfileStyles"; // Import styled components from SettingsProfileStyles.js
+import { useNavigate } from "react-router-dom";
 
 const SettingsProfile = () => {
+  const navigate = useNavigate(); // Hook to access the navigate function
+
   const teacherInfo = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    phone: '123-456-7890',
-    address: '123 Main St, City, Country',
-    qualification: 'Master of Education',
+    name: "John Doe",
+    email: "johndoe@example.com",
+    phone: "123-456-7890",
+    address: "123 Main St, City, Country",
+    qualification: "Master of Education",
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    navigate("/admin-signIn"); // Redirect to the sign-in page
   };
 
   return (
@@ -41,6 +49,7 @@ const SettingsProfile = () => {
           <ProfileInfo>{teacherInfo.qualification}</ProfileInfo>
         </ProfileDetails>
         <EditButton>Edit Profile</EditButton>
+        <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
       </Content>
     </ProfileContainer>
   );
