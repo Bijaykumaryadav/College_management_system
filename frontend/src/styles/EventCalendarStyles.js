@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const EventCalendarContainer = styled.div`
-  display: flex;
+  display: ${({ isDashboard }) => (isDashboard ? "block" : "flex")};
 `;
 
 export const Content = styled.div`

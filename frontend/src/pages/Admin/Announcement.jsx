@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
@@ -19,7 +19,7 @@ import {
   AnnouncementContent,
 } from "../../styles/AnnouncementStyles";
 
-const Announcement = () => {
+const Announcement = ({ isDashboard }) => {
   // State for managing announcement
   const [announcement, setAnnouncement] = useState("");
   const [announcements, setAnnouncements] = useState([]);
@@ -65,7 +65,7 @@ const Announcement = () => {
 
   return (
     <SidebarProvider>
-      <AnnouncementContainer>
+      <AnnouncementContainer isDashboard={isDashboard}>
         <ToastContainer />
         <Sidebar />
         <Content>

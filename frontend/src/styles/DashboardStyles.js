@@ -1,7 +1,9 @@
 // AdminDashboardStyles.js
 import styled from "styled-components";
 
-export const AdminDashboardContainer = styled.div``;
+export const AdminDashboardContainer = styled.div`
+  display: block;
+`;
 
 export const Content = styled.div`
   flex: 1;
@@ -9,12 +11,12 @@ export const Content = styled.div`
 `;
 
 export const TopContent = styled.div`
-  display: block;
   gap: 20px;
   flex: 1; /* Take remaining space */
 `;
 
 export const BottomContent = styled.div`
+  display: block;
   margin-top: 20px;
   /* Make the content side by side */
   gap: 20px; /* Add gap between the components */

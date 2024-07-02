@@ -6,7 +6,7 @@ import {
   SubmitButton,
 } from "../styles/AdminSignInStyles";
 import axios from "axios";
-import { Link, useNavigate /*useLocation/*/ } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdminRegisterLink } from "../styles/styles";
 
 const AdminSignIn = () => {

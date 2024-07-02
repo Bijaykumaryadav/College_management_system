@@ -16,7 +16,7 @@ import {
   ErrorText,
 } from "../../styles/EventCalendarStyles";
 
-const EventCalendar = () => {
+const EventCalendar = ({ isDashboard }) => {
   const [events, setEvents] = useState([]);
   const [newEvent, setNewEvent] = useState("");
   const [error, setError] = useState(null);
@@ -59,7 +59,7 @@ const EventCalendar = () => {
 
   return (
     <SidebarProvider>
-      <EventCalendarContainer>
+      <EventCalendarContainer isDashboard={isDashboard}>
         <Sidebar />
         <Content>
           <h1>Events & Calendar</h1>

@@ -9,7 +9,7 @@ import {
   IndividualPerformance,
 } from "../../styles/PerformanceStyles";
 
-const Performance = () => {
+const Performance = ({ isDashboard }) => {
   // Sample data for school performance
   const schoolPerformanceData = {
     averageScore: 85,
@@ -25,7 +25,7 @@ const Performance = () => {
 
   return (
     <SidebarProvider>
-      <PerformanceContainer>
+      <PerformanceContainer isDashboard={isDashboard}>
         <Sidebar /> {/* Include the Sidebar component */}
         <Content>
           <PerformanceContent>

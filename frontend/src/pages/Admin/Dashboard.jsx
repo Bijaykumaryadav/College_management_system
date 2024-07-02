@@ -92,19 +92,17 @@ const AdminDashboard = () => {
               </Section>
               <Section>
                 <SectionTitle>Events Calendar</SectionTitle>
-                <EventCalendar events={events} />
+                <EventCalendar events={events} isDashboard />
               </Section>
             </TopContent>
             <BottomContent>
               <Section>
                 <SectionTitle>Announcements</SectionTitle>
-                <Announcement announcements={announcements} />
+                <Announcement announcements={announcements} isDashboard />
               </Section>
               <Section>
                 <SectionTitle>Student Performance</SectionTitle>
-                <Performance
-                  performance={studentPerformance}
-                />
+                <Performance performance={studentPerformance} isDashboard />
               </Section>
             </BottomContent>
           </Content>
@@ -113,5 +111,6 @@ const AdminDashboard = () => {
     </SidebarProvider>
   );
 };
+
 
 export default AdminDashboard;

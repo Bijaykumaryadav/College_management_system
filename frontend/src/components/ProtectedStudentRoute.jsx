@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const ProtectedStudentRoute = ({ element: Component }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -32,7 +33,7 @@ const ProtectedStudentRoute = ({ element: Component }) => {
           "http://localhost:4000/api/v1/users/auth/students/check",
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${storedToken}`,
             },
           }
         );
@@ -48,7 +49,7 @@ const ProtectedStudentRoute = ({ element: Component }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [location.search]);
 
   if (loading) {
     return <div>Loading...</div>;
