@@ -1,18 +1,15 @@
 // TeachersStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const TeachersContainer = styled.div`
   display: flex;
-  
 `;
 
 export const Content = styled.div`
   flex: 1;
 `;
 
-export const TeachersContent = styled.div`
-  padding: 250px;
-`;
+export const TeachersContent = styled.div``;
 
 export const TeachersHeader = styled.h2`
   font-size: 24px;

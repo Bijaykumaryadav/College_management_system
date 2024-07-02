@@ -1,10 +1,8 @@
 // ClassesStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ClassesContainer = styled.div`
   display: flex;
-  padding-left: 240px;
-
   @media screen and (max-width: 768px) {
     flex-direction: column;
     padding-left: 0;
@@ -56,7 +54,6 @@ export const AddClassButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-
 
 export const ClassContainer = styled.div`
   display: flex;

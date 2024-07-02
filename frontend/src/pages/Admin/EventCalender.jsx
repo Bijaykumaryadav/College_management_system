@@ -1,5 +1,7 @@
 // EventCalendar.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
+
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import {
@@ -56,35 +58,37 @@ const EventCalendar = () => {
   };
 
   return (
-    <EventCalendarContainer>
-      <Sidebar />
-      <Content>
-        <h1>Events & Calendar</h1>
-        <div>Current Time: {new Date().toLocaleString()}</div>
-        <CalendarContainer>
-          {/* Display Calendar Here */}
-          {/* For example: <Calendar /> */}
-          Calendar
-        </CalendarContainer>
-        <AddEventForm onSubmit={addEvent}>
-          <h2>Add New Event</h2>
-          <EventInput
-            type="text"
-            value={newEvent}
-            onChange={(e) => setNewEvent(e.target.value)}
-            placeholder="Enter Event"
-          />
-          <AddEventButton type="submit">Add Event</AddEventButton>
-        </AddEventForm>
-        {error && <ErrorText>{error}</ErrorText>}
-        <Events>
-          <h2>Events</h2>
-          {events.map((event, index) => (
-            <Event key={index}>{event}</Event>
-          ))}
-        </Events>
-      </Content>
-    </EventCalendarContainer>
+    <SidebarProvider>
+      <EventCalendarContainer>
+        <Sidebar />
+        <Content>
+          <h1>Events & Calendar</h1>
+          <div>Current Time: {new Date().toLocaleString()}</div>
+          <CalendarContainer>
+            {/* Display Calendar Here */}
+            {/* For example: <Calendar /> */}
+            Calendar
+          </CalendarContainer>
+          <AddEventForm onSubmit={addEvent}>
+            <h2>Add New Event</h2>
+            <EventInput
+              type="text"
+              value={newEvent}
+              onChange={(e) => setNewEvent(e.target.value)}
+              placeholder="Enter Event"
+            />
+            <AddEventButton type="submit">Add Event</AddEventButton>
+          </AddEventForm>
+          {error && <ErrorText>{error}</ErrorText>}
+          <Events>
+            <h2>Events</h2>
+            {events.map((event, index) => (
+              <Event key={index}>{event}</Event>
+            ))}
+          </Events>
+        </Content>
+      </EventCalendarContainer>
+    </SidebarProvider>
   );
 };
 

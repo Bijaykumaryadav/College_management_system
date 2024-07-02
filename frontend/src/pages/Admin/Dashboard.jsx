@@ -102,7 +102,9 @@ const AdminDashboard = () => {
               </Section>
               <Section>
                 <SectionTitle>Student Performance</SectionTitle>
-                <Performance performance={studentPerformance} />
+                <Performance
+                  performance={studentPerformance}
+                />
               </Section>
             </BottomContent>
           </Content>

@@ -1,9 +1,8 @@
 // AssignmentsStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const AssignmentsContainer = styled.div`
   display: flex;
-  padding-left: 240px;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
@@ -67,12 +66,9 @@ export const AddAssignmentButton = styled.button`
   cursor: pointer;
 `;
 
-
 export const SidebarContainer = styled.div`
   flex: 0 0 250px;
 `;
-
-
 
 export const AssignmentCard = styled.div`
   background-color: #fff;

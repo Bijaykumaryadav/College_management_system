@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const AttendanceContainer = styled.div`
   display: flex;
-  padding-left: 240px;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
