@@ -6,7 +6,7 @@ export const ProfileContainer = styled.div`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px;
+  display: block;
 `;
 
 export const Content = styled.div`

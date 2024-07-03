@@ -60,7 +60,7 @@ export const ClassContainer = styled.div`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px; /* Sidebar width */
+  display: block;
 `;
 
 export const ClassHeader = styled.h1`

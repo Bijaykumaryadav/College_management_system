@@ -70,6 +70,5 @@ export const StudentDashboardContainer = styled.div`
 `;
 
 export const TeacherDashboardContainer = styled.div`
-  display: flex;
-  padding-left: 240px;
+  display: block;
 `;

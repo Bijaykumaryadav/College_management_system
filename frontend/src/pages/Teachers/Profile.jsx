@@ -12,9 +12,10 @@ import {
   EditButton,
   LogoutButton,
 } from "../../styles/SettingsProfileStyles";
+import { SidebarProvider } from "./SidebarContext";
 
 const TeacherProfileSection = () => {
-  const navigate = useNavigate(); // Hook to access the navigate function
+  const navigate = useNavigate();
 
   const [teacherInfo, setTeacherInfo] = useState({
     name: "John Doe",
@@ -25,33 +26,35 @@ const TeacherProfileSection = () => {
   });
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    navigate("/teacher-signIn"); // Redirect to the sign-in page
+    localStorage.removeItem("token");
+    navigate("/teacher-signIn");
   };
 
   return (
-    <ProfileContainer>
-      <SidebarContainer>
-        <Sidebar />
-      </SidebarContainer>
-      <Content>
-        <ProfileHeader>Profile Details</ProfileHeader>
-        <ProfileDetails>
-          <ProfileLabel>Name:</ProfileLabel>
-          <ProfileInfo>{teacherInfo.name}</ProfileInfo>
-          <ProfileLabel>Email:</ProfileLabel>
-          <ProfileInfo>{teacherInfo.email}</ProfileInfo>
-          <ProfileLabel>Phone:</ProfileLabel>
-          <ProfileInfo>{teacherInfo.phone}</ProfileInfo>
-          <ProfileLabel>Address:</ProfileLabel>
-          <ProfileInfo>{teacherInfo.address}</ProfileInfo>
-          <ProfileLabel>Qualification:</ProfileLabel>
-          <ProfileInfo>{teacherInfo.qualification}</ProfileInfo>
-        </ProfileDetails>
-        <EditButton>Edit Profile</EditButton>
-        <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
-      </Content>
-    </ProfileContainer>
+    <SidebarProvider>
+      <ProfileContainer>
+        <SidebarContainer>
+          <Sidebar />
+        </SidebarContainer>
+        <Content>
+          <ProfileHeader>Profile Details</ProfileHeader>
+          <ProfileDetails>
+            <ProfileLabel>Name:</ProfileLabel>
+            <ProfileInfo>{teacherInfo.name}</ProfileInfo>
+            <ProfileLabel>Email:</ProfileLabel>
+            <ProfileInfo>{teacherInfo.email}</ProfileInfo>
+            <ProfileLabel>Phone:</ProfileLabel>
+            <ProfileInfo>{teacherInfo.phone}</ProfileInfo>
+            <ProfileLabel>Address:</ProfileLabel>
+            <ProfileInfo>{teacherInfo.address}</ProfileInfo>
+            <ProfileLabel>Qualification:</ProfileLabel>
+            <ProfileInfo>{teacherInfo.qualification}</ProfileInfo>
+          </ProfileDetails>
+          <EditButton>Edit Profile</EditButton>
+          <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
+        </Content>
+      </ProfileContainer>
+    </SidebarProvider>
   );
 };
 
