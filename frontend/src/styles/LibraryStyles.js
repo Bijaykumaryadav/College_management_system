@@ -78,8 +78,7 @@ export const ActionButton = styled.button`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px; /* Sidebar width */
-`;
+display: block;`;
 
 export const LibraryHeader = styled.h1`
   font-size: 24px;
@@ -88,9 +87,15 @@ export const LibraryHeader = styled.h1`
 
 export const BorrowButton = styled.button`
   padding: 8px 16px;
-  background-color: #007bff;
+  font-size: 1em;
   color: #fff;
+  background-color: #007bff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;

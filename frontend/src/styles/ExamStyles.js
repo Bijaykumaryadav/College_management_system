@@ -1,12 +1,12 @@
 // ExamStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ExamContainer = styled.div`
   display: flex;
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px;
+  display: block;
 `;
 
 export const Content = styled.div`

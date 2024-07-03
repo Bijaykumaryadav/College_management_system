@@ -22,7 +22,9 @@ export const SchoolPerformance = styled.div`
   margin-bottom: 20px;
 `;
 
-export const IndividualPerformance = styled.div``;
+export const IndividualPerformance = styled.div`
+  display: block;
+`;
 
 export const SidebarContainer = styled.div`
   flex: 0 0 250px; /* Sidebar width */

@@ -11,7 +11,8 @@ import {
   Label,
   Value,
   LogoutButton,
-} from "../../styles/SettingsProfileStyles"; // Import styled components from ProfileSectionStyles.js
+} from "../../styles/SettingsProfileStyles";
+import { SidebarProvider } from "./SidebarContext";
 
 const ProfileSection = () => {
   // Sample student profile data
@@ -31,37 +32,39 @@ const ProfileSection = () => {
   }; // Moved the closing brace here
 
   return (
-    <ProfileContainer>
-      <SidebarContainer>
-        <Sidebar />
-      </SidebarContainer>
-      <Content>
-        <ProfileHeader>Profile</ProfileHeader>
-        <ProfileInfo>
-          <ProfileDetail>
-            <Label>Name:</Label>
-            <Value>{studentProfile.name}</Value>
-          </ProfileDetail>
-          <ProfileDetail>
-            <Label>Age:</Label>
-            <Value>{studentProfile.age}</Value>
-          </ProfileDetail>
-          <ProfileDetail>
-            <Label>Grade:</Label>
-            <Value>{studentProfile.grade}</Value>
-          </ProfileDetail>
-          <ProfileDetail>
-            <Label>School:</Label>
-            <Value>{studentProfile.school}</Value>
-          </ProfileDetail>
-          <ProfileDetail>
-            <Label>Email:</Label>
-            <Value>{studentProfile.email}</Value>
-          </ProfileDetail>
-          <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
-        </ProfileInfo>
-      </Content>
-    </ProfileContainer>
+    <SidebarProvider>
+      <ProfileContainer>
+        <SidebarContainer>
+          <Sidebar />
+        </SidebarContainer>
+        <Content>
+          <ProfileHeader>Profile</ProfileHeader>
+          <ProfileInfo>
+            <ProfileDetail>
+              <Label>Name:</Label>
+              <Value>{studentProfile.name}</Value>
+            </ProfileDetail>
+            <ProfileDetail>
+              <Label>Age:</Label>
+              <Value>{studentProfile.age}</Value>
+            </ProfileDetail>
+            <ProfileDetail>
+              <Label>Grade:</Label>
+              <Value>{studentProfile.grade}</Value>
+            </ProfileDetail>
+            <ProfileDetail>
+              <Label>School:</Label>
+              <Value>{studentProfile.school}</Value>
+            </ProfileDetail>
+            <ProfileDetail>
+              <Label>Email:</Label>
+              <Value>{studentProfile.email}</Value>
+            </ProfileDetail>
+            <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
+          </ProfileInfo>
+        </Content>
+      </ProfileContainer>
+    </SidebarProvider>
   );
 };
 

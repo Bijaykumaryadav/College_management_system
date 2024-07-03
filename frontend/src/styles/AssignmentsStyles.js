@@ -67,7 +67,7 @@ export const AddAssignmentButton = styled.button`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px;
+  display: block;
 `;
 
 export const AssignmentCard = styled.div`
