@@ -51,17 +51,24 @@ const Students = () => {
           "http://localhost:4000/api/v1/students",
           newStudent
         );
-        setStudents([...students, response.data.student]);
         setNewStudent({
           name: "",
           email: "",
           registrationNumber: "",
           grade: "",
         });
+        // Fetch the updated list of students
+        fetchStudents();
       } catch (error) {
         console.error("Error adding student:", error);
       }
     }
+  };
+
+  const categorizeStudents = (departmentCode) => {
+    return students.filter((student) =>
+      student.registrationNumber.includes(departmentCode)
+    );
   };
 
   return (
@@ -109,8 +116,40 @@ const Students = () => {
               />
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
+            <StudentsHeader>Computer Science Engineering</StudentsHeader>
             <StudentList>
-              {students.map((student) => (
+              {categorizeStudents("CS").map((student) => (
+                <StudentItem key={student.id}>
+                  {student.name} - {student.email} -{" "}
+                  {student.registrationNumber} - {student.grade}
+                </StudentItem>
+              ))}
+            </StudentList>
+            <StudentsHeader>
+              Artificial Intelligence and Machine Learning
+            </StudentsHeader>
+            <StudentList>
+              {categorizeStudents("AI").map((student) => (
+                <StudentItem key={student.id}>
+                  {student.name} - {student.email} -{" "}
+                  {student.registrationNumber} - {student.grade}
+                </StudentItem>
+              ))}
+            </StudentList>
+            <StudentsHeader>Civil Engineering</StudentsHeader>
+            <StudentList>
+              {categorizeStudents("CV").map((student) => (
+                <StudentItem key={student.id}>
+                  {student.name} - {student.email} -{" "}
+                  {student.registrationNumber} - {student.grade}
+                </StudentItem>
+              ))}
+            </StudentList>
+            <StudentsHeader>
+              Electrical and Communication Engineering
+            </StudentsHeader>
+            <StudentList>
+              {categorizeStudents("EC").map((student) => (
                 <StudentItem key={student.id}>
                   {student.name} - {student.email} -{" "}
                   {student.registrationNumber} - {student.grade}
