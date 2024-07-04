@@ -1,9 +1,8 @@
 // StudentsStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StudentsContainer = styled.div`
   display: flex;
- 
 `;
 
 export const Content = styled.div`

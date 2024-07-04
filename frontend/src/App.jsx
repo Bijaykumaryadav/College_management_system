@@ -57,67 +57,141 @@ const App = () => {
           <Route path="chatroom" element={<Chatroom />} />
         </Route>
         <Route path="choose-user" element={<ChooseUser />} />
+        {/* sign-in routes */}
         <Route path="admin-signIn" element={<AdminSignIn />} />
         <Route path="student-signIn" element={<StudentSignIn />} />
         <Route path="teacher-signIn" element={<TeacherSignIn />} />
-
+        {/* user registration routes */}
+        <Route path="admin/register" element={<AdminRegister />} />
+        {/* Students sections */}
+        <Route path="students/register" element={<StudentRegister />} />
+        {/* teacher sections */}
+        <Route path="teachers/register" element={<TeacherRegister />} />
         {/* Protected Routes */}
+        {/* Admin section */}
         <Route
           path="admin/dashboard"
           element={<ProtectedRoute element={AdminDashboard} />}
         />
-
+        <Route
+          path="admin/classes"
+          element={<ProtectedRoute element={Classes} />}
+        />
+        <Route path="admin/exams" element={<ProtectedRoute element={Exam} />} />
+        <Route
+          path="admin/attendance"
+          element={<ProtectedRoute element={Attendance} />}
+        />
+        <Route
+          path="admin/performance"
+          element={<ProtectedRoute element={Performance} />}
+        />
+        <Route
+          path="admin/teachers"
+          element={<ProtectedRoute element={Teachers} />}
+        />
+        <Route
+          path="admin/students"
+          element={<ProtectedRoute element={Students} />}
+        />
+        <Route
+          path="admin/assignments"
+          element={<ProtectedRoute element={Assignments} />}
+        />
+        <Route
+          path="admin/library"
+          element={<ProtectedRoute element={Library} />}
+        />
+        <Route
+          path="admin/communication"
+          element={<ProtectedRoute element={Announcement} />}
+        />
+        <Route
+          path="admin/events"
+          element={<ProtectedRoute element={EventCalender} />}
+        />
+        <Route
+          path="admin/settings"
+          element={<ProtectedRoute element={SettingsProfile} />}
+        />
+        {/* Student section */}
+        <Route
+          path="student/dashboard"
+          element={<ProtectedStudentRoute element={StudentDashboard} />}
+        />
+        <Route
+          path="student/assignments"
+          element={<ProtectedStudentRoute element={StudentAssignments} />}
+        />
+        <Route
+          path="student/exams"
+          element={<ProtectedStudentRoute element={ExamSection} />}
+        />
+        <Route
+          path="student/performance"
+          element={<ProtectedStudentRoute element={PerformanceSection} />}
+        />
+        <Route
+          path="student/attendance"
+          element={<ProtectedStudentRoute element={AttendanceSection} />}
+        />
+        <Route
+          path="student/library"
+          element={<ProtectedStudentRoute element={LibrarySection} />}
+        />
+        <Route
+          path="student/communication"
+          element={<ProtectedStudentRoute element={AnnouncementSection} />}
+        />
+        <Route
+          path="student/settings"
+          element={<ProtectedStudentRoute element={ProfileSection} />}
+        />
+        {/* Teachers sections */}
         <Route
           path="teacher/dashboard"
           element={<ProtectedTeacherRoute element={TeacherDashboard} />}
         />
         <Route
-          path="student/dashboard"
-          element={<ProtectedStudentRoute element={StudentDashboard} />}
+          path="teacher/classes"
+          element={<ProtectedTeacherRoute element={ClassSection} />}
         />
-
-        {/* Admin section */}
-        <Route path="admin/classes" element={<Classes />} />
-        <Route path="admin/exams" element={<Exam />} />
-        <Route path="admin/attendance" element={<Attendance />} />
-        <Route path="admin/performance" element={<Performance />} />
-        <Route path="admin/teachers" element={<Teachers />} />
-        <Route path="admin/students" element={<Students />} />
-        <Route path="admin/assignments" element={<Assignments />} />
-        <Route path="admin/library" element={<Library />} />
-        <Route path="admin/communication" element={<Announcement />} />
-        <Route path="admin/events" element={<EventCalender />} />
-        <Route path="admin/settings" element={<SettingsProfile />} />
-        <Route path="admin/register" element={<AdminRegister />} />
-
-        {/* Students sections */}
-        <Route path="students/register" element={<StudentRegister />} />
-        <Route path="student/assignments" element={<StudentAssignments />} />
-        <Route path="student/exams" element={<ExamSection />} />
-        <Route path="student/performance" element={<PerformanceSection />} />
-        <Route path="student/attendance" element={<AttendanceSection />} />
-        <Route path="student/library" element={<LibrarySection />} />
-        <Route path="student/communication" element={<AnnouncementSection />} />
-        <Route path="student/settings" element={<ProfileSection />} />
-
-        {/* Teachers sections */}
-        <Route path="teachers/register" element={<TeacherRegister />} />
-        <Route path="teacher/classes" element={<ClassSection />} />
-        <Route path="teacher/students" element={<StudentSection />} />
-        <Route path="teacher/teachers" element={<TeacherSection />} />
-        <Route path="teacher/assignments" element={<AssignmentSection />} />
-        <Route path="teacher/exams" element={<CheckExamSection />} />
+        <Route
+          path="teacher/students"
+          element={<ProtectedTeacherRoute element={StudentSection} />}
+        />
+        <Route
+          path="teacher/teachers"
+          element={<ProtectedTeacherRoute element={TeacherSection} />}
+        />
+        <Route
+          path="teacher/assignments"
+          element={<ProtectedTeacherRoute element={AssignmentSection} />}
+        />
+        <Route
+          path="teacher/exams"
+          element={<ProtectedTeacherRoute element={CheckExamSection} />}
+        />
         <Route
           path="teacher/performance"
-          element={<CheckPerformanceSection />}
+          element={<ProtectedTeacherRoute element={CheckPerformanceSection} />}
         />
-        <Route path="teacher/attendance" element={<CheckAttendanceSection />} />
+        <Route
+          path="teacher/attendance"
+          element={<ProtectedTeacherRoute element={CheckAttendanceSection} />}
+        />
         <Route
           path="teacher/communication"
-          element={<CheckAnnouncementSection />}
+          element={<ProtectedTeacherRoute element={CheckAnnouncementSection} />}
         />
-        <Route path="teacher/events" element={<EventSection />} />
-        <Route path="teacher/settings" element={<TeacherProfileSection />} />
+        <Route
+          path="teacher/events"
+          element={<ProtectedTeacherRoute element={EventSection} />}
+        />
+        <Route
+          path="teacher/settings"
+          element={<ProtectedTeacherRoute element={TeacherProfileSection} />}
+        />
       </Routes>
     </Router>
   );

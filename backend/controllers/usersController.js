@@ -171,3 +171,17 @@ export const googleStudentSignUp = async (req, res) => {
   // Correctly append the token as a query parameter
   res.redirect(`${process.env.FRONTEND_URL}/student/dashboard?${queryParams}`);
 };
+
+
+// usersController.js
+export const getAdmins = async (req, res, next) => {
+  try {
+    const admin = req.admin; // Use the admin info from the request object
+    if (!admin) {
+      return res.status(404).json({ success: false, message: "Admin not found" });
+    }
+    res.status(200).json(admin);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Sidebar from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 import {
@@ -10,23 +12,50 @@ import {
   ProfileInfo,
   EditButton,
   LogoutButton,
-} from "../../styles/SettingsProfileStyles"; // Import styled components from SettingsProfileStyles.js
+} from "../../styles/SettingsProfileStyles";
 import { useNavigate } from "react-router-dom";
 
 const SettingsProfile = () => {
-  const navigate = useNavigate(); // Hook to access the navigate function
+  const [teacherInfo, setTeacherInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    qualification: "",
+  });
 
-  const teacherInfo = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "123-456-7890",
-    address: "123 Main St, City, Country",
-    qualification: "Master of Education",
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTeacherInfo = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/users/admins",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setTeacherInfo({
+          name: response.data.name,
+          email: response.data.email,
+          phone: "123-456-7890", // Default value or from another source
+          address: "123 Main St, City, Country", // Default value or from another source
+          qualification: "Master of Education", // Default value or from another source
+        });
+      } catch (error) {
+        console.error("Error fetching teacher info:", error);
+      }
+    };
+
+    fetchTeacherInfo();
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    navigate("/admin-signIn"); // Redirect to the sign-in page
+    localStorage.removeItem("token");
+    navigate("/admin-signIn");
   };
 
   return (
