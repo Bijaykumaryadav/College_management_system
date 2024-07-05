@@ -1,3 +1,4 @@
+
 // StudentsStyles.js
 import styled from "styled-components";
 
@@ -36,6 +37,13 @@ export const AddStudentForm = styled.form`
 `;
 
 export const AddStudentInput = styled.input`
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const AddStudentSelect = styled.select`
   padding: 8px;
   margin-right: 10px;
   border: 1px solid #ccc;

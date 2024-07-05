@@ -1,5 +1,6 @@
-// ProfileSection.js
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Sidebar from "./Sidebar";
 import {
   ProfileContainer,
@@ -15,21 +16,47 @@ import {
 import { SidebarProvider } from "./SidebarContext";
 
 const ProfileSection = () => {
-  // Sample student profile data
-  const navigate = useNavigate(); // Hook to access the navigate function
+  const [studentInfo, setStudentInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    semester: "",
+    usn: "",
+  });
 
-  const studentProfile = {
-    name: "John Doe",
-    age: 18,
-    grade: "12th",
-    school: "Example High School",
-    email: "john.doe@example.com",
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchStudentInfo = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/users/students",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setStudentInfo({
+          name: response.data.name,
+          email: response.data.email,
+          phone: "7829574362", 
+          semester: "6",
+          usn: "1BH21CS018", 
+        });
+      } catch (error) {
+        console.error("Error fetching student info:", error);
+      }
+    };
+
+    fetchStudentInfo();
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    navigate("/student-signIn"); // Redirect to the sign-in page
-  }; // Moved the closing brace here
+    localStorage.removeItem("token"); 
+    navigate("/student-signIn"); 
+  };
 
   return (
     <SidebarProvider>
@@ -42,23 +69,23 @@ const ProfileSection = () => {
           <ProfileInfo>
             <ProfileDetail>
               <Label>Name:</Label>
-              <Value>{studentProfile.name}</Value>
+              <Value>{studentInfo.name}</Value>
             </ProfileDetail>
             <ProfileDetail>
-              <Label>Age:</Label>
-              <Value>{studentProfile.age}</Value>
+              <Label>Phone:</Label>
+              <Value>{studentInfo.phone}</Value>
             </ProfileDetail>
             <ProfileDetail>
-              <Label>Grade:</Label>
-              <Value>{studentProfile.grade}</Value>
+              <Label>Semester:</Label>
+              <Value>{studentInfo.semester}</Value>
             </ProfileDetail>
             <ProfileDetail>
-              <Label>School:</Label>
-              <Value>{studentProfile.school}</Value>
+              <Label>USN:</Label>
+              <Value>{studentInfo.usn}</Value>
             </ProfileDetail>
             <ProfileDetail>
               <Label>Email:</Label>
-              <Value>{studentProfile.email}</Value>
+              <Value>{studentInfo.email}</Value>
             </ProfileDetail>
             <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
           </ProfileInfo>

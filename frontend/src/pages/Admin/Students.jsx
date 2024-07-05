@@ -12,6 +12,7 @@ import {
   AddStudentForm,
   AddStudentInput,
   AddStudentButton,
+  AddStudentSelect
 } from "../../styles/StudentsStyles";
 
 const Students = () => {
@@ -47,27 +48,46 @@ const Students = () => {
       newStudent.grade.trim() !== ""
     ) {
       try {
-        const response = await axios.post(
-          "http://localhost:4000/api/v1/students",
-          newStudent
-        );
+        await axios.post("http://localhost:4000/api/v1/students", newStudent);
         setNewStudent({
           name: "",
           email: "",
           registrationNumber: "",
           grade: "",
         });
-        // Fetch the updated list of students
-        fetchStudents();
+        fetchStudents(); // Fetch the updated list of students
       } catch (error) {
         console.error("Error adding student:", error);
       }
     }
   };
 
-  const categorizeStudents = (departmentCode) => {
-    return students.filter((student) =>
-      student.registrationNumber.includes(departmentCode)
+  const categorizeStudents = (departmentCode, semester) => {
+    return students.filter(
+      (student) =>
+        student.registrationNumber.includes(departmentCode) &&
+        student.grade === semester
+    );
+  };
+
+  const renderStudentsByDepartmentAndSemester = (departmentCode, departmentName) => {
+    const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
+    return (
+      <>
+        <StudentsHeader>{departmentName}</StudentsHeader>
+        {semesters.map((semester) => (
+          <div key={`${departmentCode}-${semester}`}>
+            <StudentsHeader>Semester {semester}</StudentsHeader>
+            <StudentList>
+              {categorizeStudents(departmentCode, semester).map((student) => (
+                <StudentItem key={student.id}>
+                  {student.name} - {student.email} - {student.registrationNumber} - {student.grade}
+                </StudentItem>
+              ))}
+            </StudentList>
+          </div>
+        ))}
+      </>
     );
   };
 
@@ -106,56 +126,28 @@ const Students = () => {
                   })
                 }
               />
-              <AddStudentInput
-                type="text"
-                placeholder="Enter Sem"
+              <AddStudentSelect
                 value={newStudent.grade}
                 onChange={(e) =>
                   setNewStudent({ ...newStudent, grade: e.target.value })
                 }
-              />
+              >
+                <option value="" disabled>Select Semester</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </AddStudentSelect>
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
-            <StudentsHeader>Computer Science Engineering</StudentsHeader>
-            <StudentList>
-              {categorizeStudents("CS").map((student) => (
-                <StudentItem key={student.id}>
-                  {student.name} - {student.email} -{" "}
-                  {student.registrationNumber} - {student.grade}
-                </StudentItem>
-              ))}
-            </StudentList>
-            <StudentsHeader>
-              Artificial Intelligence and Machine Learning
-            </StudentsHeader>
-            <StudentList>
-              {categorizeStudents("AI").map((student) => (
-                <StudentItem key={student.id}>
-                  {student.name} - {student.email} -{" "}
-                  {student.registrationNumber} - {student.grade}
-                </StudentItem>
-              ))}
-            </StudentList>
-            <StudentsHeader>Civil Engineering</StudentsHeader>
-            <StudentList>
-              {categorizeStudents("CV").map((student) => (
-                <StudentItem key={student.id}>
-                  {student.name} - {student.email} -{" "}
-                  {student.registrationNumber} - {student.grade}
-                </StudentItem>
-              ))}
-            </StudentList>
-            <StudentsHeader>
-              Electrical and Communication Engineering
-            </StudentsHeader>
-            <StudentList>
-              {categorizeStudents("EC").map((student) => (
-                <StudentItem key={student.id}>
-                  {student.name} - {student.email} -{" "}
-                  {student.registrationNumber} - {student.grade}
-                </StudentItem>
-              ))}
-            </StudentList>
+            {renderStudentsByDepartmentAndSemester("CS", "Computer Science Engineering")}
+            {renderStudentsByDepartmentAndSemester("AI", "Artificial Intelligence and Machine Learning")}
+            {renderStudentsByDepartmentAndSemester("CV", "Civil Engineering")}
+            {renderStudentsByDepartmentAndSemester("EC", "Electrical and Communication Engineering")}
           </StudentsContent>
         </Content>
       </StudentsContainer>

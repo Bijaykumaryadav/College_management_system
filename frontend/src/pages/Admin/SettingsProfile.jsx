@@ -41,9 +41,9 @@ const SettingsProfile = () => {
         setTeacherInfo({
           name: response.data.name,
           email: response.data.email,
-          phone: "123-456-7890", // Default value or from another source
-          address: "123 Main St, City, Country", // Default value or from another source
-          qualification: "Master of Education", // Default value or from another source
+          phone: "123-456-7890", 
+          address: "123 Main St, City, Country",
+          qualification: "Master of Education", 
         });
       } catch (error) {
         console.error("Error fetching teacher info:", error);
