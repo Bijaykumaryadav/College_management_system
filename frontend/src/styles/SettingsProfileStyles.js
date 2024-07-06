@@ -1,4 +1,3 @@
-// SettingsProfileStyles.js
 import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
@@ -61,4 +60,28 @@ export const LogoutButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px; // Optional: to add some space if needed
+`;
+
+export const Input = styled.input`
+  padding: 8px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const Dropdown = styled.select`
+  padding: 8px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const CompleteButton = styled.button`
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
 `;

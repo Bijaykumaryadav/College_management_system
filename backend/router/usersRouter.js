@@ -13,7 +13,8 @@ import {
   googleSignUp,
   googleTeacherSignUp,
   googleStudentSignUp,
-  getAdmins,       
+  getAdmins,
+  getStudents       
 } from "../controllers/usersController.js";
 import passport from "passport";
 
@@ -29,7 +30,8 @@ router.post("/admin/signin", adminSignIn);
 router.post("/student/signin", studentSignIn);
 router.post("/teacher/signin", teacherSignIn);
 
-router.get("/admins", adminAuth, getAdmins); // Apply adminAuth middleware
+router.get("/admins", adminAuth, getAdmins); 
+router.get("/students",studentAuth,getStudents);
 
 // Authentication check routes
 router.get("/auth/admin/check", adminAuth, (req, res) => {

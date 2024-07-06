@@ -12,6 +12,10 @@ import {
   Label,
   Value,
   LogoutButton,
+  Input,
+  Dropdown,
+  CompleteButton,
+  EditButton,
 } from "../../styles/SettingsProfileStyles";
 import { SidebarProvider } from "./SidebarContext";
 
@@ -20,9 +24,11 @@ const ProfileSection = () => {
     name: "",
     email: "",
     phone: "",
-    semester: "",
-    usn: "",
+    grade: "",
+    registrationNumber: "",
   });
+
+  const [editMode, setEditMode] = useState(false); // Initially false to show profile info first
 
   const navigate = useNavigate();
 
@@ -41,10 +47,11 @@ const ProfileSection = () => {
         setStudentInfo({
           name: response.data.name,
           email: response.data.email,
-          phone: "7829574362", 
-          semester: "6",
-          usn: "1BH21CS018", 
+          phone: response.data.phone || "",
+          grade: response.data.grade || "",
+          registrationNumber: response.data.registrationNumber || "",
         });
+        // No need to set editMode here
       } catch (error) {
         console.error("Error fetching student info:", error);
       }
@@ -53,9 +60,35 @@ const ProfileSection = () => {
     fetchStudentInfo();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setStudentInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
+  };
+
+  const handleCompleteProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:4000/api/v1/students", studentInfo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error updating student info:", error);
+    }
+  };
+
   const handleLogout = () => {
-    localStorage.removeItem("token"); 
-    navigate("/student-signIn"); 
+    localStorage.removeItem("token");
+    navigate("/student-signIn");
+  };
+
+  const toggleEditMode = () => {
+    setEditMode((prevMode) => !prevMode);
   };
 
   return (
@@ -73,20 +106,63 @@ const ProfileSection = () => {
             </ProfileDetail>
             <ProfileDetail>
               <Label>Phone:</Label>
-              <Value>{studentInfo.phone}</Value>
+              {editMode ? (
+                <Input
+                  type="text"
+                  name="phone"
+                  value={studentInfo.phone}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <Value>{studentInfo.phone}</Value>
+              )}
             </ProfileDetail>
             <ProfileDetail>
               <Label>Semester:</Label>
-              <Value>{studentInfo.semester}</Value>
+              {editMode ? (
+                <Dropdown
+                  name="grade"
+                  value={studentInfo.grade}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Semester</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </Dropdown>
+              ) : (
+                <Value>{studentInfo.grade}</Value>
+              )}
             </ProfileDetail>
             <ProfileDetail>
               <Label>USN:</Label>
-              <Value>{studentInfo.usn}</Value>
+              {editMode ? (
+                <Input
+                  type="text"
+                  name="registrationNumber"
+                  value={studentInfo.registrationNumber}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <Value>{studentInfo.registrationNumber}</Value>
+              )}
             </ProfileDetail>
             <ProfileDetail>
               <Label>Email:</Label>
               <Value>{studentInfo.email}</Value>
             </ProfileDetail>
+            {editMode ? (
+              <CompleteButton onClick={handleCompleteProfile}>
+                Complete Your Profile
+              </CompleteButton>
+            ) : (
+              <EditButton onClick={toggleEditMode}>Edit Profile</EditButton>
+            )}
             <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
           </ProfileInfo>
         </Content>

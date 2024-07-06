@@ -185,3 +185,15 @@ export const getAdmins = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getStudents = async (req,res,next) => {
+  try{
+    const student = req.student;
+    if(!student){
+      return res.status(404).json({success: false , message: "Student not found"});
+    }
+    res.status(200).json(student);
+  }catch(error){
+    next(error);
+  }
+}

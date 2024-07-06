@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import validator from "validator";
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -9,13 +8,19 @@ const studentSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  grade: {
+    type: String,
+    required: true,
   },
   registrationNumber: {
     type: String,
     unique: true,
-  },
-  grade: {
-    type: String,
     required: true,
   },
 });
