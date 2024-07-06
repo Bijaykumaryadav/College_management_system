@@ -26,17 +26,40 @@ const ProfileSection = () => {
     phone: "",
     grade: "",
     registrationNumber: "",
+    _id: "", // Adding _id to the state
   });
 
   const [editMode, setEditMode] = useState(false); // Initially false to show profile info first
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchStudentInfo = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
+useEffect(() => {
+  const fetchStudentInfo = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/students",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (
+        response.data.data.phone &&
+        response.data.data.grade &&
+        response.data.data.registrationNumber
+      ) {
+        setStudentInfo({
+          name: response.data.data.name,
+          email: response.data.data.email,
+          phone: response.data.data.phone,
+          grade: response.data.data.grade,
+          registrationNumber: response.data.data.registrationNumber,
+        });
+      } else {
+        const response2 = await axios.get(
           "http://localhost:4000/api/v1/users/students",
           {
             headers: {
@@ -45,20 +68,21 @@ const ProfileSection = () => {
           }
         );
         setStudentInfo({
-          name: response.data.name,
-          email: response.data.email,
-          phone: response.data.phone || "",
-          grade: response.data.grade || "",
-          registrationNumber: response.data.registrationNumber || "",
+          name: response2.data.name,
+          email: response2.data.email,
+          phone: response2.data.phone || "",
+          grade: response2.data.grade || "",
+          registrationNumber: response2.data.registrationNumber || "",
         });
-        // No need to set editMode here
-      } catch (error) {
-        console.error("Error fetching student info:", error);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching student info:", error);
+    }
+  };
 
-    fetchStudentInfo();
-  }, []);
+  fetchStudentInfo();
+}, []);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
