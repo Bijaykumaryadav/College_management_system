@@ -33,56 +33,66 @@ const ProfileSection = () => {
 
   const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchStudentInfo = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/students",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  useEffect(() => {
+    const fetchStudentInfo = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-      if (
-        response.data.data.phone &&
-        response.data.data.grade &&
-        response.data.data.registrationNumber
-      ) {
-        setStudentInfo({
-          name: response.data.data.name,
-          email: response.data.data.email,
-          phone: response.data.data.phone,
-          grade: response.data.data.grade,
-          registrationNumber: response.data.data.registrationNumber,
-        });
-      } else {
-        const response2 = await axios.get(
-          "http://localhost:4000/api/v1/users/students",
+        const studentResponse = await axios.get(
+          "http://localhost:4000/api/v1/students",
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setStudentInfo({
-          name: response2.data.name,
-          email: response2.data.email,
-          phone: response2.data.phone || "",
-          grade: response2.data.grade || "",
-          registrationNumber: response2.data.registrationNumber || "",
-        });
+        console.log("Student response:", studentResponse.data.data);
+
+        const studentData = studentResponse.data.data;
+
+        if (
+          studentData != null &&
+          studentData.phone != null &&
+          studentData.grade != null &&
+          studentData.registrationNumber != null
+        ) {
+          setStudentInfo({
+            name: studentData.name,
+            email: studentData.email,
+            phone: studentData.phone,
+            grade: studentData.grade,
+            registrationNumber: studentData.registrationNumber,
+            _id: studentData._id,
+          });
+        } else {
+          const userResponse = await axios.get(
+            "http://localhost:4000/api/v1/users/students",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("User response:", userResponse.data);
+
+          const userData = userResponse.data;
+
+          setStudentInfo({
+            name: userData.name,
+            email: userData.email,
+            phone: userData.phone || "",
+            grade: userData.grade || "",
+            registrationNumber: userData.registrationNumber || "",
+            _id: userData._id,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching student info:", error);
       }
-    } catch (error) {
-      console.error("Error fetching student info:", error);
-    }
-  };
+    };
 
-  fetchStudentInfo();
-}, []);
-
+    fetchStudentInfo();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

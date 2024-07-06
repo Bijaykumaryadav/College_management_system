@@ -51,10 +51,22 @@ export const getLoggedInStudent = async (req, res, next) => {
     // Fetch the student information using the student ID
     const student = await Student.findById(studentId);
     console.log("student id: ", studentId);
+    console.log("student: ", student);
+
     if (!student) {
-      return next("Student not found!", 404);
+      return res.status(200).json({
+        success: true,
+        data: {
+          name: null,
+          email: null,
+          phone: null,
+          grade: null,
+          registrationNumber: null,
+        },
+      });
     }
 
+    console.log("phone is:", student.phone);
     res.status(200).json({
       success: true,
       data: {
@@ -70,3 +82,4 @@ export const getLoggedInStudent = async (req, res, next) => {
     next(err);
   }
 };
+
