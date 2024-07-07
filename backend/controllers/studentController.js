@@ -1,15 +1,20 @@
 import { Student } from "../models/studentSchema.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const createStudent = async (req, res, next) => {
   console.log(req.body);
   const { _id, name, email, phone, registrationNumber, grade } = req.body;
   try {
-    if (!name || !grade) {
-      return next("Please Fill Full Form!", 400);
+    if (!name || !grade || !phone || !email || !registrationNumber) {
+      return res.status(400).json({ message: "Please Fill Full Form!" });
     }
-    await Student.create({
-      _id,
+
+    // Validate or generate ObjectId
+    const studentId = _id ? new mongoose.Types.ObjectId(_id) : undefined;
+
+    const newStudent = await Student.create({
+      _id: studentId,
       name,
       email,
       phone,
@@ -19,8 +24,10 @@ export const createStudent = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Student Created!",
+      data: newStudent,
     });
   } catch (err) {
+    console.log("Error in createStudent:", err);
     next(err);
   }
 };
@@ -82,4 +89,3 @@ export const getLoggedInStudent = async (req, res, next) => {
     next(err);
   }
 };
-

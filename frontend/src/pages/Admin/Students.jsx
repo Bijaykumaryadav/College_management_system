@@ -12,13 +12,14 @@ import {
   AddStudentForm,
   AddStudentInput,
   AddStudentButton,
-  AddStudentSelect
+  AddStudentSelect,
 } from "../../styles/StudentsStyles";
 
 const Students = () => {
   const [newStudent, setNewStudent] = useState({
     name: "",
     email: "",
+    phone: "",
     registrationNumber: "",
     grade: "",
   });
@@ -44,6 +45,7 @@ const Students = () => {
     if (
       newStudent.name.trim() !== "" &&
       newStudent.email.trim() !== "" &&
+      newStudent.phone.trim() !== "" &&
       newStudent.registrationNumber.trim() !== "" &&
       newStudent.grade.trim() !== ""
     ) {
@@ -52,6 +54,7 @@ const Students = () => {
         setNewStudent({
           name: "",
           email: "",
+          phone: "",
           registrationNumber: "",
           grade: "",
         });
@@ -70,7 +73,10 @@ const Students = () => {
     );
   };
 
-  const renderStudentsByDepartmentAndSemester = (departmentCode, departmentName) => {
+  const renderStudentsByDepartmentAndSemester = (
+    departmentCode,
+    departmentName
+  ) => {
     const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
     return (
       <>
@@ -81,7 +87,8 @@ const Students = () => {
             <StudentList>
               {categorizeStudents(departmentCode, semester).map((student) => (
                 <StudentItem key={student.id}>
-                  {student.name} - {student.email} - {student.registrationNumber} - {student.grade}
+                  {student.name} - {student.email} - {student.phone} -
+                  {student.registrationNumber} - {student.grade}
                 </StudentItem>
               ))}
             </StudentList>
@@ -117,6 +124,14 @@ const Students = () => {
               />
               <AddStudentInput
                 type="text"
+                placeholder="Enter phone number"
+                value={newStudent.phone}
+                onChange={(e) =>
+                  setNewStudent({ ...newStudent, phone: e.target.value })
+                }
+              />
+              <AddStudentInput
+                type="text"
                 placeholder="Enter USN"
                 value={newStudent.registrationNumber}
                 onChange={(e) =>
@@ -132,7 +147,9 @@ const Students = () => {
                   setNewStudent({ ...newStudent, grade: e.target.value })
                 }
               >
-                <option value="" disabled>Select Semester</option>
+                <option value="" disabled>
+                  Select Semester
+                </option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -144,10 +161,19 @@ const Students = () => {
               </AddStudentSelect>
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
-            {renderStudentsByDepartmentAndSemester("CS", "Computer Science Engineering")}
-            {renderStudentsByDepartmentAndSemester("AI", "Artificial Intelligence and Machine Learning")}
+            {renderStudentsByDepartmentAndSemester(
+              "CS",
+              "Computer Science Engineering"
+            )}
+            {renderStudentsByDepartmentAndSemester(
+              "AI",
+              "Artificial Intelligence and Machine Learning"
+            )}
             {renderStudentsByDepartmentAndSemester("CV", "Civil Engineering")}
-            {renderStudentsByDepartmentAndSemester("EC", "Electrical and Communication Engineering")}
+            {renderStudentsByDepartmentAndSemester(
+              "EC",
+              "Electrical and Communication Engineering"
+            )}
           </StudentsContent>
         </Content>
       </StudentsContainer>
