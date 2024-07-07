@@ -26,11 +26,13 @@ const TeacherProfileSection = () => {
     phone: "",
     address: "",
     qualification: "",
-    department: "", // Adding department to the state
-    position: "", // Adding position to the state
+    department: "",
+    position: "",
+    subjectCodes: "", // Adding subjectCodes to the state
+    _id: "",
   });
 
-  const [editMode, setEditMode] = useState(false); // Initially false to show profile info first
+  const [editMode, setEditMode] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,15 +53,50 @@ const TeacherProfileSection = () => {
 
         const teacherData = response.data.data;
 
-        setTeacherInfo({
-          name: teacherData.name,
-          email: teacherData.email,
-          phone: teacherData.phone,
-          address: teacherData.address,
-          qualification: teacherData.qualification,
-          department: teacherData.department || "",
-          position: teacherData.position || "",
-        });
+        if (
+          teacherData != null &&
+          teacherData.phone != null &&
+          teacherData.address != null &&
+          teacherData.qualification != null &&
+          teacherData.department != null &&
+          teacherData.position != null &&
+          teacherData.subjectCodes != null
+        ) {
+          setTeacherInfo({
+            name: teacherData.name,
+            email: teacherData.email,
+            phone: teacherData.phone,
+            address: teacherData.address,
+            qualification: teacherData.qualification,
+            department: teacherData.department || "",
+            position: teacherData.position || "",
+            subjectCodes: teacherData.subjectCodes || "",
+            _id: teacherData._id,
+          });
+        } else {
+          const userResponse = await axios.get(
+            "http://localhost:4000/api/v1/users/teachers",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("User response:", userResponse.data);
+
+          const userData = userResponse.data;
+          setTeacherInfo({
+            name: userData.name,
+            email: userData.email,
+            phone: userData.phone || "",
+            address: userData.address || "",
+            qualification: userData.qualification || "",
+            department: userData.department || "",
+            position: userData.position || "",
+            subjectCodes: userData.subjectCodes || "",
+            _id: userData._id,
+          });
+        }
       } catch (error) {
         console.error("Error fetching teacher info:", error);
       }
@@ -154,12 +191,23 @@ const TeacherProfileSection = () => {
             <ProfileDetail>
               <Label>Department:</Label>
               {editMode ? (
-                <Input
-                  type="text"
+                <Dropdown
                   name="department"
                   value={teacherInfo.department}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Select Department</option>
+                  <option value="COMPUTER SCIENCE ENGINEERING">
+                    COMPUTER SCIENCE ENGINEERING
+                  </option>
+                  <option value="ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING">
+                    ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+                  </option>
+                  <option value="CIVIL ENGINEERING">CIVIL ENGINEERING</option>
+                  <option value="ELECTRICAL AND COMMUNICATION ENGINEERING">
+                    ELECTRICAL AND COMMUNICATION ENGINEERING
+                  </option>
+                </Dropdown>
               ) : (
                 <Value>{teacherInfo.department}</Value>
               )}
@@ -182,6 +230,20 @@ const TeacherProfileSection = () => {
                 </Dropdown>
               ) : (
                 <Value>{teacherInfo.position}</Value>
+              )}
+            </ProfileDetail>
+            <ProfileDetail>
+              <Label>Subject Codes:</Label>
+              {editMode ? (
+                <Input
+                  type="text"
+                  name="subjectCodes"
+                  value={teacherInfo.subjectCodes}
+                  onChange={handleInputChange}
+                  placeholder="Enter subject codes separated by space"
+                />
+              ) : (
+                <Value>{teacherInfo.subjectCodes}</Value>
               )}
             </ProfileDetail>
             <ProfileDetail>

@@ -14,7 +14,8 @@ import {
   googleTeacherSignUp,
   googleStudentSignUp,
   getAdmins,
-  getStudents       
+  getStudents,
+  getTeachers,
 } from "../controllers/usersController.js";
 import passport from "passport";
 
@@ -30,8 +31,9 @@ router.post("/admin/signin", adminSignIn);
 router.post("/student/signin", studentSignIn);
 router.post("/teacher/signin", teacherSignIn);
 
-router.get("/admins", adminAuth, getAdmins); 
-router.get("/students",studentAuth,getStudents);
+router.get("/admins", adminAuth, getAdmins);
+router.get("/students", studentAuth, getStudents);
+router.get("/teachers", teacherAuth, getTeachers);
 
 // Authentication check routes
 router.get("/auth/admin/check", adminAuth, (req, res) => {

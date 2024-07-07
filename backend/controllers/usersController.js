@@ -165,20 +165,18 @@ export const googleStudentSignUp = async (req, res) => {
   req.user.tokens = req.user.tokens.concat({ token });
   await req.user.save();
 
-  // Stringify user data for the query parameter
   const queryParams = new URLSearchParams({ token }).toString();
 
-  // Correctly append the token as a query parameter
   res.redirect(`${process.env.FRONTEND_URL}/student/dashboard?${queryParams}`);
 };
 
-
-// usersController.js
 export const getAdmins = async (req, res, next) => {
   try {
-    const admin = req.admin; // Use the admin info from the request object
+    const admin = req.admin; 
     if (!admin) {
-      return res.status(404).json({ success: false, message: "Admin not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Admin not found" });
     }
     res.status(200).json(admin);
   } catch (error) {
@@ -186,14 +184,30 @@ export const getAdmins = async (req, res, next) => {
   }
 };
 
-export const getStudents = async (req,res,next) => {
-  try{
+export const getStudents = async (req, res, next) => {
+  try {
     const student = req.student;
-    if(!student){
-      return res.status(404).json({success: false , message: "Student not found"});
+    if (!student) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
     }
     res.status(200).json(student);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-}
+};
+
+export const getTeachers = async (req, res, next) => {
+  try {
+    const teacher = req.teacher;
+    if (!teacher) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Teacher not found" });
+    }
+    res.status(200).json(teacher);
+  } catch (error) {
+    next(error);
+  }
+};
