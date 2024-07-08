@@ -28,7 +28,7 @@ const TeacherProfileSection = () => {
     qualification: "",
     department: "",
     position: "",
-    subjectCodes: "", // Adding subjectCodes to the state
+    subjectCodes: "",
     _id: "",
   });
 

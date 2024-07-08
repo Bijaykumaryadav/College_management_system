@@ -26,10 +26,10 @@ const ProfileSection = () => {
     phone: "",
     grade: "",
     registrationNumber: "",
-    _id: "", // Adding _id to the state
+    _id: "", 
   });
 
-  const [editMode, setEditMode] = useState(false); // Initially false to show profile info first
+  const [editMode, setEditMode] = useState(false);
 
   const navigate = useNavigate();
 
