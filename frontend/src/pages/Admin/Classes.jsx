@@ -48,16 +48,16 @@ const Classes = () => {
           "http://localhost:4000/api/v1/class",
           { grade: newClassName }
         );
-        console.log("Response data:", response.data); // Log the response data
+        console.log("Response data:", response.data); 
         setClasses((prevClasses) => {
           if (Array.isArray(prevClasses)) {
-            return [...prevClasses, response.data]; // Use callback function to update state
+            return [...prevClasses, response.data];
           } else {
             console.error(
               "Error adding class: Invalid state for classes:",
               prevClasses
             );
-            return []; // Reset classes state to an empty array
+            return [];
           }
         });
         setNewClassName("");

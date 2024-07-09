@@ -26,7 +26,9 @@ const ProfileSection = () => {
     phone: "",
     grade: "",
     registrationNumber: "",
-    _id: "", 
+    section: "",
+    subSection: "",
+    _id: "",
   });
 
   const [editMode, setEditMode] = useState(false);
@@ -54,7 +56,8 @@ const ProfileSection = () => {
           studentData != null &&
           studentData.phone != null &&
           studentData.grade != null &&
-          studentData.registrationNumber != null
+          studentData.registrationNumber != null &&
+          studentData.section != null
         ) {
           setStudentInfo({
             name: studentData.name,
@@ -62,6 +65,8 @@ const ProfileSection = () => {
             phone: studentData.phone,
             grade: studentData.grade,
             registrationNumber: studentData.registrationNumber,
+            section: studentData.section,
+            subSection: studentData.subSection || "",
             _id: studentData._id,
           });
         } else {
@@ -83,6 +88,8 @@ const ProfileSection = () => {
             phone: userData.phone || "",
             grade: userData.grade || "",
             registrationNumber: userData.registrationNumber || "",
+            section: userData.section || "",
+            subSection: userData.subSection || "",
             _id: userData._id,
           });
         }
@@ -186,6 +193,60 @@ const ProfileSection = () => {
                 <Value>{studentInfo.registrationNumber}</Value>
               )}
             </ProfileDetail>
+            <ProfileDetail>
+              <Label>Section:</Label>
+              {editMode ? (
+                <Dropdown
+                  name="section"
+                  value={studentInfo.section}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Section</option>
+                  <option value="P Cycle">P Cycle</option>
+                  <option value="C Cycle">C Cycle</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </Dropdown>
+              ) : (
+                <Value>{studentInfo.section}</Value>
+              )}
+            </ProfileDetail>
+            {editMode &&
+              (studentInfo.section === "P Cycle" ||
+                studentInfo.section === "C Cycle") && (
+                <ProfileDetail>
+                  <Label>Sub Section:</Label>
+                  <Dropdown
+                    name="subSection"
+                    value={studentInfo.subSection}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select Sub Section</option>
+                    {studentInfo.section === "P Cycle" && (
+                      <>
+                        <option value="P1">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                        <option value="P4">P4</option>
+                        <option value="P5">P5</option>
+                      </>
+                    )}
+                    {studentInfo.section === "C Cycle" && (
+                      <>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                        <option value="C3">C3</option>
+                        <option value="C4">C4</option>
+                        <option value="C5">C5</option>
+                      </>
+                    )}
+                  </Dropdown>
+                </ProfileDetail>
+              )}
             <ProfileDetail>
               <Label>Email:</Label>
               <Value>{studentInfo.email}</Value>

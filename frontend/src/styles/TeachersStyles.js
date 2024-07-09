@@ -1,4 +1,3 @@
-// TeachersStyles.js
 import styled from "styled-components";
 
 export const TeachersContainer = styled.div`
@@ -46,5 +45,14 @@ export const AddTeacherButton = styled.button`
   color: #fff;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+`;
+
+export const AddTeacherDropdown = styled.select`
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
   cursor: pointer;
 `;

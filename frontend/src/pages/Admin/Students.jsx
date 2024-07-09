@@ -22,6 +22,8 @@ const Students = () => {
     phone: "",
     registrationNumber: "",
     grade: "",
+    section: "",
+    subSection: "",
   });
   const [students, setStudents] = useState([]);
 
@@ -47,7 +49,9 @@ const Students = () => {
       newStudent.email.trim() !== "" &&
       newStudent.phone.trim() !== "" &&
       newStudent.registrationNumber.trim() !== "" &&
-      newStudent.grade.trim() !== ""
+      newStudent.grade.trim() !== "" &&
+      newStudent.section.trim() !== "" &&
+      newStudent.subSection.trim() !== ""
     ) {
       try {
         await axios.post("http://localhost:4000/api/v1/students", newStudent);
@@ -57,8 +61,10 @@ const Students = () => {
           phone: "",
           registrationNumber: "",
           grade: "",
+          section: "",
+          subSection: "",
         });
-        fetchStudents(); // Fetch the updated list of students
+        fetchStudents();
       } catch (error) {
         console.error("Error adding student:", error);
       }
@@ -159,6 +165,59 @@ const Students = () => {
                 <option value="7">7</option>
                 <option value="8">8</option>
               </AddStudentSelect>
+              <AddStudentSelect
+                value={newStudent.section}
+                onChange={(e) =>
+                  setNewStudent({ ...newStudent, section: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Select Section
+                </option>
+                <option value="P Cycle">P Cycle</option>
+                <option value="C Cycle">C Cycle</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+              </AddStudentSelect>
+              {newStudent.section &&
+                (newStudent.section === "P Cycle" ||
+                  newStudent.section === "C Cycle") && (
+                  <AddStudentSelect
+                    value={newStudent.subSection}
+                    onChange={(e) =>
+                      setNewStudent({
+                        ...newStudent,
+                        subSection: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="" disabled>
+                      Select Sub Section
+                    </option>
+                    {newStudent.section === "P Cycle" && (
+                      <>
+                        <option value="P1">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                        <option value="P4">P4</option>
+                        <option value="P5">P5</option>
+                      </>
+                    )}
+                    {newStudent.section === "C Cycle" && (
+                      <>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                        <option value="C3">C3</option>
+                        <option value="C4">C4</option>
+                        <option value="C5">C5</option>
+                      </>
+                    )}
+                  </AddStudentSelect>
+                )}
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
             {renderStudentsByDepartmentAndSemester(
