@@ -4,10 +4,29 @@ import mongoose from "mongoose";
 
 export const createStudent = async (req, res, next) => {
   console.log(req.body);
-  const { _id, name, email, phone, registrationNumber, grade } = req.body;
+  const {
+    _id,
+    name,
+    email,
+    phone,
+    registrationNumber,
+    grade,
+    section,
+    subSection,
+  } = req.body;
+
   try {
-    if (!name || !grade || !phone || !email || !registrationNumber) {
-      return res.status(400).json({ message: "Please Fill Full Form!" });
+    if (
+      !name ||
+      !grade ||
+      !phone ||
+      !email ||
+      !registrationNumber ||
+      !section
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Please fill in all required fields!" });
     }
 
     // Validate or generate ObjectId
@@ -20,10 +39,13 @@ export const createStudent = async (req, res, next) => {
       phone,
       registrationNumber,
       grade,
+      section,
+      subSection,
     });
+
     res.status(200).json({
       success: true,
-      message: "Student Created!",
+      message: "Student created successfully!",
       data: newStudent,
     });
   } catch (err) {

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { handleValidationError } from "../middlewares/errorHandler.js";
 
-// Create a new teacher
+
 export const createTeacher = async (req, res, next) => {
   const {
     _id,

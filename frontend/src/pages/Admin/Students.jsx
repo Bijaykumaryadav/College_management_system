@@ -42,64 +42,128 @@ const Students = () => {
     }
   };
 
-  const handleAddStudent = async (e) => {
-    e.preventDefault();
-    if (
-      newStudent.name.trim() !== "" &&
-      newStudent.email.trim() !== "" &&
-      newStudent.phone.trim() !== "" &&
-      newStudent.registrationNumber.trim() !== "" &&
-      newStudent.grade.trim() !== "" &&
-      newStudent.section.trim() !== "" &&
-      newStudent.subSection.trim() !== ""
-    ) {
-      try {
-        await axios.post("http://localhost:4000/api/v1/students", newStudent);
-        setNewStudent({
-          name: "",
-          email: "",
-          phone: "",
-          registrationNumber: "",
-          grade: "",
-          section: "",
-          subSection: "",
-        });
-        fetchStudents();
-      } catch (error) {
-        console.error("Error adding student:", error);
-      }
+const handleAddStudent = async (e) => {
+  e.preventDefault();
+  if (
+    newStudent.name.trim() !== "" &&
+    newStudent.email.trim() !== "" &&
+    newStudent.phone.trim() !== "" &&
+    newStudent.registrationNumber.trim() !== "" &&
+    newStudent.grade.trim() !== "" &&
+    newStudent.section.trim() !== ""
+  ) {
+    try {
+      await axios.post("http://localhost:4000/api/v1/students", newStudent);
+      setNewStudent({
+        name: "",
+        email: "",
+        phone: "",
+        registrationNumber: "",
+        grade: "",
+        section: "",
+        subSection: "",
+      });
+      fetchStudents();
+    } catch (error) {
+      console.error("Error adding student:", error);
     }
-  };
+  }
+};
 
-  const categorizeStudents = (departmentCode, semester) => {
+
+
+  const categorizeStudents = (
+    departmentCode,
+    semester,
+    section,
+    subSection
+  ) => {
     return students.filter(
       (student) =>
         student.registrationNumber.includes(departmentCode) &&
-        student.grade === semester
+        student.grade === semester &&
+        student.section === section &&
+        (!subSection || student.subSection === subSection)
     );
   };
 
-  const renderStudentsByDepartmentAndSemester = (
+  const renderStudentsByDepartmentSemesterSectionAndSubSection = (
     departmentCode,
     departmentName
   ) => {
     const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
+    const sections = ["P Cycle", "C Cycle", "A", "B", "C", "D", "E", "F"];
+    const subSections = {
+      "P Cycle": ["P1", "P2", "P3", "P4", "P5"],
+      "C Cycle": ["C1", "C2", "C3", "C4", "C5"],
+    };
+
     return (
       <>
         <StudentsHeader>{departmentName}</StudentsHeader>
-        {semesters.map((semester) => (
-          <div key={`${departmentCode}-${semester}`}>
-            <StudentsHeader>Semester {semester}</StudentsHeader>
-            <StudentList>
-              {categorizeStudents(departmentCode, semester).map((student) => (
-                <StudentItem key={student.id}>
-                  {student.name} - {student.email} - {student.phone} -
-                  {student.registrationNumber} - {student.grade}
-                </StudentItem>
-              ))}
-            </StudentList>
-          </div>
-        ))}
+        {semesters.map((semester) =>
+          sections.map((section) => {
+            let sectionContent = null;
+            if (subSections[section]) {
+              sectionContent = subSections[section].map((subSection) => {
+                const categorizedStudents = categorizeStudents(
+                  departmentCode,
+                  semester,
+                  section,
+                  subSection
+                );
+                if (categorizedStudents.length > 0) {
+                  return (
+                    <div
+                      key={`${departmentCode}-${semester}-${section}-${subSection}`}
+                    >
+                      <StudentsHeader>
+                        Semester {semester} - Section {section} - Sub-Section{" "}
+                        {subSection}
+                      </StudentsHeader>
+                      <StudentList>
+                        {categorizedStudents.map((student) => (
+                          <StudentItem key={student.id}>
+                            {student.name} - {student.email} - {student.phone} -{" "}
+                            {student.registrationNumber} - {student.grade} -{" "}
+                            {student.section} - {student.subSection}
+                          </StudentItem>
+                        ))}
+                      </StudentList>
+                    </div>
+                  );
+                }
+                return null;
+              });
+            } else {
+              const categorizedStudents = categorizeStudents(
+                departmentCode,
+                semester,
+                section,
+                null
+              );
+              if (categorizedStudents.length > 0) {
+                sectionContent = (
+                  <div key={`${departmentCode}-${semester}-${section}`}>
+                    <StudentsHeader>
+                      Semester {semester} - Section {section}
+                    </StudentsHeader>
+                    <StudentList>
+                      {categorizedStudents.map((student) => (
+                        <StudentItem key={student.id}>
+                          {student.name} - {student.email} - {student.phone} -{" "}
+                          {student.registrationNumber} - {student.grade} -{" "}
+                          {student.section} - {student.subSection}
+                        </StudentItem>
+                      ))}
+                    </StudentList>
+                  </div>
+                );
+              }
+            }
+            return sectionContent;
+          })
+        )}
       </>
     );
   };
@@ -220,16 +284,19 @@ const Students = () => {
                 )}
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
-            {renderStudentsByDepartmentAndSemester(
+            {renderStudentsByDepartmentSemesterSectionAndSubSection(
               "CS",
               "Computer Science Engineering"
             )}
-            {renderStudentsByDepartmentAndSemester(
+            {renderStudentsByDepartmentSemesterSectionAndSubSection(
               "AI",
               "Artificial Intelligence and Machine Learning"
             )}
-            {renderStudentsByDepartmentAndSemester("CV", "Civil Engineering")}
-            {renderStudentsByDepartmentAndSemester(
+            {renderStudentsByDepartmentSemesterSectionAndSubSection(
+              "CV",
+              "Civil Engineering"
+            )}
+            {renderStudentsByDepartmentSemesterSectionAndSubSection(
               "EC",
               "Electrical and Communication Engineering"
             )}

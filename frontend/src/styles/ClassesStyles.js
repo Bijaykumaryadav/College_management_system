@@ -55,6 +55,13 @@ export const AddClassButton = styled.button`
   cursor: pointer;
 `;
 
+export const AddClassSelect = styled.select`
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
 export const ClassContainer = styled.div`
   display: flex;
 `;

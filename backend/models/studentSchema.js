@@ -23,6 +23,14 @@ const studentSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  section: {
+    type: String,
+    required: true,
+  },
+  subSection: {
+    type: String,
+    required: false,
+  },
 });
 
 export const Student = mongoose.model("Student", studentSchema);

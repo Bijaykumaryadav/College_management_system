@@ -10,8 +10,3 @@ const classSchema = new mongoose.Schema({
 
 
 export const Class = mongoose.model('Classes', classSchema);
-
-
-
-
-
