@@ -254,7 +254,7 @@ const Assignments = () => {
                 <AssignmentItem key={assignment.id}>
                   <strong>{assignment.title}: </strong>
                   {assignment.description}, {assignment.grade},
-                  {assignment.deadline}, {assignment.department},
+                  {assignment.deadline}, {assignment.department},{"Semester-"}
                   {assignment.semester}, {assignment.section}
                   {assignment.subSection && `- ${assignment.subSection}`}
                 </AssignmentItem>
