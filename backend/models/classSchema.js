@@ -1,12 +1,40 @@
 import mongoose from "mongoose";
-import validator from "validator";
 
-const classSchema = new mongoose.Schema({
-  grade: {
-    type: String,
-    required: true
+const classSchema = new mongoose.Schema(
+  {
+    grade: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    department: {
+      type: String,
+      required: true,
+      enum: [
+        "COMPUTER SCIENCE ENGINEERING",
+        "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "CIVIL ENGINEERING",
+        "ELECTRONICS AND COMMUNICATION ENGINEERING",
+      ],
+    },
+    semester: {
+      type: String,
+      required: true,
+      enum: ["1", "2", "3", "4", "5", "6", "7", "8"],
+    },
+    section: {
+      type: String,
+      required: true,
+      enum: ["P Cycle", "C Cycle", "A", "B", "C", "D", "E", "F"],
+    },
+    subSection: {
+      type: String,
+      required: false,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-
-export const Class = mongoose.model('Classes', classSchema);
+export const Class = mongoose.model("Class", classSchema);

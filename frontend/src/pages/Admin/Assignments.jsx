@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
+import { SidebarProvider } from "./SidebarContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +15,7 @@ import {
   AddAssignmentInput,
   AddAssignmentTextArea,
   AddAssignmentButton,
+  AddAssignmentSelect,
 } from "../../styles/AssignmentsStyles";
 
 const Assignments = () => {
@@ -23,8 +24,15 @@ const Assignments = () => {
     description: "",
     grade: "",
     deadline: "",
+    department: "",
+    semester: "",
+    section: "",
+    subSection: "",
   });
   const [assignments, setAssignments] = useState([]);
+  const [department, setDepartment] = useState("");
+  const [semester, setSemester] = useState("");
+  const [section, setSection] = useState("");
 
   useEffect(() => {
     fetchAssignments();
@@ -47,7 +55,10 @@ const Assignments = () => {
       newAssignment.title.trim() !== "" &&
       newAssignment.description.trim() !== "" &&
       newAssignment.grade.trim() !== "" &&
-      newAssignment.deadline.trim() !== ""
+      newAssignment.deadline.trim() !== "" &&
+      newAssignment.department.trim() !== "" &&
+      newAssignment.semester.trim() !== "" &&
+      newAssignment.section.trim() !== ""
     ) {
       try {
         const response = await axios.post(
@@ -64,7 +75,14 @@ const Assignments = () => {
           description: "",
           grade: "",
           deadline: "",
+          department: "",
+          semester: "",
+          section: "",
+          subSection: "",
         });
+        setDepartment("");
+        setSemester("");
+        setSection("");
       } catch (error) {
         console.error("Error adding assignment:", error);
         // Display error toast message
@@ -100,14 +118,122 @@ const Assignments = () => {
                   })
                 }
               />
-              <AddAssignmentInput
-                type="text"
-                placeholder="Enter assignment grade"
-                value={newAssignment.grade}
-                onChange={(e) =>
-                  setNewAssignment({ ...newAssignment, grade: e.target.value })
-                }
-              />
+              <AddAssignmentSelect
+                value={department}
+                onChange={(e) => {
+                  setDepartment(e.target.value);
+                  setSemester("");
+                  setSection("");
+                  setNewAssignment({
+                    ...newAssignment,
+                    grade: "",
+                    department: e.target.value,
+                    semester: "",
+                    section: "",
+                    subSection: "",
+                  });
+                }}
+              >
+                <option value="" disabled>
+                  Assign Department
+                </option>
+                <option value="COMPUTER SCIENCE ENGINEERING">
+                  COMPUTER SCIENCE ENGINEERING
+                </option>
+                <option value="ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING">
+                  ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+                </option>
+                <option value="CIVIL ENGINEERING">CIVIL ENGINEERING</option>
+                <option value="ELECTRONICS AND COMMUNICATION ENGINEERING">
+                  ELECTRONICS AND COMMUNICATION ENGINEERING
+                </option>
+              </AddAssignmentSelect>
+              {department && (
+                <AddAssignmentSelect
+                  value={semester}
+                  onChange={(e) => {
+                    setSemester(e.target.value);
+                    setSection("");
+                    setNewAssignment({
+                      ...newAssignment,
+                      grade: e.target.value,
+                      semester: e.target.value,
+                      section: "",
+                      subSection: "",
+                    });
+                  }}
+                >
+                  <option value="" disabled>
+                    Select Semester
+                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </AddAssignmentSelect>
+              )}
+              {semester && (
+                <AddAssignmentSelect
+                  value={section}
+                  onChange={(e) => {
+                    setSection(e.target.value);
+                    setNewAssignment({
+                      ...newAssignment,
+                      section: e.target.value,
+                      subSection: "",
+                    });
+                  }}
+                >
+                  <option value="" disabled>
+                    Select Section
+                  </option>
+                  <option value="P Cycle">P Cycle</option>
+                  <option value="C Cycle">C Cycle</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </AddAssignmentSelect>
+              )}
+              {section && (section === "P Cycle" || section === "C Cycle") && (
+                <AddAssignmentSelect
+                  value={newAssignment.subSection}
+                  onChange={(e) =>
+                    setNewAssignment({
+                      ...newAssignment,
+                      subSection: e.target.value,
+                    })
+                  }
+                >
+                  <option value="" disabled>
+                    Select Sub Section
+                  </option>
+                  {section === "P Cycle" && (
+                    <>
+                      <option value="P1">P1</option>
+                      <option value="P2">P2</option>
+                      <option value="P3">P3</option>
+                      <option value="P4">P4</option>
+                      <option value="P5">P5</option>
+                    </>
+                  )}
+                  {section === "C Cycle" && (
+                    <>
+                      <option value="C1">C1</option>
+                      <option value="C2">C2</option>
+                      <option value="C3">C3</option>
+                      <option value="C4">C4</option>
+                      <option value="C5">C5</option>
+                    </>
+                  )}
+                </AddAssignmentSelect>
+              )}
               <AddAssignmentInput
                 type="text"
                 placeholder="Enter assignment deadline"
@@ -127,8 +253,10 @@ const Assignments = () => {
               {assignments.map((assignment) => (
                 <AssignmentItem key={assignment.id}>
                   <strong>{assignment.title}: </strong>
-                  {assignment.description}, {assignment.grade},{" "}
-                  {assignment.deadline}
+                  {assignment.description}, {assignment.grade},
+                  {assignment.deadline}, {assignment.department},
+                  {assignment.semester}, {assignment.section}
+                  {assignment.subSection && `- ${assignment.subSection}`}
                 </AssignmentItem>
               ))}
             </AssignmentList>

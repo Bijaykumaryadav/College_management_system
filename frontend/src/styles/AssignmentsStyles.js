@@ -1,4 +1,3 @@
-// AssignmentsStyles.js
 import styled from "styled-components";
 
 export const AssignmentsContainer = styled.div`
@@ -64,6 +63,16 @@ export const AddAssignmentButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+export const AddAssignmentSelect = styled.select`
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #fff;
+  font-size: 16px;
 `;
 
 export const SidebarContainer = styled.div`

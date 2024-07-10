@@ -68,16 +68,14 @@ export const getAllStudents = async (req, res, next) => {
 
 export const getLoggedInStudent = async (req, res, next) => {
   try {
-    // Extract token from headers
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Authentication failed!" });
     }
-    // Decode the token to get the student ID
+
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const studentId = decodedToken._id;
 
-    // Fetch the student information using the student ID
     const student = await Student.findById(studentId);
     console.log("student id: ", studentId);
     console.log("student: ", student);
@@ -91,6 +89,8 @@ export const getLoggedInStudent = async (req, res, next) => {
           phone: null,
           grade: null,
           registrationNumber: null,
+          section: null,
+          subSection: null,
         },
       });
     }
@@ -104,10 +104,12 @@ export const getLoggedInStudent = async (req, res, next) => {
         phone: student.phone,
         grade: student.grade,
         registrationNumber: student.registrationNumber,
+        section: student.section,
+        subSection: student.subSection,
       },
     });
   } catch (err) {
-    console.log("Error is ", err);
+    console.log("Error is: ", err);
     next(err);
   }
 };

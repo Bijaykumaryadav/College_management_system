@@ -5,19 +5,45 @@ import { handleValidationError } from "../middlewares/errorHandler.js";
 
 export const createAssignment = async (req, res, next) => {
   console.log(req.body);
-  const { title, description, grade, deadline } = req.body;
+  const {
+    title,
+    description,
+    grade,
+    department,
+    semester,
+    section,
+    subSection,
+    deadline,
+  } = req.body;
   try {
-    if (!title || !description || !grade || !deadline) {
+    if (
+      !title ||
+      !description ||
+      !grade ||
+      !department ||
+      !semester ||
+      !section ||
+      !deadline
+    ) {
       handleValidationError("Please Fill Full Form!", 400);
     }
-    await Assignment.create({ title, description, grade, deadline });
+    await Assignment.create({
+      title,
+      description,
+      grade,
+      department,
+      semester,
+      section,
+      subSection,
+      deadline,
+    });
     res.status(201).json({
       success: true,
       message: "Assignment Created!",
     });
   } catch (err) {
     next(err);
-  } 
+  }
 };
 
 export const getAllAssignments = async (req, res, next) => {
@@ -30,4 +56,4 @@ export const getAllAssignments = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}; 
+};

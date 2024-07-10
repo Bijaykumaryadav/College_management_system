@@ -32,7 +32,7 @@ const Classes = () => {
       const response = await axios.get(
         "http://localhost:4000/api/v1/class/getall"
       );
-      if (response.data && Array.isArray(response.data.classes)) {
+      if (response.data.classes) {
         setClasses(response.data.classes);
       } else {
         console.error(
@@ -59,23 +59,22 @@ const Classes = () => {
             subSection,
           }
         );
+
         console.log("Response data:", response.data);
-        setClasses((prevClasses) => {
-          if (Array.isArray(prevClasses)) {
-            return [...prevClasses, response.data];
-          } else {
-            console.error(
-              "Error adding class: Invalid state for classes:",
-              prevClasses
-            );
-            return [];
-          }
-        });
-        setNewClassName("");
-        setDepartment("");
-        setSemester("");
-        setSection("");
-        setSubSection("");
+
+        if (response.data.success) {
+          setClasses((prevClasses) => [...prevClasses, response.data.class]);
+          setNewClassName("");
+          setDepartment("");
+          setSemester("");
+          setSection("");
+          setSubSection("");
+        } else {
+          console.error(
+            "Error adding class: Response data invalid",
+            response.data
+          );
+        }
       } catch (error) {
         console.error("Error adding class:", error);
       }
@@ -181,11 +180,12 @@ const Classes = () => {
               <AddClassButton type="submit">Add Class</AddClassButton>
             </AddClassForm>
             <ClassList>
-              {/* Ensure that classes is an array before mapping over it */}
               {Array.isArray(classes) &&
                 classes.map((classItem, index) => (
                   <ClassItem key={index}>
-                    {classItem.grade} - {classItem.department} - {classItem.semester} - {classItem.section} {classItem.subSection && `- ${classItem.subSection}`}
+                    {classItem.grade} - {classItem.department} -{" "}
+                    {classItem.semester} - {classItem.section}{" "}
+                    {classItem.subSection && `- ${classItem.subSection}`}
                   </ClassItem>
                 ))}
             </ClassList>
