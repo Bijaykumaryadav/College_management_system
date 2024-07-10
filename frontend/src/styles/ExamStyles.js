@@ -78,3 +78,35 @@ export const ExamChartContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
 `;
+
+export const ExamList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+export const ExamItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+`;
+
+export const AddMarksInput = styled.input`
+  padding: 8px;
+  margin-right: 10px;
+`;
+
+export const AddMarksButton = styled.button`
+  padding: 8px 12px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;

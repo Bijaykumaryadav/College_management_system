@@ -12,7 +12,6 @@ import {
 import { Line } from "react-chartjs-2";
 import { SidebarProvider } from "./SidebarContext";
 
-// Import and register necessary Chart.js components
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,7 +40,7 @@ const PerformanceSection = () => {
   const performanceData = {
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     marks: [80, 85, 90, 88, 92, 85], // Sample marks for each month
-    totalMarks: 520, // Sample total marks for the year
+    totalMarks: 520, 
   };
 
   // Line chart data

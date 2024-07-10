@@ -29,7 +29,6 @@ const StudentSignIn = () => {
   };
 
   const handleGoogleSignIn = () => {
-    // Redirect to Google sign-in endpoint
     window.location.href =
       "http://localhost:4000/api/v1/users/auth/google-student";
   };

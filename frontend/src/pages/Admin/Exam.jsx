@@ -11,17 +11,26 @@ import {
   FormInput,
   AddButton,
   AddAssignmentSelect,
+  ExamList,
+  ExamItem,
+  AddMarksInput,
+  AddMarksButton,
 } from "../../styles/ExamStyles";
 
 const Exam = () => {
   const [examData, setExamData] = useState([]);
   const [name, setName] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
-  const [marks, setMarks] = useState("");
   const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState("");
   const [section, setSection] = useState("");
   const [subSection, setSubSection] = useState("");
+  const [additionalMarks, setAdditionalMarks] = useState({});
+  const [showAddMarksForm, setShowAddMarksForm] = useState({});
+  const [subjectCode, setSubjectCode] = useState("");
+  const [examType, setExamType] = useState("");
+  const [internalType, setInternalType] = useState("");
+  const [marks, setMarks] = useState("");
 
   useEffect(() => {
     fetchExams();
@@ -49,7 +58,6 @@ const Exam = () => {
       name,
       registrationNumber,
       className: `${department} - Semester ${semester} - ${section} - ${subSection}`,
-      marks: parseInt(marks),
     };
     try {
       const response = await axios.post(
@@ -65,13 +73,47 @@ const Exam = () => {
         setSemester("");
         setSection("");
         setSubSection("");
-        setMarks("");
       } else {
         console.error("Error: API response data is not an object");
       }
     } catch (error) {
       console.error("Error adding exam:", error);
     }
+  };
+
+  const handleAddMarks = async (index) => {
+    const exam = examData[index];
+    const newMarks = parseInt(additionalMarks[index]);
+    if (isNaN(newMarks)) {
+      alert("Please enter valid marks");
+      return;
+    }
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/v1/exam/${exam._id}`,
+        {
+          marks: exam.marks + newMarks,
+        }
+      );
+      console.log(response.data);
+      if (response.data.success) {
+        const updatedExamData = [...examData];
+        updatedExamData[index].marks += newMarks;
+        setExamData(updatedExamData);
+        setAdditionalMarks({ ...additionalMarks, [index]: "" });
+      } else {
+        console.error("Error: API response data is not an object");
+      }
+    } catch (error) {
+      console.error("Error adding marks:", error);
+    }
+  };
+
+  const toggleAddMarksForm = (index) => {
+    setShowAddMarksForm({
+      ...showAddMarksForm,
+      [index]: !showAddMarksForm[index],
+    });
   };
 
   const calculateTotalMarks = () => {
@@ -87,7 +129,7 @@ const Exam = () => {
       <ExamContainer>
         <Sidebar />
         <Content>
-          <ExamHeader>Exam Details</ExamHeader>
+          <ExamHeader>Exam Evaluation Details</ExamHeader>
           <ExamForm onSubmit={handleAddExam}>
             <FormLabel>Name:</FormLabel>
             <FormInput
@@ -211,25 +253,75 @@ const Exam = () => {
                 </AddAssignmentSelect>
               </>
             )}
-            <FormLabel>Marks:</FormLabel>
-            <FormInput
-              type="number"
-              value={marks}
-              onChange={(e) => setMarks(e.target.value)}
-              required
-            />
             <AddButton type="submit">Add Exam</AddButton>
           </ExamForm>
           <h2>Total Marks: {calculateTotalMarks()}</h2>
           <h3>Exam Details:</h3>
-          <ul>
+          <ExamList>
             {examData.map((exam, index) => (
-              <li key={index}>
-                Name: {exam.name}, USN: {exam.registrationNumber}, Class:{" "}
-                {exam.className}, Marks: {exam.marks}
-              </li>
+              <ExamItem key={index}>
+                <div>
+                  Name: {exam.name}, USN: {exam.registrationNumber}, Class:{" "}
+                  {exam.className}, Marks: {exam.marks}
+                </div>
+                <div>
+                  <AddMarksButton onClick={() => toggleAddMarksForm(index)}>
+                    Add Marks
+                  </AddMarksButton>
+                  {showAddMarksForm[index] && (
+                    <div>
+                      <FormLabel>Enter Subject Code:</FormLabel>
+                      <FormInput
+                        type="text"
+                        value={subjectCode}
+                        onChange={(e) => setSubjectCode(e.target.value)}
+                        required
+                      />
+                      <FormLabel>Exam Type:</FormLabel>
+                      <AddAssignmentSelect
+                        value={examType}
+                        onChange={(e) => setExamType(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
+                          Select Exam Type
+                        </option>
+                        <option value="internal">Internal</option>
+                        <option value="external">External</option>
+                      </AddAssignmentSelect>
+                      {examType === "internal" && (
+                        <>
+                          <FormLabel>Internal Type:</FormLabel>
+                          <AddAssignmentSelect
+                            value={internalType}
+                            onChange={(e) => setInternalType(e.target.value)}
+                            required
+                          >
+                            <option value="" disabled>
+                              Select Internal Type
+                            </option>
+                            <option value="I INTERNAL">I INTERNAL</option>
+                            <option value="II INTERNAL">II INTERNAL</option>
+                            <option value="III INTERNAL">III INTERNAL</option>
+                          </AddAssignmentSelect>
+                        </>
+                      )}
+                      <FormLabel>Enter Marks:</FormLabel>
+                      <AddMarksInput
+                        type="number"
+                        value={marks}
+                        onChange={(e) => setMarks(e.target.value)}
+                        required
+                      />
+                      <AddMarksButton onClick={() => handleAddMarks(index)}>
+                        Submit
+                      </AddMarksButton>
+                    </div>
+                  )}
+                </div>
+              </ExamItem>
             ))}
-          </ul>
+          </ExamList>
         </Content>
       </ExamContainer>
     </SidebarProvider>
