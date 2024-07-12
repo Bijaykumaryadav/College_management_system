@@ -2,10 +2,10 @@
 
 import { Marks } from "../models/marks.js";
 
-// POST route to add marks
 export const addMarks = async (req, res) => {
   const { studentId } = req.params;
-  const { subjectCode, examType, internalType, marks, fullMarks } = req.body;
+  const { subjectCode, examType, internalType, marks, fullMarks, passFail } =
+    req.body;
 
   try {
     const newMark = new Marks({
@@ -14,7 +14,8 @@ export const addMarks = async (req, res) => {
       examType,
       internalType,
       marks,
-      fullMarks,   
+      fullMarks,
+      passFail,
     });
 
     await newMark.save();
@@ -39,4 +40,3 @@ export const getMarks = async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to fetch marks" });
   }
 };
-

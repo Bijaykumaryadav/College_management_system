@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const marksSchema = new mongoose.Schema({
   studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Student", // Reference to Student model
+    ref: "Student", 
     required: true,
   },
   subjectCode: {
@@ -27,8 +27,10 @@ const marksSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // Other fields as needed
+  passFail: {
+    type: String,
+    enum: ["pass", "fail"],
+  },
 });
 
-
-export const Marks= mongoose.model("Marks", marksSchema);
+export const Marks = mongoose.model("Marks", marksSchema);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   AddMarksContainer,
@@ -15,7 +15,7 @@ import {
 
 const AddMarks = () => {
   const { studentId } = useParams();
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate();
 
   const [formInputs, setFormInputs] = useState({
     subjectCode: "",
@@ -37,6 +37,7 @@ const AddMarks = () => {
       const response = await axios.get(
         `http://localhost:4000/api/v1/marks/${studentId}`
       );
+      console.log("Fetched marks data:", response.data.marks);
       setMarksData(response.data.marks);
     } catch (error) {
       console.error("Error fetching marks data:", error);
@@ -72,8 +73,37 @@ const AddMarks = () => {
   };
 
   const handleNavigateToDashboard = () => {
-    navigate("/admin/dashboard"); // Navigate to admin dashboard
+    navigate("/admin/dashboard");
   };
+
+  const renderMarksTable = (filterCondition) => (
+    <MarksTable>
+      <thead>
+        <tr>
+          <TableCell>Subject Code</TableCell>
+          <TableCell>Exam Type</TableCell>
+          <TableCell>Internal Type</TableCell>
+          <TableCell>Full Marks</TableCell>
+          <TableCell>Scored Marks</TableCell>
+          <TableCell>Pass/Fail</TableCell>
+        </tr>
+      </thead>
+      <tbody>
+        {marksData.filter(filterCondition).map((mark) => (
+          <TableRow
+            key={`${mark.subjectCode}-${mark.internalType || "external"}`}
+          >
+            <TableCell>{mark.subjectCode}</TableCell>
+            <TableCell>{mark.examType}</TableCell>
+            <TableCell>{mark.internalType || "N/A"}</TableCell>
+            <TableCell>{mark.fullMarks}</TableCell>
+            <TableCell>{mark.marks}</TableCell>
+            <TableCell>{mark.passFail}</TableCell>
+          </TableRow>
+        ))}
+      </tbody>
+    </MarksTable>
+  );
 
   return (
     <AddMarksContainer>
@@ -144,33 +174,14 @@ const AddMarks = () => {
         Go to Dashboard
       </AddMarksButton>
 
-      {/* Separate Tables based on Internal Types */}
-      {formInputs.internalType && (
-        <MarksTable>
-          <thead>
-            <tr>
-              <TableCell>Subject Code</TableCell>
-              <TableCell>Exam Type</TableCell>
-              <TableCell>Internal Type</TableCell>
-              <TableCell>Full Marks</TableCell>
-              <TableCell>Scored Marks</TableCell>
-            </tr>
-          </thead>
-          <tbody>
-            {marksData
-              .filter((mark) => mark.internalType === formInputs.internalType)
-              .map((mark) => (
-                <TableRow key={mark.subjectCode}>
-                  <TableCell>{mark.subjectCode}</TableCell>
-                  <TableCell>{mark.examType}</TableCell>
-                  <TableCell>{mark.internalType}</TableCell>
-                  <TableCell>{mark.fullMarks}</TableCell>
-                  <TableCell>{mark.marks}</TableCell>
-                </TableRow>
-              ))}
-          </tbody>
-        </MarksTable>
-      )}
+      <FormLabel>I INTERNAL</FormLabel>
+      {renderMarksTable((mark) => mark.internalType === "I INTERNAL")}
+      <FormLabel>II INTERNAL</FormLabel>
+      {renderMarksTable((mark) => mark.internalType === "II INTERNAL")}
+      <FormLabel>III INTERNAL</FormLabel>
+      {renderMarksTable((mark) => mark.internalType === "III INTERNAL")}
+      <FormLabel>EXTERNAL</FormLabel>
+      {renderMarksTable((mark) => mark.examType === "external")}
     </AddMarksContainer>
   );
 };
