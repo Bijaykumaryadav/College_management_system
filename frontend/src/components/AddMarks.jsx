@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import {
   AddMarksContainer,
@@ -15,12 +15,17 @@ import {
 
 const AddMarks = () => {
   const { studentId } = useParams();
+  const navigate = useNavigate(); // Use useNavigate for navigation
+
   const [formInputs, setFormInputs] = useState({
     subjectCode: "",
     examType: "",
     internalType: "",
     marks: "",
+    fullMarks: "",
+    passFail: "",
   });
+
   const [marksData, setMarksData] = useState([]);
 
   useEffect(() => {
@@ -55,6 +60,8 @@ const AddMarks = () => {
           examType: "",
           internalType: "",
           marks: "",
+          fullMarks: "",
+          passFail: "",
         });
       } else {
         console.error("Error: API response data is not an object");
@@ -62,6 +69,10 @@ const AddMarks = () => {
     } catch (error) {
       console.error("Error adding marks:", error);
     }
+  };
+
+  const handleNavigateToDashboard = () => {
+    navigate("/admin/dashboard"); // Navigate to admin dashboard
   };
 
   return (
@@ -109,38 +120,57 @@ const AddMarks = () => {
         onChange={(e) => handleInputChange("marks", e.target.value)}
         required
       />
+      <FormLabel>Enter Full Marks:</FormLabel>
+      <AddMarksInput
+        type="number"
+        value={formInputs.fullMarks}
+        onChange={(e) => handleInputChange("fullMarks", e.target.value)}
+        required
+      />
+      <FormLabel>Pass/Fail:</FormLabel>
+      <AddAssignmentSelect
+        value={formInputs.passFail}
+        onChange={(e) => handleInputChange("passFail", e.target.value)}
+        required
+      >
+        <option value="" disabled>
+          Select Pass/Fail
+        </option>
+        <option value="pass">Pass</option>
+        <option value="fail">Fail</option>
+      </AddAssignmentSelect>
       <AddMarksButton onClick={handleAddMarks}>Submit</AddMarksButton>
+      <AddMarksButton onClick={handleNavigateToDashboard}>
+        Go to Dashboard
+      </AddMarksButton>
 
-      <MarksTable>
-        <thead>
-          <tr>
-            <TableCell>Subject Code</TableCell>
-            <TableCell>Exam Type</TableCell>
-            <TableCell>Internal Type</TableCell>
-            <TableCell>Full Marks</TableCell>
-            <TableCell>Scored Marks</TableCell>
-          </tr>
-        </thead>
-        <tbody>
-          {marksData.map((mark) => (
-            <TableRow key={mark.subjectCode}>
-              <TableCell>{mark.subjectCode}</TableCell>
-              <TableCell>{mark.examType}</TableCell>
-              <TableCell>{mark.internalType}</TableCell>
-              <TableCell>{mark.fullMarks}</TableCell>
-              <TableCell>
-                <input
-                  type="number"
-                  value={mark.scoredMarks}
-                  onChange={(e) =>
-                    handleMarksChange(mark.subjectCode, e.target.value)
-                  }
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </tbody>
-      </MarksTable>
+      {/* Separate Tables based on Internal Types */}
+      {formInputs.internalType && (
+        <MarksTable>
+          <thead>
+            <tr>
+              <TableCell>Subject Code</TableCell>
+              <TableCell>Exam Type</TableCell>
+              <TableCell>Internal Type</TableCell>
+              <TableCell>Full Marks</TableCell>
+              <TableCell>Scored Marks</TableCell>
+            </tr>
+          </thead>
+          <tbody>
+            {marksData
+              .filter((mark) => mark.internalType === formInputs.internalType)
+              .map((mark) => (
+                <TableRow key={mark.subjectCode}>
+                  <TableCell>{mark.subjectCode}</TableCell>
+                  <TableCell>{mark.examType}</TableCell>
+                  <TableCell>{mark.internalType}</TableCell>
+                  <TableCell>{mark.fullMarks}</TableCell>
+                  <TableCell>{mark.marks}</TableCell>
+                </TableRow>
+              ))}
+          </tbody>
+        </MarksTable>
+      )}
     </AddMarksContainer>
   );
 };

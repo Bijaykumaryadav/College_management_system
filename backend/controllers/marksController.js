@@ -5,7 +5,7 @@ import { Marks } from "../models/marks.js";
 // POST route to add marks
 export const addMarks = async (req, res) => {
   const { studentId } = req.params;
-  const { subjectCode, examType, internalType, marks } = req.body;
+  const { subjectCode, examType, internalType, marks, fullMarks } = req.body;
 
   try {
     const newMark = new Marks({
@@ -14,7 +14,7 @@ export const addMarks = async (req, res) => {
       examType,
       internalType,
       marks,
-      fullMarks: 100, // Example, adjust as needed
+      fullMarks,   
     });
 
     await newMark.save();
@@ -40,17 +40,3 @@ export const getMarks = async (req, res) => {
   }
 };
 
-export const updateMarks = async (req, res) => {
-  const { studentId, subjectCode } = req.params;
-  const { marks } = req.body;
-  try {
-    const updatedMarks = await Marks.findOneAndUpdate(
-      { studentId, subjectCode },
-      { marks },
-      { new: true }
-    );
-    res.json({ success: true, marks: updatedMarks });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
