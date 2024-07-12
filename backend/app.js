@@ -14,6 +14,7 @@ import eventsRouter from "./router/eventsRouter.js";
 import examRouter from "./router/examRouter.js";
 import attendanceRouter from "./router/attendanceRouter.js";
 import usersRouter from "./router/usersRouter.js";
+import marks from "./router/marks.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import "./config/passport-google-strategy.js"; // Import the passport configuration
 
@@ -53,6 +54,7 @@ app.use("/api/v1/events", eventsRouter);
 app.use("/api/v1/exam", examRouter);
 app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/marks", marks);
 
 app.use((err, req, res, next) => {
   errorHandler(err, req, res, next);

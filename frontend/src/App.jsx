@@ -15,6 +15,7 @@ import AdminDashboard from "../src/pages/Admin/Dashboard";
 import StudentDashboard from "../src/pages/Students/Dashboard";
 import TeacherDashboard from "../src/pages/Teachers/Dashboard";
 import Classes from "../src/pages/Admin/Classes";
+import AddMarks from "./components/AddMarks";
 import Exam from "../src/pages/Admin/Exam";
 import Attendance from "../src/pages/Admin/Attendance";
 import Performance from "../src/pages/Admin/Performance";
@@ -78,6 +79,8 @@ const App = () => {
           element={<ProtectedRoute element={Classes} />}
         />
         <Route path="admin/exams" element={<ProtectedRoute element={Exam} />} />
+        <Route path="/add-marks/:studentId" element={<AddMarks />} />
+
         <Route
           path="admin/attendance"
           element={<ProtectedRoute element={Attendance} />}
