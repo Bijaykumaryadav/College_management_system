@@ -1,6 +1,7 @@
 // controllers/marksController.js
 
 import { Marks } from "../models/marks.js";
+import {percentage} from "../models/externalmarks.js";
 
 export const addMarks = async (req, res) => {
   const { studentId } = req.params;
@@ -40,3 +41,27 @@ export const getMarks = async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to fetch marks" });
   }
 };
+
+
+export const external =  async (req, res) => {
+  const { studentId } = req.params;
+  const { _id,externalPercentage } = req.body;
+
+  try {
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    
+    await percentage.create({
+      id:studentId,
+      externalPercentage
+    })
+
+    res.status(200).json({ success: true, message: "External percentage updated successfully" });
+  } catch (error) {
+    console.error("Error updating external percentage:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+

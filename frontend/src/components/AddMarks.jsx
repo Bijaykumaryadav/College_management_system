@@ -27,6 +27,7 @@ const AddMarks = () => {
   });
 
   const [marksData, setMarksData] = useState([]);
+  const [overallPercentages, setOverallPercentages] = useState({});
 
   useEffect(() => {
     fetchMarksData();
@@ -50,9 +51,13 @@ const AddMarks = () => {
 
   const handleAddMarks = async () => {
     try {
+      const marksDataToSend = { ...formInputs };
+      if (marksDataToSend.examType !== "internal") {
+        delete marksDataToSend.internalType;
+      }
       const response = await axios.post(
         `http://localhost:4000/api/v1/marks/${studentId}`,
-        formInputs
+        marksDataToSend
       );
       if (response.data.success) {
         fetchMarksData();
@@ -74,6 +79,55 @@ const AddMarks = () => {
 
   const handleNavigateToDashboard = () => {
     navigate("/admin/dashboard");
+  };
+
+  const calculateOverallPercentage = async (type, isExternal = false) => {
+    const filteredMarks = marksData.filter((mark) =>
+      isExternal ? mark.examType === type : mark.internalType === type
+    );
+
+    if (filteredMarks.length === 0) {
+      setOverallPercentages((prev) => ({
+        ...prev,
+        [type]: "N/A",
+      }));
+      return;
+    }
+
+    const totalMarks = filteredMarks.reduce((acc, mark) => acc + mark.marks, 0);
+    const totalFullMarks = filteredMarks.reduce(
+      (acc, mark) => acc + mark.fullMarks,
+      0
+    );
+
+    if (totalFullMarks === 0) {
+      setOverallPercentages((prev) => ({
+        ...prev,
+        [type]: "N/A",
+      }));
+      return;
+    }
+
+    const overallPercentage = ((totalMarks / totalFullMarks) * 100).toFixed(2);
+
+    setOverallPercentages((prev) => ({
+      ...prev,
+      [type]: overallPercentage,
+    }));
+
+    if (isExternal) {
+      try {
+        const response = await axios.post(
+          `http://localhost:4000/api/v1/marks/percentage/${studentId}`,
+          { externalPercentage: overallPercentage }
+        );
+        if (!response.data.success) {
+          console.error("Error updating external percentage");
+        }
+      } catch (error) {
+        console.error("Error updating external percentage:", error);
+      }
+    }
   };
 
   const renderMarksTable = (filterCondition) => (
@@ -176,12 +230,40 @@ const AddMarks = () => {
 
       <FormLabel>I INTERNAL</FormLabel>
       {renderMarksTable((mark) => mark.internalType === "I INTERNAL")}
+      <AddMarksButton onClick={() => calculateOverallPercentage("I INTERNAL")}>
+        Calculate Overall Percentage
+      </AddMarksButton>
+      {overallPercentages["I INTERNAL"] && (
+        <div>Overall Percentage: {overallPercentages["I INTERNAL"]}%</div>
+      )}
       <FormLabel>II INTERNAL</FormLabel>
       {renderMarksTable((mark) => mark.internalType === "II INTERNAL")}
+      <AddMarksButton onClick={() => calculateOverallPercentage("II INTERNAL")}>
+        Calculate Overall Percentage
+      </AddMarksButton>
+      {overallPercentages["II INTERNAL"] && (
+        <div>Overall Percentage: {overallPercentages["II INTERNAL"]}%</div>
+      )}
       <FormLabel>III INTERNAL</FormLabel>
       {renderMarksTable((mark) => mark.internalType === "III INTERNAL")}
+      <AddMarksButton
+        onClick={() => calculateOverallPercentage("III INTERNAL")}
+      >
+        Calculate Overall Percentage
+      </AddMarksButton>
+      {overallPercentages["III INTERNAL"] && (
+        <div>Overall Percentage: {overallPercentages["III INTERNAL"]}%</div>
+      )}
       <FormLabel>EXTERNAL</FormLabel>
       {renderMarksTable((mark) => mark.examType === "external")}
+      <AddMarksButton
+        onClick={() => calculateOverallPercentage("external", true)}
+      >
+        Calculate Overall Percentage
+      </AddMarksButton>
+      {overallPercentages["external"] && (
+        <div>Overall Percentage: {overallPercentages["external"]}%</div>
+      )}
     </AddMarksContainer>
   );
 };

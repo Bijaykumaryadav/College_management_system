@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const marksSchema = new mongoose.Schema({
   studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Student", 
+    ref: "Student",
     required: true,
   },
   subjectCode: {
@@ -18,6 +18,7 @@ const marksSchema = new mongoose.Schema({
   internalType: {
     type: String,
     enum: ["I INTERNAL", "II INTERNAL", "III INTERNAL"],
+    required: false,
   },
   marks: {
     type: Number,
