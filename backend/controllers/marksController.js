@@ -1,7 +1,7 @@
 // controllers/marksController.js
 
 import { Marks } from "../models/marks.js";
-import {percentage} from "../models/externalmarks.js";
+import { percentage } from "../models/externalmarks.js";
 
 export const addMarks = async (req, res) => {
   const { studentId } = req.params;
@@ -35,6 +35,7 @@ export const getMarks = async (req, res) => {
 
   try {
     const marks = await Marks.find({ studentId });
+    console.log("marks is:", marks);
     res.status(200).json({ success: true, marks });
   } catch (error) {
     console.error("Error fetching marks:", error);
@@ -42,26 +43,25 @@ export const getMarks = async (req, res) => {
   }
 };
 
-
-export const external =  async (req, res) => {
+export const external = async (req, res) => {
   const { studentId } = req.params;
-  const { _id,externalPercentage } = req.body;
+  const { externalPercentage } = req.body;
 
   try {
-    const student = await Student.findById(studentId);
+    const student = await percentage.findById(studentId);
     if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+      await percentage.create({
+        studentId,
+        externalPercentage,
+      });
     }
-    
-    await percentage.create({
-      id:studentId,
-      externalPercentage
-    })
 
-    res.status(200).json({ success: true, message: "External percentage updated successfully" });
+    res.status(200).json({
+      success: true,
+      message: "External percentage updated successfully",
+    });
   } catch (error) {
     console.error("Error updating external percentage:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
-

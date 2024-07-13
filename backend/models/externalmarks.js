@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const StudentSchema = new mongoose.Schema({
-    _id: {
+  studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",
+    ref: "Marks",
     required: true,
-    },
+  },
   externalPercentage: {
     type: Number,
     default: null,

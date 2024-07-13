@@ -5,16 +5,15 @@ import {
   Title,
   LoremTextContainer,
 } from "../styles/styles";
-import { LoremIpsum } from "lorem-ipsum";
 import ImageSlider from "../components/ImageSlider";
 import Enquire from "../components/Enquire";
 import Admission from "../components/Admission";
 import SocialMedia from "../components/Socialmedia";
 
-const lorem = new LoremIpsum();
 
 const Home = () => {
-  const loremText = lorem.generateParagraphs(1);
+  const loremText =
+    "The College Management System (CMS) for Bangalore Technological Institute is designed to streamline and enhance the administrative and academic functions of the college. This comprehensive system provides various modules for managing students, teachers, classes, exams, and marks, thereby ensuring efficient and effective operations within the institution.";
 
   return (
     <>
