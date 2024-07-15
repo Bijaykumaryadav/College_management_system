@@ -1,37 +1,35 @@
-// AttendanceStyles.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const AttendanceContainer = styled.div`
   display: flex;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    padding-left: 0;
-  }
 `;
 
 export const Content = styled.div`
   flex: 1;
-`;
-
-export const AttendanceContent = styled.div`
   padding: 20px;
 `;
 
+export const AttendanceContent = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
 export const AttendanceHeader = styled.h2`
-  font-size: 24px;
   margin-bottom: 20px;
 `;
 
-export const AttendanceList = styled.ul`
-  list-style: none;
-  padding: 0;
+export const AttendanceList = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-export const AttendanceItem = styled.li`
+export const AttendanceItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  padding: 10px 0;
 `;
 
 export const StudentName = styled.span`
@@ -39,34 +37,31 @@ export const StudentName = styled.span`
 `;
 
 export const CheckboxLabel = styled.label`
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  input {
+    margin-right: 5px;
+  }
 `;
 
 export const Divider = styled.hr`
-  margin-top: 5px;
-  border: 0;
-  border-top: 1px solid #ccc;
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
 `;
 
 export const SubmitButton = styled.button`
-  padding: 8px 16px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-`;
+  margin-top: 20px;
 
-
-export const SidebarContainer = styled.div`
-  flex: 0 0 250px; /* Sidebar width */
-`;
-
-export const AttendanceDate = styled.span`
-  font-weight: bold;
-`;
-
-export const AttendanceStatus = styled.span`
-  margin-left: 10px;
-  color: ${({ present }) => (present ? 'green' : 'red')};
+  &:hover {
+    background-color: #0056b3;
+  }
 `;

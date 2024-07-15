@@ -1,7 +1,6 @@
-// Attendance.js
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
+import { SidebarProvider } from "./SidebarContext";
 import axios from "axios";
 import {
   AttendanceContainer,
@@ -16,7 +15,7 @@ import {
   SubmitButton,
 } from "../../styles/AttendanceStyles";
 
-const Attendance = () => {
+const Attendance = ({ isDashboard }) => {
   const [students, setStudents] = useState([]);
   const [attendanceData, setAttendanceData] = useState([]);
 
@@ -75,7 +74,7 @@ const Attendance = () => {
 
   return (
     <SidebarProvider>
-      <AttendanceContainer>
+      <AttendanceContainer isDashboard={isDashboard}>
         <Sidebar />
         <Content>
           <AttendanceContent>
@@ -87,7 +86,8 @@ const Attendance = () => {
                     <StudentName>{student.name}</StudentName>
                     <CheckboxLabel>
                       <input
-                        type="checkbox"
+                        type="radio"
+                        name={`status-${student.id}`}
                         checked={attendanceData[index]?.status === "Present"}
                         onChange={() =>
                           handleStatusChange(student.id, "Present")
@@ -97,7 +97,8 @@ const Attendance = () => {
                     </CheckboxLabel>
                     <CheckboxLabel>
                       <input
-                        type="checkbox"
+                        type="radio"
+                        name={`status-${student.id}`}
                         checked={attendanceData[index]?.status === "Absent"}
                         onChange={() =>
                           handleStatusChange(student.id, "Absent")
@@ -107,7 +108,8 @@ const Attendance = () => {
                     </CheckboxLabel>
                     <CheckboxLabel>
                       <input
-                        type="checkbox"
+                        type="radio"
+                        name={`status-${student.id}`}
                         checked={
                           attendanceData[index]?.status ===
                           "Absent with apology"
