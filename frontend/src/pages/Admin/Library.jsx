@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
+import { SidebarProvider } from "./SidebarContext";
 
 import axios from "axios";
 import {
@@ -16,7 +16,6 @@ import {
   BookItem,
   BookTitle,
   BookAuthor,
-  ActionButton,
 } from "../../styles/LibraryStyles";
 
 const Library = () => {
@@ -52,13 +51,6 @@ const Library = () => {
     }
   };
 
-  const handleBookPick = async (bookId, studentId) => {
-    // Implement logic to record when a student picks a book
-  };
-
-  const handleBookReturn = async (bookId, studentId) => {
-    // Implement logic to mark when a student returns a book
-  };
 
   return (
     <SidebarProvider>
@@ -96,16 +88,6 @@ const Library = () => {
               <BookItem key={book._id}>
                 <BookTitle>{book.bookname}</BookTitle>
                 <BookAuthor>by {book.author}</BookAuthor>
-                <ActionButton
-                  onClick={() => handleBookPick(book._id, "student123")}
-                >
-                  Pick
-                </ActionButton>
-                <ActionButton
-                  onClick={() => handleBookReturn(book._id, "student123")}
-                >
-                  Return
-                </ActionButton>
               </BookItem>
             ))}
           </BookList>

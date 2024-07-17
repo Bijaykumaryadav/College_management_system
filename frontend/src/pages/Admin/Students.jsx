@@ -7,8 +7,9 @@ import {
   Content,
   StudentsContent,
   StudentsHeader,
-  StudentList,
-  StudentItem,
+  StudentsTable,
+  TableRow,
+  TableCell,
   AddStudentForm,
   AddStudentInput,
   AddStudentButton,
@@ -42,35 +43,33 @@ const Students = () => {
     }
   };
 
-const handleAddStudent = async (e) => {
-  e.preventDefault();
-  if (
-    newStudent.name.trim() !== "" &&
-    newStudent.email.trim() !== "" &&
-    newStudent.phone.trim() !== "" &&
-    newStudent.registrationNumber.trim() !== "" &&
-    newStudent.grade.trim() !== "" &&
-    newStudent.section.trim() !== ""
-  ) {
-    try {
-      await axios.post("http://localhost:4000/api/v1/students", newStudent);
-      setNewStudent({
-        name: "",
-        email: "",
-        phone: "",
-        registrationNumber: "",
-        grade: "",
-        section: "",
-        subSection: "",
-      });
-      fetchStudents();
-    } catch (error) {
-      console.error("Error adding student:", error);
+  const handleAddStudent = async (e) => {
+    e.preventDefault();
+    if (
+      newStudent.name.trim() !== "" &&
+      newStudent.email.trim() !== "" &&
+      newStudent.phone.trim() !== "" &&
+      newStudent.registrationNumber.trim() !== "" &&
+      newStudent.grade.trim() !== "" &&
+      newStudent.section.trim() !== ""
+    ) {
+      try {
+        await axios.post("http://localhost:4000/api/v1/students", newStudent);
+        setNewStudent({
+          name: "",
+          email: "",
+          phone: "",
+          registrationNumber: "",
+          grade: "",
+          section: "",
+          subSection: "",
+        });
+        fetchStudents();
+      } catch (error) {
+        console.error("Error adding student:", error);
+      }
     }
-  }
-};
-
-
+  };
 
   const categorizeStudents = (
     departmentCode,
@@ -121,15 +120,34 @@ const handleAddStudent = async (e) => {
                         Semester {semester} - Section {section} - Sub-Section{" "}
                         {subSection}
                       </StudentsHeader>
-                      <StudentList>
-                        {categorizedStudents.map((student) => (
-                          <StudentItem key={student.id}>
-                            {student.name} - {student.email} - {student.phone} -{" "}
-                            {student.registrationNumber} - {student.grade} -{" "}
-                            {student.section} - {student.subSection}
-                          </StudentItem>
-                        ))}
-                      </StudentList>
+                      <StudentsTable>
+                        <thead>
+                          <tr>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Phone</TableCell>
+                            <TableCell>USN</TableCell>
+                            <TableCell>Semester</TableCell>
+                            <TableCell>Section</TableCell>
+                            <TableCell>Sub-Section</TableCell>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {categorizedStudents.map((student) => (
+                            <TableRow key={student.id}>
+                              <TableCell>{student.name}</TableCell>
+                              <TableCell>{student.email}</TableCell>
+                              <TableCell>{student.phone}</TableCell>
+                              <TableCell>
+                                {student.registrationNumber}
+                              </TableCell>
+                              <TableCell>{student.grade}</TableCell>
+                              <TableCell>{student.section}</TableCell>
+                              <TableCell>{student.subSection}</TableCell>
+                            </TableRow>
+                          ))}
+                        </tbody>
+                      </StudentsTable>
                     </div>
                   );
                 }
@@ -148,15 +166,32 @@ const handleAddStudent = async (e) => {
                     <StudentsHeader>
                       Semester {semester} - Section {section}
                     </StudentsHeader>
-                    <StudentList>
-                      {categorizedStudents.map((student) => (
-                        <StudentItem key={student.id}>
-                          {student.name} - {student.email} - {student.phone} -{" "}
-                          {student.registrationNumber} - {student.grade} -{" "}
-                          {student.section} - {student.subSection}
-                        </StudentItem>
-                      ))}
-                    </StudentList>
+                    <StudentsTable>
+                      <thead>
+                        <tr>
+                          <TableCell>Name</TableCell>
+                          <TableCell>Email</TableCell>
+                          <TableCell>Phone</TableCell>
+                          <TableCell>USN</TableCell>
+                          <TableCell>Semester</TableCell>
+                          <TableCell>Section</TableCell>
+                          <TableCell>Sub-Section</TableCell>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {categorizedStudents.map((student) => (
+                          <TableRow key={student.id}>
+                            <TableCell>{student.name}</TableCell>
+                            <TableCell>{student.email}</TableCell>
+                            <TableCell>{student.phone}</TableCell>
+                            <TableCell>{student.registrationNumber}</TableCell>
+                            <TableCell>{student.grade}</TableCell>
+                            <TableCell>{student.section}</TableCell>
+                            <TableCell>{student.subSection}</TableCell>
+                          </TableRow>
+                        ))}
+                      </tbody>
+                    </StudentsTable>
                   </div>
                 );
               }

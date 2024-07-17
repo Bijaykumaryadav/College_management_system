@@ -86,9 +86,6 @@ const TeacherDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
 
   return (
     <SidebarProvider>

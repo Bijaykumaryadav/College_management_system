@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { SidebarProvider } from "./SidebarContext";
@@ -13,6 +13,10 @@ import {
   AddClassInput,
   AddClassButton,
   AddClassSelect,
+  ClassesTable,
+  TableHeader,
+  TableRow,
+  TableData,
 } from "../../styles/ClassesStyles";
 
 const Classes = () => {
@@ -22,6 +26,7 @@ const Classes = () => {
   const [semester, setSemester] = useState("");
   const [section, setSection] = useState("");
   const [subSection, setSubSection] = useState("");
+  const [showTable, setShowTable] = useState(true); // Initially show the table
 
   useEffect(() => {
     fetchClasses();
@@ -179,16 +184,28 @@ const Classes = () => {
               )}
               <AddClassButton type="submit">Add Class</AddClassButton>
             </AddClassForm>
-            <ClassList>
-              {Array.isArray(classes) &&
-                classes.map((classItem, index) => (
-                  <ClassItem key={index}>
-                    {classItem.grade} - {classItem.department} -{" "}
-                    {classItem.semester} - {classItem.section}{" "}
-                    {classItem.subSection && `- ${classItem.subSection}`}
-                  </ClassItem>
+            <ClassesTable>
+              <thead>
+                <TableHeader>
+                  <th>Class Name</th>
+                  <th>Department</th>
+                  <th>Semester</th>
+                  <th>Section</th>
+                  <th>Sub Section</th>
+                </TableHeader>
+              </thead>
+              <tbody>
+                {classes.map((classItem, index) => (
+                  <TableRow key={index}>
+                    <TableData>{classItem.grade}</TableData>
+                    <TableData>{classItem.department}</TableData>
+                    <TableData>{classItem.semester}</TableData>
+                    <TableData>{classItem.section}</TableData>
+                    <TableData>{classItem.subSection || "N/A"}</TableData>
+                  </TableRow>
                 ))}
-            </ClassList>
+              </tbody>
+            </ClassesTable>
           </ClassesContent>
         </Content>
       </ClassesContainer>

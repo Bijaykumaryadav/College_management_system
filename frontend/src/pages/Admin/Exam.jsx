@@ -14,8 +14,7 @@ import {
 
 const Exam = () => {
   const [students, setStudents] = useState([]);
-  const [redirectTo, setRedirectTo] = useState(null); // State to manage redirection
-
+  const [redirectTo, setRedirectTo] = useState(null); 
   useEffect(() => {
     fetchStudents();
   }, []);

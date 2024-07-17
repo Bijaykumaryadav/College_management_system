@@ -1,5 +1,4 @@
-// ClassSection.js
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
 import {
@@ -7,8 +6,10 @@ import {
   SidebarContainer,
   Content,
   ClassHeader,
-  ClassList,
-  ClassItem,
+  ClassesTable,
+  TableHeader,
+  TableRow,
+  TableData,
 } from "../../styles/ClassesStyles";
 import { SidebarProvider } from "./SidebarContext";
 
@@ -45,16 +46,28 @@ const ClassSection = () => {
         </SidebarContainer>
         <Content>
           <ClassHeader>Classes</ClassHeader>
-          <ClassList>
-            {classes.map((classItem, index) => (
-              <ClassItem key={index}>
-                {classItem.grade} - {classItem.department} -{"SEMESTER:"}
-                {classItem.semester} -{"SECTION:"} {classItem.section} - 
-                {" "}
-                {classItem.subSection && ` ${classItem.subSection}`}
-              </ClassItem>
-            ))}
-          </ClassList>
+          <ClassesTable>
+            <thead>
+              <TableHeader>
+                <th>Class Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+                <th>Section</th>
+                <th>Sub Section</th>
+              </TableHeader>
+            </thead>
+            <tbody>
+              {classes.map((classItem, index) => (
+                <TableRow key={index}>
+                  <TableData>{classItem.grade}</TableData>
+                  <TableData>{classItem.department}</TableData>
+                  <TableData>{classItem.semester}</TableData>
+                  <TableData>{classItem.section}</TableData>
+                  <TableData>{classItem.subSection || "N/A"}</TableData>
+                </TableRow>
+              ))}
+            </tbody>
+          </ClassesTable>
         </Content>
       </ClassContainer>
     </SidebarProvider>

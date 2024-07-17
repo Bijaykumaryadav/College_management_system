@@ -1,5 +1,5 @@
 // StudentSection.js
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { SidebarProvider } from "./SidebarContext";
@@ -8,8 +8,9 @@ import {
   Content,
   StudentsContent,
   StudentsHeader,
-  StudentList,
-  StudentItem,
+  StudentsTable,
+  TableRow,
+  TableCell,
 } from "../../styles/StudentsStyles";
 
 const StudentSection = () => {
@@ -30,7 +31,12 @@ const StudentSection = () => {
     }
   };
 
-  const categorizeStudents = (departmentCode, semester, section, subSection) => {
+  const categorizeStudents = (
+    departmentCode,
+    semester,
+    section,
+    subSection
+  ) => {
     return students.filter(
       (student) =>
         student.registrationNumber.includes(departmentCode) &&
@@ -74,15 +80,34 @@ const StudentSection = () => {
                         Semester {semester} - Section {section} - Sub-Section{" "}
                         {subSection}
                       </StudentsHeader>
-                      <StudentList>
-                        {categorizedStudents.map((student) => (
-                          <StudentItem key={student.id}>
-                            {student.name} - {student.email} - {student.phone} -{" "}
-                            {student.registrationNumber} - {student.grade} -{" "}
-                            {student.section} - {student.subSection}
-                          </StudentItem>
-                        ))}
-                      </StudentList>
+                      <StudentsTable>
+                        <thead>
+                          <tr>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Phone</TableCell>
+                            <TableCell>USN</TableCell>
+                            <TableCell>Semester</TableCell>
+                            <TableCell>Section</TableCell>
+                            <TableCell>Sub-Section</TableCell>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {categorizedStudents.map((student) => (
+                            <TableRow key={student.id}>
+                              <TableCell>{student.name}</TableCell>
+                              <TableCell>{student.email}</TableCell>
+                              <TableCell>{student.phone}</TableCell>
+                              <TableCell>
+                                {student.registrationNumber}
+                              </TableCell>
+                              <TableCell>{student.grade}</TableCell>
+                              <TableCell>{student.section}</TableCell>
+                              <TableCell>{student.subSection}</TableCell>
+                            </TableRow>
+                          ))}
+                        </tbody>
+                      </StudentsTable>
                     </div>
                   );
                 }
@@ -101,15 +126,32 @@ const StudentSection = () => {
                     <StudentsHeader>
                       Semester {semester} - Section {section}
                     </StudentsHeader>
-                    <StudentList>
-                      {categorizedStudents.map((student) => (
-                        <StudentItem key={student.id}>
-                          {student.name} - {student.email} - {student.phone} -{" "}
-                          {student.registrationNumber} - {student.grade} -{" "}
-                          {student.section} - {student.subSection}
-                        </StudentItem>
-                      ))}
-                    </StudentList>
+                    <StudentsTable>
+                      <thead>
+                        <tr>
+                          <TableCell>Name</TableCell>
+                          <TableCell>Email</TableCell>
+                          <TableCell>Phone</TableCell>
+                          <TableCell>USN</TableCell>
+                          <TableCell>Semester</TableCell>
+                          <TableCell>Section</TableCell>
+                          <TableCell>Sub-Section</TableCell>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {categorizedStudents.map((student) => (
+                          <TableRow key={student.id}>
+                            <TableCell>{student.name}</TableCell>
+                            <TableCell>{student.email}</TableCell>
+                            <TableCell>{student.phone}</TableCell>
+                            <TableCell>{student.registrationNumber}</TableCell>
+                            <TableCell>{student.grade}</TableCell>
+                            <TableCell>{student.section}</TableCell>
+                            <TableCell>{student.subSection}</TableCell>
+                          </TableRow>
+                        ))}
+                      </tbody>
+                    </StudentsTable>
                   </div>
                 );
               }

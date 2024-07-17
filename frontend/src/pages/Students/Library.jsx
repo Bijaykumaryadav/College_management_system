@@ -32,9 +32,10 @@ const LibrarySection = () => {
     }
   };
 
-  const handleBorrowBook = (id) => {
-    // Implement borrow book functionality here
-    console.log(`Book with ID ${id} has been borrowed.`);
+  const handleBorrowBook = (bookId, studentId) => {
+  };
+
+  const handleBookReturn = async (bookId, studentId) => {
   };
 
   return (
@@ -52,6 +53,11 @@ const LibrarySection = () => {
                 <p>Author: {book.author}</p>
                 <BorrowButton onClick={() => handleBorrowBook(book._id)}>
                   Borrow
+                </BorrowButton>
+                <BorrowButton
+                  onClick={() => handleBookReturn(book._id, "student123")}
+                >
+                  Return
                 </BorrowButton>
               </BookItem>
             ))}

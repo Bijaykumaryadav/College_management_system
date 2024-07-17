@@ -2,10 +2,6 @@ import styled from "styled-components";
 
 export const ClassesContainer = styled.div`
   display: flex;
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    padding-left: 0;
-  }
 `;
 
 export const Content = styled.div`
@@ -77,4 +73,35 @@ export const ClassHeader = styled.h1`
 export const GradeHeader = styled.h3`
   font-size: 18px;
   margin-bottom: 10px;
+`;
+
+export const ShowTableButton = styled.button`
+  padding: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+`;
+
+export const ClassesTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+`;
+
+export const TableHeader = styled.tr`
+  background-color: #f1f1f1;
+`;
+
+export const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+export const TableData = styled.td`
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
 `;

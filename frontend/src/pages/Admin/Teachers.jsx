@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 import axios from "axios";
@@ -7,8 +7,9 @@ import {
   Content,
   TeachersContent,
   TeachersHeader,
-  TeacherList,
-  TeacherItem,
+  TeachersTable,
+  TableRow,
+  TableCell,
   AddTeacherForm,
   AddTeacherInput,
   AddTeacherButton,
@@ -170,63 +171,211 @@ const Teachers = () => {
               <AddTeacherButton type="submit">Add Teacher</AddTeacherButton>
             </AddTeacherForm>
 
-            <TeachersHeader>Computer Science Engineering</TeachersHeader>
-            <TeacherList>
-              {categorizedTeachers("COMPUTER SCIENCE ENGINEERING").map(
-                (teacher) => (
-                  <TeacherItem key={teacher.id}>
-                    {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
-                    {teacher.address} - {teacher.qualification} -{" "}
-                    {teacher.department} - {teacher.position} -{" "}
-                    {teacher.subjectCodes}
-                  </TeacherItem>
-                )
-              )}
-            </TeacherList>
+            {categorizedTeachers("COMPUTER SCIENCE ENGINEERING").length > 0 && (
+              <>
+                <TeachersHeader>Computer Science Engineering</TeachersHeader>
+                <TeachersTable>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Qualification</th>
+                      <th>Department</th>
+                      <th>Position</th>
+                      <th>Subject Codes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categorizedTeachers("COMPUTER SCIENCE ENGINEERING").map(
+                      (teacher) => (
+                        <TableRow key={teacher.id}>
+                          <TableCell data-label="Name">
+                            {teacher.name}
+                          </TableCell>
+                          <TableCell data-label="Email">
+                            {teacher.email}
+                          </TableCell>
+                          <TableCell data-label="Phone">
+                            {teacher.phone}
+                          </TableCell>
+                          <TableCell data-label="Address">
+                            {teacher.address}
+                          </TableCell>
+                          <TableCell data-label="Qualification">
+                            {teacher.qualification}
+                          </TableCell>
+                          <TableCell data-label="Department">
+                            {teacher.department}
+                          </TableCell>
+                          <TableCell data-label="Position">
+                            {teacher.position}
+                          </TableCell>
+                          <TableCell data-label="Subject Codes">
+                            {teacher.subjectCodes}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
+                  </tbody>
+                </TeachersTable>
+              </>
+            )}
 
-            <TeachersHeader>
-              Artificial Intelligence and Machine Learning
-            </TeachersHeader>
-            <TeacherList>
-              {categorizedTeachers(
-                "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING"
-              ).map((teacher) => (
-                <TeacherItem key={teacher.id}>
-                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
-                  {teacher.address} - {teacher.qualification} -{" "}
-                  {teacher.department} - {teacher.position} -{" "}
-                  {teacher.subjectCodes}
-                </TeacherItem>
-              ))}
-            </TeacherList>
+            {categorizedTeachers("ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING")
+              .length > 0 && (
+              <>
+                <TeachersHeader>
+                  Artificial Intelligence and Machine Learning
+                </TeachersHeader>
+                <TeachersTable>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Qualification</th>
+                      <th>Department</th>
+                      <th>Position</th>
+                      <th>Subject Codes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categorizedTeachers(
+                      "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING"
+                    ).map((teacher) => (
+                      <TableRow key={teacher.id}>
+                        <TableCell data-label="Name">{teacher.name}</TableCell>
+                        <TableCell data-label="Email">
+                          {teacher.email}
+                        </TableCell>
+                        <TableCell data-label="Phone">
+                          {teacher.phone}
+                        </TableCell>
+                        <TableCell data-label="Address">
+                          {teacher.address}
+                        </TableCell>
+                        <TableCell data-label="Qualification">
+                          {teacher.qualification}
+                        </TableCell>
+                        <TableCell data-label="Department">
+                          {teacher.department}
+                        </TableCell>
+                        <TableCell data-label="Position">
+                          {teacher.position}
+                        </TableCell>
+                        <TableCell data-label="Subject Codes">
+                          {teacher.subjectCodes}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </TeachersTable>
+              </>
+            )}
 
-            <TeachersHeader>Civil Engineering</TeachersHeader>
-            <TeacherList>
-              {categorizedTeachers("CIVIL ENGINEERING").map((teacher) => (
-                <TeacherItem key={teacher.id}>
-                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
-                  {teacher.address} - {teacher.qualification} -{" "}
-                  {teacher.department} - {teacher.position} -{" "}
-                  {teacher.subjectCodes}
-                </TeacherItem>
-              ))}
-            </TeacherList>
+            {categorizedTeachers("CIVIL ENGINEERING").length > 0 && (
+              <>
+                <TeachersHeader>Civil Engineering</TeachersHeader>
+                <TeachersTable>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Qualification</th>
+                      <th>Department</th>
+                      <th>Position</th>
+                      <th>Subject Codes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categorizedTeachers("CIVIL ENGINEERING").map((teacher) => (
+                      <TableRow key={teacher.id}>
+                        <TableCell data-label="Name">{teacher.name}</TableCell>
+                        <TableCell data-label="Email">
+                          {teacher.email}
+                        </TableCell>
+                        <TableCell data-label="Phone">
+                          {teacher.phone}
+                        </TableCell>
+                        <TableCell data-label="Address">
+                          {teacher.address}
+                        </TableCell>
+                        <TableCell data-label="Qualification">
+                          {teacher.qualification}
+                        </TableCell>
+                        <TableCell data-label="Department">
+                          {teacher.department}
+                        </TableCell>
+                        <TableCell data-label="Position">
+                          {teacher.position}
+                        </TableCell>
+                        <TableCell data-label="Subject Codes">
+                          {teacher.subjectCodes}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </TeachersTable>
+              </>
+            )}
 
-            <TeachersHeader>
-              Electrical and Communication Engineering
-            </TeachersHeader>
-            <TeacherList>
-              {categorizedTeachers(
-                "ELECTRICAL AND COMMUNICATION ENGINEERING"
-              ).map((teacher) => (
-                <TeacherItem key={teacher.id}>
-                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
-                  {teacher.address} - {teacher.qualification} -{" "}
-                  {teacher.department} - {teacher.position} -{" "}
-                  {teacher.subjectCodes}
-                </TeacherItem>
-              ))}
-            </TeacherList>
+            {categorizedTeachers("ELECTRICAL AND COMMUNICATION ENGINEERING")
+              .length > 0 && (
+              <>
+                <TeachersHeader>
+                  Electrical and Communication Engineering
+                </TeachersHeader>
+                <TeachersTable>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Qualification</th>
+                      <th>Department</th>
+                      <th>Position</th>
+                      <th>Subject Codes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categorizedTeachers(
+                      "ELECTRICAL AND COMMUNICATION ENGINEERING"
+                    ).map((teacher) => (
+                      <TableRow key={teacher.id}>
+                        <TableCell data-label="Name">{teacher.name}</TableCell>
+                        <TableCell data-label="Email">
+                          {teacher.email}
+                        </TableCell>
+                        <TableCell data-label="Phone">
+                          {teacher.phone}
+                        </TableCell>
+                        <TableCell data-label="Address">
+                          {teacher.address}
+                        </TableCell>
+                        <TableCell data-label="Qualification">
+                          {teacher.qualification}
+                        </TableCell>
+                        <TableCell data-label="Department">
+                          {teacher.department}
+                        </TableCell>
+                        <TableCell data-label="Position">
+                          {teacher.position}
+                        </TableCell>
+                        <TableCell data-label="Subject Codes">
+                          {teacher.subjectCodes}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </TeachersTable>
+              </>
+            )}
           </TeachersContent>
         </Content>
       </TeachersContainer>
