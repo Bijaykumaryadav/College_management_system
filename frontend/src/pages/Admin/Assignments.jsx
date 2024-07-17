@@ -43,7 +43,8 @@ const Assignments = () => {
       const response = await axios.get(
         "http://localhost:4000/api/v1/assignments/getall"
       );
-      setAssignments(response.data.assignments);
+      // Ensure that assignments are always an array
+      setAssignments(response.data.assignments || []);
     } catch (error) {
       console.error("Error fetching assignments:", error);
     }
@@ -65,11 +66,9 @@ const Assignments = () => {
           "http://localhost:4000/api/v1/assignments",
           newAssignment
         );
-        // Display success toast message
         toast.success("Assignment added successfully");
-        // Add the new assignment to the list
-        setAssignments([...assignments, response.data.assignment]);
-        // Clear the form
+        // Fetch assignments again after adding
+        fetchAssignments();
         setNewAssignment({
           title: "",
           description: "",
@@ -85,10 +84,43 @@ const Assignments = () => {
         setSection("");
       } catch (error) {
         console.error("Error adding assignment:", error);
-        // Display error toast message
         toast.error("Error adding assignment");
       }
+    } else {
+      toast.error("Please fill out all required fields");
     }
+  };
+
+  const categorizedAssignments = (dept) => {
+    return assignments
+      .filter(
+        (assignment) => assignment.department && assignment.department === dept
+      )
+      .reduce((acc, assignment) => {
+        const section = `${assignment.semester}-${assignment.section}`;
+        if (!acc[section]) {
+          acc[section] = [];
+        }
+        acc[section].push(assignment);
+        return acc;
+      }, {});
+  };
+
+  const renderAssignmentsByDepartmentAndSection = (dept) => {
+    const categorized = categorizedAssignments(dept);
+    return Object.keys(categorized).map((section) => (
+      <div key={section}>
+        <h3>Section: {section}</h3>
+        <AssignmentList>
+          {categorized[section].map((assignment) => (
+            <AssignmentItem key={assignment._id}>
+              <strong>{assignment.title}: </strong>
+              {assignment.description}, {"deadline is:"} {assignment.deadline}
+            </AssignmentItem>
+          ))}
+        </AssignmentList>
+      </div>
+    ));
   };
 
   return (
@@ -102,7 +134,7 @@ const Assignments = () => {
             <AddAssignmentForm onSubmit={handleAddAssignment}>
               <AddAssignmentInput
                 type="text"
-                placeholder="Enter assignment title"
+                placeholder="Enter subject code"
                 value={newAssignment.title}
                 onChange={(e) =>
                   setNewAssignment({ ...newAssignment, title: e.target.value })
@@ -235,7 +267,7 @@ const Assignments = () => {
                 </AddAssignmentSelect>
               )}
               <AddAssignmentInput
-                type="text"
+                type="date"
                 placeholder="Enter assignment deadline"
                 value={newAssignment.deadline}
                 onChange={(e) =>
@@ -249,17 +281,34 @@ const Assignments = () => {
                 Add Assignment
               </AddAssignmentButton>
             </AddAssignmentForm>
-            <AssignmentList>
-              {assignments.map((assignment) => (
-                <AssignmentItem key={assignment.id}>
-                  <strong>{assignment.title}: </strong>
-                  {assignment.description}, {assignment.grade},
-                  {assignment.deadline}, {assignment.department},{"Semester-"}
-                  {assignment.semester}, {assignment.section}
-                  {assignment.subSection && `- ${assignment.subSection}`}
-                </AssignmentItem>
-              ))}
-            </AssignmentList>
+
+            {assignments.length > 0 && (
+              <>
+                <AssignmentsHeader>
+                  Computer Science Engineering
+                </AssignmentsHeader>
+                {renderAssignmentsByDepartmentAndSection(
+                  "COMPUTER SCIENCE ENGINEERING"
+                )}
+
+                <AssignmentsHeader>
+                  Artificial Intelligence and Machine Learning
+                </AssignmentsHeader>
+                {renderAssignmentsByDepartmentAndSection(
+                  "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING"
+                )}
+
+                <AssignmentsHeader>Civil Engineering</AssignmentsHeader>
+                {renderAssignmentsByDepartmentAndSection("CIVIL ENGINEERING")}
+
+                <AssignmentsHeader>
+                  Electronics and Communication Engineering
+                </AssignmentsHeader>
+                {renderAssignmentsByDepartmentAndSection(
+                  "ELECTRONICS AND COMMUNICATION ENGINEERING"
+                )}
+              </>
+            )}
           </AssignmentsContent>
         </Content>
       </AssignmentsContainer>

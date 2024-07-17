@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
-import axios from "axios"; // Import axios for making API calls
+import axios from "axios";
 import {
   PerformanceContainer,
   Content,
@@ -30,9 +30,8 @@ const Performance = ({ isDashboard }) => {
         const studentsResponse = await axios.get(
           "http://localhost:4000/api/v1/students/getall"
         );
-        console.log("Students Response:", studentsResponse.data); // Log the response
+        console.log("Students Response:", studentsResponse.data);
 
-        // Assuming the API response structure is { students: [...] }
         const students = studentsResponse.data.students;
 
         if (!Array.isArray(students)) {
@@ -42,15 +41,28 @@ const Performance = ({ isDashboard }) => {
         // Fetch individual performance data for each student
         const performanceData = await Promise.all(
           students.map(async (student) => {
-            const percentageResponse = await axios.get(
-              `http://localhost:4000/api/v1/marks/percentage/${student._id}`
-            );
-            console.log("Percentage Response:", percentageResponse.data);
-            return {
-              id: student._id,
-              name: student.name,
-              score: percentageResponse.data.externalPercentage,
-            };
+            try {
+              const percentageResponse = await axios.get(
+                `http://localhost:4000/api/v1/marks/percentage/${student._id}`
+              );
+              console.log("Percentage Response:", percentageResponse.data);
+              return {
+                id: student._id,
+                name: student.name,
+                score: percentageResponse.data.externalPercentage,
+              };
+            } catch (error) {
+              // If percentage data is not found, handle gracefully
+              console.error(
+                `Error fetching percentage for student ${student._id}:`,
+                error
+              );
+              return {
+                id: student._id,
+                name: student.name,
+                score: null, // or any default value indicating data not found
+              };
+            }
           })
         );
 
@@ -68,7 +80,7 @@ const Performance = ({ isDashboard }) => {
   return (
     <SidebarProvider>
       <PerformanceContainer isDashboard={isDashboard}>
-        <Sidebar /> {/* Include the Sidebar component */}
+        <Sidebar />
         <Content>
           <PerformanceContent>
             <PerformanceHeader>School Performance</PerformanceHeader>
@@ -83,8 +95,8 @@ const Performance = ({ isDashboard }) => {
               ) : (
                 individualPerformanceData.map((student) => (
                   <p key={student.id}>
-                    {student.name}: {student.score}
-                    {"%"}
+                    {student.name}:{" "}
+                    {student.score !== null ? `${student.score}%` : "Not found"}
                   </p>
                 ))
               )}
