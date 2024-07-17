@@ -2,15 +2,14 @@ import mongoose from "mongoose";
 import validator from "validator";
 
 const announcementSchema = new mongoose.Schema({
-    announcement: {
+  announcement: {
     type: String,
-    required: true
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now, // Example default date value
   },
 });
 
-export const Announcement = mongoose.model('Announcement', announcementSchema);
-
-
-
-
-
+export const Announcement = mongoose.model("Announcement", announcementSchema);

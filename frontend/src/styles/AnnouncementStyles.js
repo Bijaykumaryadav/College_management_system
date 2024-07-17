@@ -70,6 +70,10 @@ export const AnnouncementHeader = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
 `;
+export const AnnouncementDate = styled.div`
+  color: #777;
+  font-size: 12px;
+`;
 
 export const AnnouncementTitle = styled.h3`
   margin-bottom: 10px;

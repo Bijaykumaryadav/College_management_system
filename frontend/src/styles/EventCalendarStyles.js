@@ -1,4 +1,3 @@
-// EventCalendarStyles.js
 import styled from "styled-components";
 
 export const EventCalendarContainer = styled.div`
@@ -22,6 +21,9 @@ export const Events = styled.div`
 `;
 
 export const Event = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
   padding: 10px;
   background-color: #f9f9f9;
@@ -31,10 +33,19 @@ export const Event = styled.div`
 export const AddEventForm = styled.form`
   margin-top: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const EventInput = styled.input`
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+`;
+
+export const EventDateInput = styled.input`
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -49,6 +60,10 @@ export const AddEventButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 export const ErrorText = styled.p`

@@ -25,6 +25,10 @@ export const AttendanceList = styled.div`
   flex-direction: column;
 `;
 
+export const SidebarContainer = styled.div`
+  display: block;
+`;
+
 export const AttendanceItem = styled.div`
   display: flex;
   align-items: center;
@@ -65,3 +69,40 @@ export const SubmitButton = styled.button`
     background-color: #0056b3;
   }
 `;
+
+export const AttendanceDate = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  input {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+`;
+
+export const AttendanceStatus = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+`;
+

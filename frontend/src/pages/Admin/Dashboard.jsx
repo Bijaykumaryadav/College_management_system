@@ -23,11 +23,17 @@ const AdminDashboard = () => {
   const [events, setEvents] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [studentPerformance, setStudentPerformance] = useState([]);
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [totalTeachers, setTotalTeachers] = useState(0);
+  const [totalClasses, setTotalClasses] = useState(0);
 
   useEffect(() => {
     fetchEvents();
     fetchAnnouncements();
     fetchStudentPerformance();
+    fetchTotalStudents();
+    fetchTotalTeachers();
+    fetchTotalClasses();
   }, []);
 
   const fetchEvents = async () => {
@@ -63,6 +69,39 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchTotalStudents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/students/getall"
+      );
+      setTotalStudents(response.data.students.length);
+    } catch (error) {
+      console.error("Error fetching total students:", error);
+    }
+  };
+
+  const fetchTotalTeachers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/teachers/getall"
+      );
+      setTotalTeachers(response.data.teachers.length);
+    } catch (error) {
+      console.error("Error fetching total teachers:", error);
+    }
+  };
+
+  const fetchTotalClasses = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/class/getall"
+      );
+      setTotalClasses(response.data.classes.length);
+    } catch (error) {
+      console.error("Error fetching total classes:", error);
+    }
+  };
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -74,34 +113,27 @@ const AdminDashboard = () => {
                 <CardContainer>
                   <Card>
                     <CardTitle>Total Students</CardTitle>
-                    <CardContent>500</CardContent>
+                    <CardContent>{totalStudents}</CardContent>
                   </Card>
                   <Card>
                     <CardTitle>Total Teachers</CardTitle>
-                    <CardContent>50</CardContent>
+                    <CardContent>{totalTeachers}</CardContent>
                   </Card>
                   <Card>
                     <CardTitle>Total Classes</CardTitle>
-                    <CardContent>20</CardContent>
-                  </Card>
-                  <Card>
-                    <CardTitle>Total Subjects</CardTitle>
-                    <CardContent>10</CardContent>
+                    <CardContent>{totalClasses}</CardContent>
                   </Card>
                 </CardContainer>
               </Section>
               <Section>
-                <SectionTitle>Events Calendar</SectionTitle>
                 <EventCalendar events={events} isDashboard />
               </Section>
             </TopContent>
             <BottomContent>
               <Section>
-                <SectionTitle>Announcements</SectionTitle>
                 <Announcement announcements={announcements} isDashboard />
               </Section>
               <Section>
-                <SectionTitle>Student Performance</SectionTitle>
                 <Performance performance={studentPerformance} isDashboard />
               </Section>
             </BottomContent>
@@ -111,6 +143,5 @@ const AdminDashboard = () => {
     </SidebarProvider>
   );
 };
-
 
 export default AdminDashboard;

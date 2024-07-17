@@ -17,6 +17,7 @@ import {
   AnnouncementList,
   AnnouncementItem,
   AnnouncementContent,
+  AnnouncementDate, // Import the new styled component for date
 } from "../../styles/AnnouncementStyles";
 
 const Announcement = ({ isDashboard }) => {
@@ -46,7 +47,8 @@ const Announcement = ({ isDashboard }) => {
       const response = await axios.post(
         "http://localhost:4000/api/v1/announcements",
         {
-          announcement: announcement, // Ensure that the key matches the backend model
+          announcement: announcement,
+          date: new Date(), // Example: Sending current date
         }
       );
       console.log("Announcement sent:", response.data);
@@ -94,6 +96,9 @@ const Announcement = ({ isDashboard }) => {
                 <AnnouncementContent>
                   {announcement.announcement}
                 </AnnouncementContent>
+                <AnnouncementDate>
+                  {new Date(announcement.date).toLocaleDateString()}
+                </AnnouncementDate>
               </AnnouncementItem>
             ))}
           </AnnouncementList>
