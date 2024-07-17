@@ -1,4 +1,3 @@
-// Library.js
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
@@ -41,13 +40,13 @@ const Library = () => {
   const addBook = async (book) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/library",
+        "http://localhost:4000/api/v1/library/books",
         {
           bookname: book.title,
           author: book.author,
         }
       );
-      setBooks([...books, response.data]);
+      setBooks([...books, response.data.book]);
     } catch (error) {
       console.error("Error adding book:", error);
     }

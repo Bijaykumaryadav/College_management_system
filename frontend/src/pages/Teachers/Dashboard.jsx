@@ -1,5 +1,7 @@
 // TeacherDashboard.js
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
+import axios from "axios";
 import {
   TeacherDashboardContainer,
   Content,
@@ -11,8 +13,83 @@ import {
   CardContent,
 } from "../../styles/DashboardStyles";
 import { SidebarProvider } from "./SidebarContext";
+import Announcement from "./Announcement";
+import { Event, Events } from "../../styles/EventCalendarStyles";
 
 const TeacherDashboard = () => {
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [totalTeachers, setTotalTeachers] = useState(0);
+  const [totalClasses, setTotalClasses] = useState(0);
+  const [announcements, setAnnouncements] = useState([]);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchTotalStudents();
+    fetchTotalTeachers();
+    fetchTotalClasses();
+    fetchAnnouncements();
+    fetchEvents();
+  }, []);
+
+  const fetchTotalStudents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/students/getall"
+      );
+      setTotalStudents(response.data.students.length);
+    } catch (error) {
+      console.error("Error fetching total students:", error);
+    }
+  };
+
+  const fetchTotalTeachers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/teachers/getall"
+      );
+      setTotalTeachers(response.data.teachers.length);
+    } catch (error) {
+      console.error("Error fetching total teachers:", error);
+    }
+  };
+
+  const fetchTotalClasses = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/class/getall"
+      );
+      setTotalClasses(response.data.classes.length);
+    } catch (error) {
+      console.error("Error fetching total classes:", error);
+    }
+  };
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/announcements/getall"
+      );
+      setAnnouncements(response.data.announcements || []);
+    } catch (error) {
+      console.error("Error fetching announcements:", error);
+    }
+  };
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/events/getall"
+      );
+      setEvents(response.data.events || []);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -23,30 +100,34 @@ const TeacherDashboard = () => {
               <CardContainer>
                 <Card>
                   <CardTitle>Total Students</CardTitle>
-                  <CardContent>500</CardContent>
+                  <CardContent>{totalStudents}</CardContent>
                 </Card>
                 <Card>
                   <CardTitle>Total Teachers</CardTitle>
-                  <CardContent>50</CardContent>
+                  <CardContent>{totalTeachers}</CardContent>
                 </Card>
                 <Card>
                   <CardTitle>Total Classes</CardTitle>
-                  <CardContent>50</CardContent>
+                  <CardContent>{totalClasses}</CardContent>
                 </Card>
               </CardContainer>
             </Section>
 
             <Section>
-              <SectionTitle>Recent Activity</SectionTitle>
-              {/* Add a list of recent activity items */}
+              <Announcement announcements={announcements} isDashboard />
             </Section>
 
             <Section>
               <SectionTitle>Upcoming Events</SectionTitle>
-              {/* Add a calendar or list of upcoming events */}
+              <Events>
+                {events.map((event, index) => (
+                  <Event key={index}>
+                    <div>{event.event}</div>
+                    <div>{new Date(event.date).toLocaleDateString()}</div>
+                  </Event>
+                ))}
+              </Events>
             </Section>
-
-            {/* Add more sections for other parts of the admin dashboard */}
           </Content>
         </TeacherDashboardContainer>
       </Sidebar>

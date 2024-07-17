@@ -1,7 +1,10 @@
-// CheckAnnouncementSection.js
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
+import axios from "axios";
+import { SidebarProvider } from "./SidebarContext"; // Import SidebarProvider
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   AnnouncementContainer,
   Content,
@@ -14,14 +17,15 @@ import {
   AnnouncementList,
   AnnouncementItem,
   AnnouncementContent,
+  AnnouncementDate, // Import the new styled component for date
 } from "../../styles/AnnouncementStyles";
-import { SidebarProvider } from "./SidebarContext";
 
-const CheckAnnouncementSection = () => {
+const Announcement = ({ isDashboard }) => {
+  // State for managing announcement
   const [announcement, setAnnouncement] = useState("");
   const [announcements, setAnnouncements] = useState([]);
-  const [error, setError] = useState(null);
 
+  // Function to fetch announcements
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get(
@@ -44,23 +48,31 @@ const CheckAnnouncementSection = () => {
         "http://localhost:4000/api/v1/announcements",
         {
           announcement: announcement,
+          date: new Date(), // Example: Sending current date
         }
       );
       console.log("Announcement sent:", response.data);
+      // Display success toast message
+      toast.success("Announcement sent successfully");
+      // Clear the form
       setAnnouncement("");
+      // Fetch announcements again to update the list
       fetchAnnouncements();
     } catch (error) {
       console.error("Error sending announcement:", error);
-      setError("Error sending announcement");
+      // Display error toast message
+      toast.error("Error sending announcement");
     }
   };
 
   return (
     <SidebarProvider>
-      <AnnouncementContainer>
+      <AnnouncementContainer isDashboard={isDashboard}>
+        <ToastContainer />
         <Sidebar />
         <Content>
           <Title>Announcement</Title>
+          {/* Announcement Form */}
           <AnnouncementForm onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="announcement">Announcement:</Label>
@@ -76,6 +88,7 @@ const CheckAnnouncementSection = () => {
             <Button type="submit">Send Announcement</Button>
           </AnnouncementForm>
 
+          {/* Display Announcements */}
           <h2>Announcements</h2>
           <AnnouncementList>
             {announcements.map((announcement) => (
@@ -83,6 +96,9 @@ const CheckAnnouncementSection = () => {
                 <AnnouncementContent>
                   {announcement.announcement}
                 </AnnouncementContent>
+                <AnnouncementDate>
+                  {new Date(announcement.date).toLocaleDateString()}
+                </AnnouncementDate>
               </AnnouncementItem>
             ))}
           </AnnouncementList>
@@ -92,4 +108,4 @@ const CheckAnnouncementSection = () => {
   );
 };
 
-export default CheckAnnouncementSection;
+export default Announcement;

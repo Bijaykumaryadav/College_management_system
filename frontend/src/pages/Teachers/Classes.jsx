@@ -48,7 +48,10 @@ const ClassSection = () => {
           <ClassList>
             {classes.map((classItem, index) => (
               <ClassItem key={index}>
-                <h3>{classItem.grade}</h3>
+                {classItem.grade} - {classItem.department} -{"SEMESTER:"}
+                {classItem.semester} -{"SECTION:"} {classItem.section} - 
+                {" "}
+                {classItem.subSection && ` ${classItem.subSection}`}
               </ClassItem>
             ))}
           </ClassList>

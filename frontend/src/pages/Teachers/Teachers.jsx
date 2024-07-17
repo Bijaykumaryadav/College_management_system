@@ -1,8 +1,8 @@
 // TeacherSection.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import axios from "axios";
 import { SidebarProvider } from "./SidebarContext";
+import axios from "axios";
 import {
   TeachersContainer,
   Content,
@@ -10,17 +10,9 @@ import {
   TeachersHeader,
   TeacherList,
   TeacherItem,
-  AddTeacherForm,
-  AddTeacherInput,
-  AddTeacherButton,
 } from "../../styles/TeachersStyles";
 
 const TeacherSection = () => {
-  const [newTeacher, setNewTeacher] = useState({
-    name: "",
-    email: "",
-    subject: "",
-  });
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
@@ -38,6 +30,10 @@ const TeacherSection = () => {
     }
   };
 
+  const categorizedTeachers = (department) => {
+    return teachers.filter((teacher) => teacher.department === department);
+  };
+
   return (
     <SidebarProvider>
       <TeachersContainer>
@@ -45,10 +41,61 @@ const TeacherSection = () => {
         <Content>
           <TeachersContent>
             <TeachersHeader>Teachers</TeachersHeader>
+
+            <TeachersHeader>Computer Science Engineering</TeachersHeader>
             <TeacherList>
-              {teachers.map((teacher) => (
+              {categorizedTeachers("COMPUTER SCIENCE ENGINEERING").map(
+                (teacher) => (
+                  <TeacherItem key={teacher.id}>
+                    {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
+                    {teacher.address} - {teacher.qualification} -{" "}
+                    {teacher.department} - {teacher.position} -{" "}
+                    {teacher.subjectCodes}
+                  </TeacherItem>
+                )
+              )}
+            </TeacherList>
+
+            <TeachersHeader>
+              Artificial Intelligence and Machine Learning
+            </TeachersHeader>
+            <TeacherList>
+              {categorizedTeachers(
+                "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING"
+              ).map((teacher) => (
                 <TeacherItem key={teacher.id}>
-                  {teacher.name} - {teacher.email} - {teacher.subject}
+                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
+                  {teacher.address} - {teacher.qualification} -{" "}
+                  {teacher.department} - {teacher.position} -{" "}
+                  {teacher.subjectCodes}
+                </TeacherItem>
+              ))}
+            </TeacherList>
+
+            <TeachersHeader>Civil Engineering</TeachersHeader>
+            <TeacherList>
+              {categorizedTeachers("CIVIL ENGINEERING").map((teacher) => (
+                <TeacherItem key={teacher.id}>
+                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
+                  {teacher.address} - {teacher.qualification} -{" "}
+                  {teacher.department} - {teacher.position} -{" "}
+                  {teacher.subjectCodes}
+                </TeacherItem>
+              ))}
+            </TeacherList>
+
+            <TeachersHeader>
+              Electronics and Communication Engineering
+            </TeachersHeader>
+            <TeacherList>
+              {categorizedTeachers(
+                "ELECTRONICS AND COMMUNICATION ENGINEERING"
+              ).map((teacher) => (
+                <TeacherItem key={teacher.id}>
+                  {teacher.name} - {teacher.email} - {teacher.phone} -{" "}
+                  {teacher.address} - {teacher.qualification} -{" "}
+                  {teacher.department} - {teacher.position} -{" "}
+                  {teacher.subjectCodes}
                 </TeacherItem>
               ))}
             </TeacherList>
