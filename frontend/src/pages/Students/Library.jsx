@@ -13,9 +13,11 @@ import {
   BorrowButton,
 } from "../../styles/LibraryStyles";
 import { SidebarProvider } from "./SidebarContext";
+import { useNavigate } from "react-router-dom";
 
 const LibrarySection = () => {
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchBooks();
@@ -33,9 +35,11 @@ const LibrarySection = () => {
   };
 
   const handleBorrowBook = (bookId, studentId) => {
+    navigate("/borrow");
   };
 
   const handleBookReturn = async (bookId, studentId) => {
+    navigate("/return");
   };
 
   return (

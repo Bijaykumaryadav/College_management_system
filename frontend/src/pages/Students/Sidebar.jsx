@@ -10,6 +10,7 @@ import {
   BsCalendar,
   BsGear,
   BsChatDots,
+  BsPeople,
 } from "react-icons/bs";
 import logo from "../assets/logo.png";
 
@@ -120,6 +121,12 @@ const Sidebar = ({ children }) => {
               <BsGraphUp />
             </SidebarIcon>
             <StyledLink to="/student/dashboard">Dashboard</StyledLink>
+          </SidebarNavItem>
+          <SidebarNavItem>
+            <SidebarIcon>
+              <BsPeople />
+            </SidebarIcon>
+            <StyledLink to="/student/classes">Classes</StyledLink>
           </SidebarNavItem>
           <SidebarNavItem>
             <SidebarIcon>

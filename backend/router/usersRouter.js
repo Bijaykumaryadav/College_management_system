@@ -16,6 +16,7 @@ import {
   getAdmins,
   getStudents,
   getTeachers,
+  getId,
 } from "../controllers/usersController.js";
 import passport from "passport";
 
@@ -34,6 +35,7 @@ router.post("/teacher/signin", teacherSignIn);
 router.get("/admins", adminAuth, getAdmins);
 router.get("/students", studentAuth, getStudents);
 router.get("/teachers", teacherAuth, getTeachers);
+router.get("/id", studentAuth, getId);
 
 // Authentication check routes
 router.get("/auth/admin/check", adminAuth, (req, res) => {

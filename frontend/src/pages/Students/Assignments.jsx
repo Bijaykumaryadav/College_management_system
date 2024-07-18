@@ -11,14 +11,17 @@ import {
   AssignmentDescription,
   AssignmentButton,
   AssignmentDoneMessage,
-} from "../../styles/AssignmentsStyles"; // Import styled components from AssignmentStyles.js
+} from "../../styles/AssignmentsStyles";
 import { SidebarProvider } from "./SidebarContext";
 
 const StudentAssignments = () => {
   const [assignments, setAssignments] = useState([]);
+  const [students, setStudents] = useState([]);
+  const studentId = students.length > 0 ? students[0]._id : null; // Assuming the first student for now
 
   useEffect(() => {
     fetchAssignments();
+    fetchStudents();
   }, []);
 
   const fetchAssignments = async () => {
@@ -32,8 +35,38 @@ const StudentAssignments = () => {
     }
   };
 
-  const handleDoAssignment = (id) => {
-    // Implement your logic for handling assignment submission
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/v1/students"
+      );
+      setStudents(response.data.students);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
+  };
+
+  const handleDoAssignment = async (id, opinion) => {
+    if (!studentId) {
+      console.error("No student ID available");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:4000/api/v1/assignments/submit", {
+        assignmentId: id,
+        studentId: studentId,
+        opinion: opinion,
+      });
+      // Update the assignment as done in the local state
+      setAssignments((prevAssignments) =>
+        prevAssignments.map((assignment) =>
+          assignment._id === id ? { ...assignment, done: true } : assignment
+        )
+      );
+    } catch (error) {
+      console.error("Error submitting assignment:", error);
+    }
   };
 
   return (
@@ -45,14 +78,16 @@ const StudentAssignments = () => {
         <Content>
           <h1>Assignments</h1>
           {assignments.map((assignment) => (
-            <AssignmentCard key={assignment.id}>
+            <AssignmentCard key={assignment._id}>
               <AssignmentTitle>{assignment.title}</AssignmentTitle>
               <AssignmentDescription>
                 {assignment.description}
               </AssignmentDescription>
               {!assignment.done ? (
                 <AssignmentForm
-                  onDoAssignment={() => handleDoAssignment(assignment.id)}
+                  onDoAssignment={(opinion) =>
+                    handleDoAssignment(assignment._id, opinion)
+                  }
                 />
               ) : (
                 <AssignmentDoneMessage>Assignment Done</AssignmentDoneMessage>
@@ -75,7 +110,7 @@ const AssignmentForm = ({ onDoAssignment }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (opinion.trim() !== "") {
-      onDoAssignment();
+      onDoAssignment(opinion);
     } else {
       alert("Please provide your opinion/assignment.");
     }

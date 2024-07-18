@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   StudentSignInContainer,
@@ -7,6 +7,7 @@ import {
   InputField,
   SubmitButton,
 } from "../styles/StudentSignInStyles";
+import { AdminRegisterLink } from "../styles/styles";
 
 const StudentSignIn = () => {
   const [email, setEmail] = useState("");
@@ -55,15 +56,15 @@ const StudentSignIn = () => {
         <SubmitButton type="submit" onClick={handleSignIn}>
           Sign In
         </SubmitButton>
-        <Link
+        <AdminRegisterLink
           to="/students/register"
           style={{ paddingBottom: "10px", fontSize: "16px" }}
         >
           Create Account
-        </Link>
-        <Link style={{ paddingBottom: "10px", fontSize: "16px" }}>
+        </AdminRegisterLink>
+        {/* <Link style={{ paddingBottom: "10px", fontSize: "16px" }}>
           Forgotten Password
-        </Link>
+        </Link> */}
         <button type="button" onClick={handleGoogleSignIn}>
           Sign in with Google
         </button>

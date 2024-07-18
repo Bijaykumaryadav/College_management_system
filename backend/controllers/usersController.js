@@ -172,7 +172,7 @@ export const googleStudentSignUp = async (req, res) => {
 
 export const getAdmins = async (req, res, next) => {
   try {
-    const admin = req.admin; 
+    const admin = req.admin;
     if (!admin) {
       return res
         .status(404)
@@ -187,6 +187,7 @@ export const getAdmins = async (req, res, next) => {
 export const getStudents = async (req, res, next) => {
   try {
     const student = req.student;
+    console.log(student);
     if (!student) {
       return res
         .status(404)
@@ -207,6 +208,19 @@ export const getTeachers = async (req, res, next) => {
         .json({ success: false, message: "Teacher not found" });
     }
     res.status(200).json(teacher);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getId = async (req, res, next) => {
+  try {
+    const { _id,email, password } = req.body;
+;
+    if (!_id) {
+      return res.status(404).json({ success: false, message: "Id not found" });
+    }
+    res.status(200).json(_id);
   } catch (error) {
     next(error);
   }

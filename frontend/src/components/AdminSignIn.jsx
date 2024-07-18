@@ -6,7 +6,7 @@ import {
   SubmitButton,
 } from "../styles/AdminSignInStyles";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AdminRegisterLink } from "../styles/styles";
 
 const AdminSignIn = () => {
@@ -31,8 +31,7 @@ const AdminSignIn = () => {
 
   const handleGoogleSignIn = () => {
     // Redirect to Google sign-in endpoint
-    window.location.href =
-      "http://localhost:4000/api/v1/users/auth/google";
+    window.location.href = "http://localhost:4000/api/v1/users/auth/google";
   };
 
   return (
@@ -57,15 +56,15 @@ const AdminSignIn = () => {
         <SubmitButton type="submit" onClick={handleSignIn}>
           Sign In
         </SubmitButton>
-        <AdminRegisterLink to="/admin/register">
+        <AdminRegisterLink to="/admin/register" style={{ padding: "15px" }}>
           Admin Register
         </AdminRegisterLink>
-        <Link
+        {/* <Link
           to="/forgot-password"
           style={{ padding: "10px", fontSize: "16px" }}
         >
           Forgotten Password
-        </Link>
+        </Link> */}
         <button type="button" onClick={handleGoogleSignIn}>
           Sign in with Google
         </button>

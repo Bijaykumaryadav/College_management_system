@@ -38,7 +38,7 @@ const ExamSection = () => {
 
   // Sample exam results data
   const examResultsData = {
-    subjects: ["Math", "Science", "English", "History"],
+    subjects: ["21C61", "21CS52", "21CS63", "21CS64"],
     results: [80, 75, 90, 85], // Sample results out of 100
   };
 

@@ -6,7 +6,6 @@ import {
   SubmitButton,
 } from "../styles/AdminRegisterStyles";
 import axios from "axios"; // Import axios
-import { Link } from "react-router-dom";
 
 const AdminRegister = () => {
   const [name, setName] = useState("");

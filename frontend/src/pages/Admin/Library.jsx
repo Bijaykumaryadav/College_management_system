@@ -51,6 +51,13 @@ const Library = () => {
     }
   };
 
+  const handleTokenSubmit = (bookId, token) => {
+    // Handle token submission logic here for a specific book (using bookId)
+    console.log("Token entered for book:", bookId, token);
+    // Clear the token input after submission (optional)
+    // Reset the token input value
+    // setToken("");
+  };
 
   return (
     <SidebarProvider>
@@ -88,6 +95,30 @@ const Library = () => {
               <BookItem key={book._id}>
                 <BookTitle>{book.bookname}</BookTitle>
                 <BookAuthor>by {book.author}</BookAuthor>
+                {/* Token input and submit button */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const token = e.target.token.value;
+                    handleTokenSubmit(book._id, token);
+                    // Reset the input field after submission
+                    e.target.reset();
+                  }}
+                >
+                  <FormGroup>
+                    <Label htmlFor={`token-${book._id}`}>
+                      Enter the generated token:
+                    </Label>
+                    <Input
+                      type="text"
+                      id={`token-${book._id}`}
+                      name="token"
+                      placeholder="Enter the generated token"
+                      required
+                    />
+                  </FormGroup>
+                  <Button type="submit">Enter</Button>
+                </form>
               </BookItem>
             ))}
           </BookList>

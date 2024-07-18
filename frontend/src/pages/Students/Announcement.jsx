@@ -1,25 +1,21 @@
-// AnnouncementSection.js
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import { SidebarProvider } from "./SidebarContext";
 import {
   AnnouncementContainer,
-  SidebarContainer,
   Content,
-  AnnouncementHeader,
+  Title,
   AnnouncementList,
   AnnouncementItem,
-  AnnouncementTitle,
+  AnnouncementContent,
+  AnnouncementDate,
 } from "../../styles/AnnouncementStyles";
-import { SidebarProvider } from "./SidebarContext";
 
-const AnnouncementSection = () => {
+const Announcement = ({ isDashboard }) => {
   const [announcements, setAnnouncements] = useState([]);
 
-  useEffect(() => {
-    fetchAnnouncements();
-  }, []);
-
+  // Function to fetch announcements
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get(
@@ -31,20 +27,26 @@ const AnnouncementSection = () => {
     }
   };
 
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
+
   return (
     <SidebarProvider>
-      <AnnouncementContainer>
-        <SidebarContainer>
-          <Sidebar />
-        </SidebarContainer>
+      <AnnouncementContainer isDashboard={isDashboard}>
+        <Sidebar />
         <Content>
-          <AnnouncementHeader>Announcements</AnnouncementHeader>
+          <Title>Announcements</Title>
+          {/* Display Announcements */}
           <AnnouncementList>
             {announcements.map((announcement) => (
               <AnnouncementItem key={announcement._id}>
-                <AnnouncementTitle>
+                <AnnouncementContent>
                   {announcement.announcement}
-                </AnnouncementTitle>
+                </AnnouncementContent>
+                <AnnouncementDate>
+                  {new Date(announcement.date).toLocaleDateString()}
+                </AnnouncementDate>
               </AnnouncementItem>
             ))}
           </AnnouncementList>
@@ -54,4 +56,4 @@ const AnnouncementSection = () => {
   );
 };
 
-export default AnnouncementSection;
+export default Announcement;

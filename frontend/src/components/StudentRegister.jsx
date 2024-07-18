@@ -59,9 +59,9 @@ const StudentRegister = () => {
           required
         />
         <SubmitButton onClick={(e) => handleRegister(e)}>Register</SubmitButton>
-        <Link style={{ padding: "25px", fontSize: "16px" }}>
+        {/* <Link style={{ padding: "25px", fontSize: "16px" }}>
           Sign In using Google
-        </Link>
+        </Link> */}
       </FormContainer>
     </AdminRegisterContainer>
   );

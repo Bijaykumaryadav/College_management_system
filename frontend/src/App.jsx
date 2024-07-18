@@ -16,6 +16,8 @@ import StudentDashboard from "../src/pages/Students/Dashboard";
 import TeacherDashboard from "../src/pages/Teachers/Dashboard";
 import Classes from "../src/pages/Admin/Classes";
 import AddMarks from "./components/AddMarks";
+import Borrowbooks from "./components/Borrowbooks.jsx";
+import ReturnBooks from "./components/Returnbooks.jsx";
 import Exam from "../src/pages/Admin/Exam";
 import Attendance from "../src/pages/Admin/Attendance";
 import Performance from "../src/pages/Admin/Performance";
@@ -26,6 +28,7 @@ import Library from "../src/pages/Admin/Library";
 import EventCalender from "../src/pages/Admin/EventCalender";
 import SettingsProfile from "../src/pages/Admin/SettingsProfile";
 import Announcement from "../src/pages/Admin/Announcement";
+import Class from "../src/pages/Students/Classes";
 import StudentAssignments from "../src/pages/Students/Assignments";
 import ExamSection from "../src/pages/Students/Exams";
 import PerformanceSection from "../src/pages/Students/Performance";
@@ -80,6 +83,8 @@ const App = () => {
         />
         <Route path="admin/exams" element={<ProtectedRoute element={Exam} />} />
         <Route path="/add-marks/:studentId" element={<AddMarks />} />
+        <Route path="/borrow" element={<Borrowbooks />} />
+        <Route path="/return" element={<ReturnBooks />} />
 
         <Route
           path="admin/attendance"
@@ -121,6 +126,10 @@ const App = () => {
         <Route
           path="student/dashboard"
           element={<ProtectedStudentRoute element={StudentDashboard} />}
+        />
+        <Route
+          path="student/classes"
+          element={<ProtectedStudentRoute element={Class} />}
         />
         <Route
           path="student/assignments"
