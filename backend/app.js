@@ -65,17 +65,22 @@ dbConnection();
 
 /*---------------------DEPLOYMENT-----------------------*/
 
-const __dirname1 = path.resolve();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "../frontend", "dist", "index.html"));
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("Running on development");
-  });
-}
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`${origin} not allowed by CORS`));
+      }
+    },
+    optionsSuccessStatus: 200,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 /*---------------------DEPLOYMENT-----------------------*/
 
