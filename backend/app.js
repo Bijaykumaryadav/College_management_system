@@ -63,20 +63,20 @@ app.use((err, req, res, next) => {
 
 dbConnection();
 
-// /*---------------------DEPLOYMENT-----------------------*/
+/*---------------------DEPLOYMENT-----------------------*/
 
-// const __dirname1 = path.resolve();
-// if (process.env.NODE_ENV === "PRODUCTION") {
-//   app.use(express.static(path.join(__dirname1, "../frontend/dist")));
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname1, "../frontend", "dist", "index.html"));
-//   });
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("Running on development");
-//   });
-// }
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname1, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "../frontend", "dist", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Running on development");
+  });
+}
 
-// /*---------------------DEPLOYMENT-----------------------*/
+/*---------------------DEPLOYMENT-----------------------*/
 
 export default app;
