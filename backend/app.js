@@ -1,5 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
+import path from "path";
 import cors from "cors";
 import passport from "passport";
 import session from "express-session"; // Add session support
@@ -61,5 +62,21 @@ app.use((err, req, res, next) => {
 });
 
 dbConnection();
+
+/*---------------------DEPLOYMENT-----------------------*/
+
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname1, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "../frontend", "dist", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Running on development");
+  });
+}
+
+/*---------------------DEPLOYMENT-----------------------*/
 
 export default app;
