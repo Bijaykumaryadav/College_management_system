@@ -84,14 +84,14 @@ app.use(
 
 // Serve static files from the frontend build directory
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
+app.use(express.static(path.join(__dirname, "../frontend", "dist")));
 
 // API routes
 // Example: app.use('/api', apiRoutes);
 
 // Catch-all handler to serve the frontend's index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
 });
 
 /*---------------------DEPLOYMENT-----------------------*/
