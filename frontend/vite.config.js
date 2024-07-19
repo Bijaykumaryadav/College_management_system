@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "dist", // Ensure this is the directory served by your server
     rollupOptions: {
       input: {
-        main: "/src/main.jsx", // Adjust if needed
+        main: "/src/main.js", // Adjust if needed
       },
     },
   },
