@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.16",
     "axios": "^1.6.8",
+    "backend": "file:..",
     "chart.js": "^4.4.3",
     "lorem-ipsum": "^2.0.8",
     "react": "^18.2.0",
