@@ -26,7 +26,7 @@ const Attendance = ({ isDashboard }) => {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/students/getall"
+        "https://bticlz.onrender.com/api/v1/students/getall"
       );
       setStudents(response.data.students);
       initializeAttendanceData(response.data.students);
@@ -63,7 +63,7 @@ const Attendance = ({ isDashboard }) => {
         status,
       }));
       const response = await axios.post(
-        "http://localhost:4000/api/v1/attendance",
+        "https://bticlz.onrender.com/api/v1/attendance",
         { attendanceData: formattedData }
       );
       console.log("Attendance data submitted:", response.data);

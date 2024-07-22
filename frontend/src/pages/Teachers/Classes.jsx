@@ -23,7 +23,7 @@ const ClassSection = () => {
   const fetchClasses = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/class/getall"
+        "https://bticlz.onrender.com/api/v1/class/getall"
       );
       if (response.data && Array.isArray(response.data.classes)) {
         setClasses(response.data.classes);

@@ -29,7 +29,7 @@ const Announcement = ({ isDashboard }) => {
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/announcements/getall"
+        "https://bticlz.onrender.com/api/v1/announcements/getall"
       );
       setAnnouncements(response.data.announcements);
     } catch (error) {
@@ -45,7 +45,7 @@ const Announcement = ({ isDashboard }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/announcements",
+        "https://bticlz.onrender.com/api/v1/announcements",
         {
           announcement: announcement,
           date: new Date(), // Example: Sending current date

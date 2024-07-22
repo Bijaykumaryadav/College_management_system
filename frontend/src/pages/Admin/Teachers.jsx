@@ -36,7 +36,7 @@ const Teachers = () => {
   const fetchTeachers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/teachers/getall"
+        "https://bticlz.onrender.com/api/v1/teachers/getall"
       );
       setTeachers(response.data.teachers);
     } catch (error) {
@@ -57,7 +57,10 @@ const Teachers = () => {
       newTeacher.subjectCodes.trim() !== ""
     ) {
       try {
-        await axios.post("http://localhost:4000/api/v1/teachers", newTeacher);
+        await axios.post(
+          "https://bticlz.onrender.com/api/v1/teachers",
+          newTeacher
+        );
         setNewTeacher({
           name: "",
           email: "",

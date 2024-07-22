@@ -42,7 +42,7 @@ const TeacherProfileSection = () => {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:4000/api/v1/teachers",
+          "https://bticlz.onrender.com/api/v1/teachers",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ const TeacherProfileSection = () => {
           });
         } else {
           const userResponse = await axios.get(
-            "http://localhost:4000/api/v1/users/teachers",
+            "https://bticlz.onrender.com/api/v1/users/teachers",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -116,11 +116,15 @@ const TeacherProfileSection = () => {
   const handleCompleteProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:4000/api/v1/teachers", teacherInfo, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        "https://bticlz.onrender.com/api/v1/teachers",
+        teacherInfo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setEditMode(false);
     } catch (error) {
       console.error("Error updating teacher info:", error);

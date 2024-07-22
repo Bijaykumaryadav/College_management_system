@@ -30,7 +30,7 @@ const ProtectedStudentRoute = ({ element: Component }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:4000/api/v1/users/auth/students/check",
+          "https://bticlz.onrender.com/api/v1/users/auth/students/check",
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,

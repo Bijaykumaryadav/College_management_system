@@ -41,7 +41,7 @@ const Assignments = () => {
   const fetchAssignments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/assignments/getall"
+        "https://bticlz.onrender.com/api/v1/assignments/getall"
       );
       // Ensure that assignments are always an array
       setAssignments(response.data.assignments || []);
@@ -63,7 +63,7 @@ const Assignments = () => {
     ) {
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/v1/assignments",
+          "https://bticlz.onrender.com/api/v1/assignments",
           newAssignment
         );
         toast.success("Assignment added successfully");

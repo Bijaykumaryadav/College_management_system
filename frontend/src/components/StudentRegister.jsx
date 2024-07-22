@@ -6,7 +6,6 @@ import {
   SubmitButton,
 } from "../styles/AdminRegisterStyles";
 import axios from "axios"; // Import axios
-import { Link } from "react-router-dom";
 
 const StudentRegister = () => {
   const [name, setName] = useState("");
@@ -18,7 +17,7 @@ const StudentRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/users/students",
+        "https://bticlz.onrender.com/api/v1/users/students",
         { name, email, password }
       );
       if (response.status === 200) {

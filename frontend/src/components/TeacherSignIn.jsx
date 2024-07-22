@@ -18,7 +18,7 @@ const TeacherSignIn = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/users/teacher/signin",
+        "https://bticlz.onrender.com/api/v1/users/teacher/signin",
         { email, password }
       );
       localStorage.setItem("token", response.data.token);
@@ -31,7 +31,7 @@ const TeacherSignIn = () => {
   const handleGoogleSignIn = () => {
     // Redirect to Google sign-in endpoint
     window.location.href =
-      "http://localhost:4000/api/v1/users/auth/google-teacher";
+      "https://bticlz.onrender.com/api/v1/users/auth/google-teacher";
   };
 
   return (

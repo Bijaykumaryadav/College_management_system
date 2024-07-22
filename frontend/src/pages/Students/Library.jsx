@@ -26,7 +26,7 @@ const LibrarySection = () => {
   const fetchBooks = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/library/getall"
+        "https://bticlz.onrender.com/api/v1/library/getall"
       );
       setBooks(response.data.books);
     } catch (error) {

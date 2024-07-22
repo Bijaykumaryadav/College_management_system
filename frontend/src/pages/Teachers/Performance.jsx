@@ -28,7 +28,7 @@ const Performance = ({ isDashboard }) => {
       try {
         // Fetch all students
         const studentsResponse = await axios.get(
-          "http://localhost:4000/api/v1/students/getall"
+          "https://bticlz.onrender.com/api/v1/students/getall"
         );
         console.log("Students Response:", studentsResponse.data);
 
@@ -43,7 +43,7 @@ const Performance = ({ isDashboard }) => {
           students.map(async (student) => {
             try {
               const percentageResponse = await axios.get(
-                `http://localhost:4000/api/v1/marks/percentage/${student._id}`
+                `https://bticlz.onrender.com/api/v1/marks/percentage/${student._id}`
               );
               console.log("Percentage Response:", percentageResponse.data);
               return {

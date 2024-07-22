@@ -27,7 +27,7 @@ const EventCalendar = ({ isDashboard }) => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/events/getall"
+        "https://bticlz.onrender.com/api/v1/events/getall"
       );
       setEvents(response.data.events || []);
     } catch (error) {
@@ -44,10 +44,13 @@ const EventCalendar = ({ isDashboard }) => {
   const addEvent = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/api/v1/events", {
-        event: newEvent,
-        date: newEventDate,
-      });
+      const response = await axios.post(
+        "https://bticlz.onrender.com/api/v1/events",
+        {
+          event: newEvent,
+          date: newEventDate,
+        }
+      );
       setEvents([...events, response.data.event]);
       setNewEvent("");
       setNewEventDate("");

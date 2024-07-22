@@ -36,7 +36,7 @@ const AddMarks = () => {
   const fetchMarksData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/v1/marks/${studentId}`
+        `https://bticlz.onrender.com/api/v1/marks/${studentId}`
       );
       console.log("Fetched marks data:", response.data.marks);
       setMarksData(response.data.marks);
@@ -56,7 +56,7 @@ const AddMarks = () => {
         delete marksDataToSend.internalType;
       }
       const response = await axios.post(
-        `http://localhost:4000/api/v1/marks/${studentId}`,
+        `https://bticlz.onrender.com/api/v1/marks/${studentId}`,
         marksDataToSend
       );
       if (response.data.success) {
@@ -118,7 +118,7 @@ const AddMarks = () => {
     if (isExternal) {
       try {
         const response = await axios.post(
-          `http://localhost:4000/api/v1/marks/percentage/${studentId}`,
+          `https://bticlz.onrender.com/api/v1/marks/percentage/${studentId}`,
           { externalPercentage: overallPercentage }
         );
         if (!response.data.success) {

@@ -35,7 +35,7 @@ const Classes = () => {
   const fetchClasses = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/class/getall"
+        "https://bticlz.onrender.com/api/v1/class/getall"
       );
       if (response.data.classes) {
         setClasses(response.data.classes);
@@ -55,7 +55,7 @@ const Classes = () => {
     if (newClassName.trim() !== "" && department && semester && section) {
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/v1/class",
+          "https://bticlz.onrender.com/api/v1/class",
           {
             grade: newClassName,
             department,

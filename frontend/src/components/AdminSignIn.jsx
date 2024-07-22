@@ -19,7 +19,7 @@ const AdminSignIn = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/users/admin/signin",
+        "https://bticlz.onrender.com/api/v1/users/admin/signin",
         { email, password }
       );
       localStorage.setItem("token", response.data.token);
@@ -31,7 +31,8 @@ const AdminSignIn = () => {
 
   const handleGoogleSignIn = () => {
     // Redirect to Google sign-in endpoint
-    window.location.href = "http://localhost:4000/api/v1/users/auth/google";
+    window.location.href =
+      "https://bticlz.onrender.com/api/v1/users/auth/google";
   };
 
   return (

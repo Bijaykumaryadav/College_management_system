@@ -21,7 +21,7 @@ const EventSection = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/events/getall"
+        "https://bticlz.onrender.com/api/v1/events/getall"
       );
       setEvents(response.data.events || []);
     } catch (error) {

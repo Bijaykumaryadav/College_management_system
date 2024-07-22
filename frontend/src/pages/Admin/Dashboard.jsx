@@ -39,7 +39,7 @@ const AdminDashboard = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/events/getall"
+        "https://bticlz.onrender.com/api/v1/events/getall"
       );
       setEvents(response.data.events || []);
     } catch (error) {
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/announcements/getall"
+        "https://bticlz.onrender.com/api/v1/announcements/getall"
       );
       setAnnouncements(response.data.announcements || []);
     } catch (error) {
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
   const fetchStudentPerformance = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/performance/getall"
+        "https://bticlz.onrender.com/api/v1/performance/getall"
       );
       setStudentPerformance(response.data.performance || []);
     } catch (error) {
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
   const fetchTotalStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/students/getall"
+        "https://bticlz.onrender.com/api/v1/students/getall"
       );
       setTotalStudents(response.data.students.length);
     } catch (error) {
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
   const fetchTotalTeachers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/teachers/getall"
+        "https://bticlz.onrender.com/api/v1/teachers/getall"
       );
       setTotalTeachers(response.data.teachers.length);
     } catch (error) {
@@ -94,7 +94,7 @@ const AdminDashboard = () => {
   const fetchTotalClasses = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/class/getall"
+        "https://bticlz.onrender.com/api/v1/class/getall"
       );
       setTotalClasses(response.data.classes.length);
     } catch (error) {

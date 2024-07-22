@@ -41,7 +41,7 @@ const ProfileSection = () => {
         const token = localStorage.getItem("token");
 
         const studentResponse = await axios.get(
-          "http://localhost:4000/api/v1/students",
+          "https://bticlz.onrender.com/api/v1/students",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const ProfileSection = () => {
           });
         } else {
           const userResponse = await axios.get(
-            "http://localhost:4000/api/v1/users/students",
+            "https://bticlz.onrender.com/api/v1/users/students",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -112,11 +112,15 @@ const ProfileSection = () => {
   const handleCompleteProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:4000/api/v1/students", studentInfo, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        "https://bticlz.onrender.com/api/v1/students",
+        studentInfo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setEditMode(false);
     } catch (error) {
       console.error("Error updating student info:", error);

@@ -31,7 +31,7 @@ const SettingsProfile = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:4000/api/v1/users/admins",
+          "https://bticlz.onrender.com/api/v1/users/admins",
           {
             headers: {
               Authorization: `Bearer ${token}`,

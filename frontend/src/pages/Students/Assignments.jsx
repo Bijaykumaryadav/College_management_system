@@ -27,7 +27,7 @@ const StudentAssignments = () => {
   const fetchAssignments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/assignments/getall"
+        "https://bticlz.onrender.com/api/v1/assignments/getall"
       );
       setAssignments(response.data.assignments);
     } catch (error) {
@@ -38,7 +38,7 @@ const StudentAssignments = () => {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/students"
+        "https://bticlz.onrender.com/api/v1/students"
       );
       setStudents(response.data.students);
     } catch (error) {
@@ -53,11 +53,14 @@ const StudentAssignments = () => {
     }
 
     try {
-      await axios.post("http://localhost:4000/api/v1/assignments/submit", {
-        assignmentId: id,
-        studentId: studentId,
-        opinion: opinion,
-      });
+      await axios.post(
+        "https://bticlz.onrender.com/api/v1/assignments/submit",
+        {
+          assignmentId: id,
+          studentId: studentId,
+          opinion: opinion,
+        }
+      );
       // Update the assignment as done in the local state
       setAssignments((prevAssignments) =>
         prevAssignments.map((assignment) =>

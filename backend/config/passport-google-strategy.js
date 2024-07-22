@@ -40,7 +40,8 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:4000/api/v1/users/auth/google/callback",
+      callbackURL:
+        "https://bticlz.onrender.com/api/v1/users/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
@@ -76,7 +77,7 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL:
-        "http://localhost:4000/api/v1/users/auth/google-teacher/callback",
+        "https://bticlz.onrender.com/api/v1/users/auth/google-teacher/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
@@ -111,7 +112,7 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL:
-        "http://localhost:4000/api/v1/users/auth/google-student/callback",
+        "https://bticlz.onrender.com/api/v1/users/auth/google-student/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

@@ -38,7 +38,7 @@ const StudentDashboard = () => {
   const fetchTotalStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/students/getall"
+        "https://bticlz.onrender.com/api/v1/students/getall"
       );
       setTotalStudents(response.data.students.length);
     } catch (error) {
@@ -49,7 +49,7 @@ const StudentDashboard = () => {
   const fetchTotalTeachers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/teachers/getall"
+        "https://bticlz.onrender.com/api/v1/teachers/getall"
       );
       setTotalTeachers(response.data.teachers.length);
     } catch (error) {
@@ -60,7 +60,7 @@ const StudentDashboard = () => {
   const fetchTotalClasses = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/class/getall"
+        "https://bticlz.onrender.com/api/v1/class/getall"
       );
       setTotalClasses(response.data.classes.length);
     } catch (error) {
@@ -71,7 +71,7 @@ const StudentDashboard = () => {
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/announcements/getall"
+        "https://bticlz.onrender.com/api/v1/announcements/getall"
       );
       setAnnouncements(response.data.announcements || []);
     } catch (error) {
@@ -82,7 +82,7 @@ const StudentDashboard = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/events/getall"
+        "https://bticlz.onrender.com/api/v1/events/getall"
       );
       setEvents(response.data.events || []);
     } catch (error) {

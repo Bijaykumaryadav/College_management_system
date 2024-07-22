@@ -18,7 +18,7 @@ const StudentSignIn = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/users/student/signin",
+        "https://bticlz.onrender.com/api/v1/users/student/signin",
         { email, password }
       );
       console.log("Student Sign In:", { email, password });
@@ -31,7 +31,7 @@ const StudentSignIn = () => {
 
   const handleGoogleSignIn = () => {
     window.location.href =
-      "http://localhost:4000/api/v1/users/auth/google-student";
+      "https://bticlz.onrender.com/api/v1/users/auth/google-student";
   };
 
   return (

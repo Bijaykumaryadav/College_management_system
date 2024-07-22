@@ -28,7 +28,7 @@ const Library = () => {
   const fetchBooks = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/library/getall"
+        "https://bticlz.onrender.com/api/v1/library/getall"
       );
       setBooks(response.data.books);
     } catch (error) {
@@ -39,7 +39,7 @@ const Library = () => {
   const addBook = async (book) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/library/books",
+        "https://bticlz.onrender.com/api/v1/library/books",
         {
           bookname: book.title,
           author: book.author,
